@@ -321,6 +321,25 @@ public class EnergyGridRoomService implements pt.ipp.isep.dei.project.dddplaceho
     }
 
     /**
+     * This method receives a roomID and detaches that room from its grid.
+     *
+     * @param roomID room ID
+     * @return true in case the room is detached, false otherwise
+     */
+    public boolean removeRoomFromGrid(String roomID) {
+        List<EnergyGrid> energyGrids = energyGridRepository.getAllGrids();
+        for (EnergyGrid e : energyGrids) {
+            List<String> gridRoomIDs = e.getRoomIdList();
+            if (gridRoomIDs.contains(roomID)) {
+                if (removeRoomFromGrid(roomID, e.getName())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * Method for US 145 - As an Administrator, I want to have a list of existing rooms attached to a house grid, so
      * that I can attach/detach rooms from it.
      * This method returns a List of Rooms Dto Web from a grid.

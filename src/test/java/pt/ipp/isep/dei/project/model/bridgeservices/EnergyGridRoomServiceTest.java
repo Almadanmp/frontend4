@@ -82,6 +82,86 @@ class EnergyGridRoomServiceTest {
     }
 
     @Test
+    void seeIfRemoveRoomFromGridWorksWhenNoGrids() {
+        // Arrange
+
+        List<EnergyGrid> emptyList = new ArrayList<>();
+
+        Mockito.when(energyGridRepository.getAllGrids()).thenReturn(emptyList);
+
+        //Act
+
+        boolean actualResult = energyGridRoomService.removeRoomFromGrid("roomID");
+
+        // Assert
+
+        assertFalse(actualResult);
+    }
+
+    @Test
+    void seeIfRemoveRoomFromGridWorksWhenRoomIsInSecondGrid() {
+        // Arrange
+
+        List<EnergyGrid> twoGrids = new ArrayList<>();
+        List<Room> twoRooms = new ArrayList<>();
+
+        Room firstRoom = new Room("Room1", "2nd Floor Office", 2, 30, 30, 10, "Room1");
+        Room secondRoom = new Room("Room2", "2nd Floor Office", 2, 30, 30, 10, "Room1");
+
+        EnergyGrid firstGrid = new EnergyGrid("FirstGrid", 400D, "34576");
+        EnergyGrid secondGrid = new EnergyGrid("SecondGrid", 400D, "34576");
+
+        secondGrid.addRoomId("Room1");
+        secondGrid.addRoomId("Room2");
+
+        twoGrids.add(secondGrid);
+        twoGrids.add(firstGrid);
+
+        twoRooms.add(firstRoom);
+        twoRooms.add(secondRoom);
+
+        Mockito.when(energyGridRepository.getAllGrids()).thenReturn(twoGrids);
+        Mockito.when(energyGridRepository.getById("SecondGrid")).thenReturn(secondGrid);
+        Mockito.when(energyGridRepository.addGrid(secondGrid)).thenReturn(secondGrid);
+        Mockito.when(roomRepository.getAllRooms()).thenReturn(twoRooms);
+
+        //Act
+
+        boolean actualResult = energyGridRoomService.removeRoomFromGrid("Room2");
+
+        // Assert
+
+        assertTrue(actualResult);
+    }
+
+    @Test
+    void seeIfRemoveRoomFromGridsWorksWhenRoomDoesNotExist() {
+        // Arrange
+
+        List<EnergyGrid> twoGrids = new ArrayList<>();
+
+        EnergyGrid firstGrid = new EnergyGrid("FirstGrid", 400D, "34576");
+        EnergyGrid secondGrid = new EnergyGrid("SecondGrid", 400D, "34576");
+
+        secondGrid.addRoomId("Room1");
+        secondGrid.addRoomId("Room2");
+
+        twoGrids.add(secondGrid);
+        twoGrids.add(firstGrid);
+
+        Mockito.when(energyGridRepository.getAllGrids()).thenReturn(twoGrids);
+
+        //Act
+
+        boolean actualResult = energyGridRoomService.removeRoomFromGrid("Room3");
+
+        // Assert
+
+        assertFalse(actualResult);
+    }
+
+
+    @Test
     void seeIfGetRoomDTOMinimalByIdWorksWhenRoomDoesNotExitInGrid() {
         // Act
 

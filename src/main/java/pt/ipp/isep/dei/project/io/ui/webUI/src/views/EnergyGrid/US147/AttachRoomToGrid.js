@@ -19,7 +19,8 @@ class AttachRoomToGrid extends React.Component {
 
     this.handleInputChange = attribute => event => {
       this.setState({
-        [attribute]: event.target.value
+        [attribute]: event.target.value,
+        isHidden: true
       });
     };
   }
@@ -29,6 +30,7 @@ class AttachRoomToGrid extends React.Component {
   handleSubmit() {
     this.props.onDeleteRoomFromGrid(this.state.name, this.state.formerGrid);
     this.props.onAttachRoomGrid(this.state.name, this.props.link.href);
+    this.toggleHidden();
   }
 
   render() {
@@ -49,7 +51,7 @@ class AttachRoomToGrid extends React.Component {
         <Button style={{backgroundColor: '#e4e5e6', marginBottom: '1rem'}}
                 onClick={this.handleSubmit}>Attach
           Room {name} to {this.props.grid}</Button>
-        {/*{!this.state.isHidden && <AttachRoom link={this.props.link} name={ this.state.name} grid={this.props.grid} formerGrid={this.state.formerGrid}/>}*/}
+        {!this.state.isHidden && <AttachRoom room={this.props.room} error={ this.props.error} grid={this.props.grid}/>}
       </>
     )
   }

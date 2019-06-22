@@ -105,6 +105,7 @@ public class EnergyGridsWebController {
         if (roomRepository.findRoomByID(roomDTO.getName()).isPresent()) {
             try {
                 if (energyGridRoomService.attachRoomToGrid(roomDTO.getName(), gridId)) {
+                    //energyGridRoomService.removeRoomFromGrid(roomDTO.getName());
                     RoomDTOMinimal roomDTOMinimal = energyGridRoomService.getMinimalRoomDTOById(gridId, roomDTO.getName());
                     return new ResponseEntity<>(roomDTOMinimal,
                             HttpStatus.OK);

@@ -11,15 +11,10 @@ class AttachRoom extends React.Component {
     super(props);
   //  this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      formerGrid: '',
       name: '',
     };
   }
 
-  componentDidMount() {
-    this.props.onDetachRoomFromGrid(this.props.name, this.props.formerGrid);
-    this.props.onAttachRoomGrid(this.props.name, this.props.link.href);
-  }
 
   render() {
     const {room, error} = this.props;
@@ -42,25 +37,4 @@ class AttachRoom extends React.Component {
   }
 }
 
-
-const mapStateToProps = (state) => {
-  return {
-
-    loading: state.Reducers147.loading,
-    room: state.Reducers147.room,
-    error: state.Reducers147.error
-  }
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onAttachRoomGrid: (name, link) => {
-      dispatch(attachRoomGrid({name, link}))
-    },
-    onDetachRoomFromGrid: (name, grid) => {
-      dispatch(detachRoomFromGrid({name, grid}))
-    },
-  }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AttachRoom);
+export default AttachRoom;
