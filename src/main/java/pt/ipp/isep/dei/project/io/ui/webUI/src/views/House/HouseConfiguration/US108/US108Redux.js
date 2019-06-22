@@ -4,6 +4,7 @@ import {fetchRooms} from './Actions108';
 import {Alert, Card, CardBody, Col, Row, Table} from "reactstrap";
 
 import TableBodyUS108 from "./TableBodyUS108"
+import US105 from "../US105";
 
 class US108Redux extends Component {
   constructor(props) {
@@ -43,6 +44,7 @@ class US108Redux extends Component {
                     </Table>
                   </CardBody>
                 </Card>
+            <US105 style={{float:'right'}}/>
           </div>
         );
       }

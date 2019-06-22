@@ -13,7 +13,7 @@ class GetChildren extends Component {
 
   toggle() {
     this.setState(state => ({collapse: !state.collapse}));
-    console.log(this.props.geographicAreaId)
+    console.log(this.props.area)
   }
 
   render() {
@@ -24,7 +24,7 @@ class GetChildren extends Component {
         <Collapse isOpen={this.state.collapse}>
             <Card>
               <CardHeader>
-                <strong>Child Geographic Area  from {this.props.geographicAreaId}</strong>
+                <strong>Child Areas from {this.props.area}</strong>
               </CardHeader>
               <CardBody style={{
                 textAlign: "right"
@@ -32,7 +32,7 @@ class GetChildren extends Component {
                 <Table responsive>
                   <TableBody link={this.props.link}/>
                 </Table>
-                <US007Redux geographicAreaId={this.props.geographicAreaId} />
+                <US007Redux geographicAreaId={this.props.geographicAreaId} mother={this.props.area}/>
               </CardBody>
             </Card>
         </Collapse>

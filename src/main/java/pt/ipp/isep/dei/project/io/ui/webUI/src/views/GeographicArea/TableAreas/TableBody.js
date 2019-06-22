@@ -3,6 +3,7 @@ import TableHeader from "./TableHeader";
 import connect from "react-redux/es/connect/connect";
 import GetChildren from "../ChildAreas/GetChildren.js";
 import GetSensors from "../AreaSensors/GetSensors.js";
+
 class TableBody extends Component {
 
   constructor(props) {
@@ -59,13 +60,15 @@ class TableBody extends Component {
             <td style={{
               textAlign: "center"
             }}>
-            <GetSensors link={item.links.find((hrefs) => hrefs.rel === 'List area sensors.')} area={item.name} linkAdd={item.links.find((hrefs) => hrefs.rel === 'Add a new area sensors.')}/>
+              <GetSensors link={item.links.find((hrefs) => hrefs.rel === 'List area sensors.')} area={item.name}
+                          linkAdd={item.links.find((hrefs) => hrefs.rel === 'Add a new area sensors.')}/>
             </td>
 
             <td style={{
               textAlign: "center"
             }}>
-              <GetChildren link={item.links.find((hrefs) => hrefs.rel === 'List child areas.')} geographicAreaId={item.geographicAreaId}  />
+              <GetChildren link={item.links.find((hrefs) => hrefs.rel === 'List child areas.')} area={item.name}
+                           geographicAreaId={item.geographicAreaId}/>
             </td>
           </tr>
         ))}
@@ -74,7 +77,6 @@ class TableBody extends Component {
   }
 
 }
-
 
 
 export default TableBody;

@@ -17,30 +17,22 @@ class SaveGASensor extends React.Component {
     console.log(addedSensor)
     const {geographicAreaId, typeSensor, name, sensorId, dateStartedFunctioning, latitude, longitude, altitude} = this.props;
 
-    if ((addedSensor.toString()).indexOf("400") != -1 || (addedSensor.toString()).indexOf("Network Error") != -1
-      || (addedSensor.toString()).indexOf("422") != -1) {
+    if ((addedSensor.toString()).indexOf("400") !== -1 || (addedSensor.toString()).indexOf("Network Error") !== -1
+      || (addedSensor.toString()).indexOf("422") !== -1) {
       return (
         <div>
           <div className="help-block"><Alert color="danger">Please complete every field before continuing.</Alert></div>
         </div>
       )
-    }
-    else if ((addedSensor.toString()).indexOf("409") != -1) {
+    } else if ((addedSensor.toString()).indexOf("409") !== -1) {
       return (
         <div>
-          <div className="help-block"><Alert color="danger">A sensor with ID:{sensorId} already exists. Please change before
-          continuing.</Alert></div>
-        </div>
-      )
-    }
-    else if ((addedSensor.toString()).indexOf("409") != -1) {
-      return (
-        <div>
-          <div className="help-block"><Alert color="danger">A sensor with ID:{sensorId} already exists. Please change before
+          <div className="help-block"><Alert color="danger">A sensor with ID:{sensorId} already exists. Please change
+            before
             continuing.</Alert></div>
         </div>
       )
-    }else {
+    } else {
       return (
         <div className="help-block"><Alert color="success">
           <p>The following sensor was added:</p>
@@ -57,20 +49,10 @@ class SaveGASensor extends React.Component {
             <li>
               Start Date: {dateStartedFunctioning}
             </li>
-            <li>
-              Latitude: {latitude}
-            </li>
-            <li>
-              Longitude: {longitude}
-            </li>
-            <li>
-              Altitude: {altitude}
-            </li>
           </ul>
         </Alert></div>
       );
     }
-
   }
 }
 

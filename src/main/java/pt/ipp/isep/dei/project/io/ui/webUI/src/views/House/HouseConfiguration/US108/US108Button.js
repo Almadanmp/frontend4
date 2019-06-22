@@ -48,7 +48,7 @@ class US108Button extends Component {
           room {this.props.name}</Button><US108BackButton/>
         {this.state.isHidden === false ?
         <US108Put name={this.props.name} floor={this.props.floor} width={this.props.width} length={this.props.length}
-                  height={this.props.height}/>:''}
+                  height={this.props.height} link={this.props.link}/>:''}
       </div>
     )
   }

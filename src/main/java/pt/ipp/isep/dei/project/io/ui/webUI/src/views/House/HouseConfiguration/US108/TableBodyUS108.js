@@ -9,7 +9,8 @@ class TableBodyUS108 extends Component {
     super(props);
     this.state = {
       check: false,
-      name: ''
+      name: '',
+      link: []
     };
   };
 
@@ -47,6 +48,7 @@ class TableBodyUS108 extends Component {
               <Button style={{backgroundColor: '#e4e5e6', marginBottom: '1rem'}} onClick={(event) => {
                 this.handleEdit();
                 this.state.name = todo.name;
+                this.state.links = todo.links;
               }}> Edit
               </Button>
             </td>
@@ -56,7 +58,7 @@ class TableBodyUS108 extends Component {
         </tbody>
       );
     } else if (rooms.length > 0 && this.state.check === true) {
-      return (<><US108Select name={this.state.name}/></>);
+      return (<><US108Select name={this.state.name} link={this.state.links.find((hrefs) => hrefs.rel === 'Edit this Room')}/></>);
     } else {
       return (<h1>No data ....</h1>);
     }

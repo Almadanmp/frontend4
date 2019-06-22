@@ -27,7 +27,7 @@ class US005extraRedux extends Component {
       <div style={{float:'left'}}>
         <Card >
           <CardHeader>
-            <i className="fa fa-align-justify"></i><strong> Sensor Types</strong>
+            <strong> Sensor Types</strong>
           </CardHeader>
             <CardBody style={{
               textAlign: "right"

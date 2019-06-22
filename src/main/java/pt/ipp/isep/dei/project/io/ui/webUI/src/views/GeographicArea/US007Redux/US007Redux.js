@@ -17,6 +17,7 @@ class US007Redux extends React.Component {
       childId: '',
       idMother: 0,
       count: 0,
+      mother: '',
     };
   }
 
@@ -50,9 +51,10 @@ class US007Redux extends React.Component {
   }
 
   handleSubmit() {
-    this.props.onFetchMotherChild(this.props.geographicAreaId,this.state.id);
+    this.props.onFetchMotherChild(this.props.geographicAreaId, this.state.id);
     console.log(this.props.geographicAreaId)
     console.log(this.state.id)
+    console.log(this.props.mother)
     this.setState({isHidden: false})
   }
 
@@ -61,7 +63,8 @@ class US007Redux extends React.Component {
 
     return (
       <div>
-        <Button onClick={this.toggle} className={"btn-pill"} style={{backgroundColor: '#93c4c4', marginBottom: '1rem'}}><i className="fa fa-plus-square-o fa-lg"/> Add Child Area{this.props.id}</Button>
+        <Button onClick={this.toggle} className={"btn-pill"} style={{backgroundColor: '#93c4c4', marginBottom: '1rem'}}><i
+          className="fa fa-plus-square-o fa-lg"/> Add Child Area{this.props.id}</Button>
         <Collapse isOpen={this.state.collapse}>
           <Card>
             <CardBody>
@@ -71,7 +74,7 @@ class US007Redux extends React.Component {
                   <Input type="select" name="select" id="select" value={this.state.value} onChange={this.handleChange2}>
                     <option value="" onChange={this.handleChange2}>Please select the child Geographic Area</option>
                     {item.map(items => (
-                      <option value={items.geographicAreaId} key={items.geographicAreaId} >
+                      <option value={items.geographicAreaId} key={items.geographicAreaId}>
                         {items.name}
                       </option>
                     ))}
@@ -79,10 +82,12 @@ class US007Redux extends React.Component {
                 </FormGroup>
               </Form>
               <p></p>
-              <Button style={{backgroundColor: '#e4e5e6', marginBottom: '1rem'}} onClick={this.handleSubmit}>Save changes
+              <Button style={{backgroundColor: '#e4e5e6', marginBottom: '1rem'}} onClick={this.handleSubmit}>Save
+                changes
               </Button>
               {(this.state.isHidden === false ?
-                <AlterMotherChild childId={this.state.id} motherId={this.props.geographicAreaId}/> : '')}
+                <AlterMotherChild childId={this.state.id} motherId={this.props.geographicAreaId}
+                                  mother={this.props.mother}/> : '')}
             </CardBody>
           </Card>'
         </Collapse>
@@ -102,7 +107,7 @@ const mapStateToProps = (state) => {
 const
   mapDispatchToProps = (dispatch) => {
     return {
-      onFetchMotherChild: (geographicAreaId,  id) => {
+      onFetchMotherChild: (geographicAreaId, id) => {
         dispatch(fetchMotherChild({geographicAreaId, id}))
       }
     }

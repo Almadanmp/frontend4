@@ -37,6 +37,7 @@ class US108Select extends Component {
   handleChange(event) {
     this.setState({value: event.target.value});
     console.log(this.props.item.name)
+    console.log(this.props.item.link)
   }
 
 
@@ -53,7 +54,7 @@ class US108Select extends Component {
       if (!item.error) {
         return (
           <div style={{textAlign: 'center'}}>
-            <RoomEditor name={this.props.name}/>
+            <RoomEditor name={this.props.name} link={this.props.link}/>
           </div>
         );
       } else {
