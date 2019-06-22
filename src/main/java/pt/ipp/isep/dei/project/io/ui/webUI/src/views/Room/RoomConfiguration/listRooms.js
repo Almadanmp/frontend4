@@ -59,7 +59,7 @@ class ListRooms extends Component {
 
           <Row>
             <Col xs="12" sm="10" md="10">
-              <Card className="card-accent-warning">
+              <Card>
                 <CardHeader>
                   <i className="fa fa-align-justify"></i><strong>Room Sensors by Room</strong>
                   <br></br>
