@@ -4,6 +4,7 @@ import US108Redux from "./US108/US108Redux";
 import Row from "reactstrap/es/Row";
 import Col from "reactstrap/es/Col";
 import {Button, Card, CardBody, CardHeader, Collapse} from "reactstrap";
+import US105 from "./US105";
 
 class HouseConfiguration extends Component {
   constructor(props) {
@@ -22,13 +23,14 @@ class HouseConfiguration extends Component {
         <h2>Welcome to the House Configuration Menu</h2>
         <h4>Please select the option you want to run</h4>
         <Row>
-          <Col xs="12" sm="10" md="5">
+          <Col xs="12" sm="10" md="8">
             <Card>
               <CardHeader>
                 <strong>Rooms in the house</strong>
               </CardHeader>
               <CardBody>
                 <US108Redux/>
+                <US105 style={{float: 'right'}}/>
               </CardBody>
             </Card>
           </Col>

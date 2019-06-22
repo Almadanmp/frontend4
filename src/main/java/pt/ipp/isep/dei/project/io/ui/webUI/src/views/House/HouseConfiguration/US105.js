@@ -26,11 +26,13 @@ class US105 extends Component {
           className="fa fa-plus-square-o fa-lg"/> Add a new room to the
           house</Button>
         <Collapse isOpen={this.state.collapse}>
+          <Col xs="20" sm="40" md="40">
           <Card className="US105">
             <CardBody>
               <RoomCreator/>
             </CardBody>
           </Card>
+          </Col>
         </Collapse>
       </div>
     )
