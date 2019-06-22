@@ -13,14 +13,13 @@ const Login = React.lazy(() => import('./login/LogInPage.js'));
 class App extends Component {
 
   render() {
-    if (localStorage.getItem("userToken") != null) {
+    if (localStorage.getItem("loginToken") != null) {
       return (
         <HashRouter>
           <React.Suspense fallback={loading()}>
             <Switch>
               <Route exact path="/about" name="Home" render={props => <DefaultLayout {...props}/>}/>
-              <Route exact path="/login" name="Login" render={props => <Login {...props}/>}/>
-              <Route exact path="/" name="Login" render={props => <Login {...props}/>}/>
+              <Route exact path="/" name="About" render={props => <DefaultLayout {...props}/>}/>
               <Route path="/" component={DefaultLayout}/>
             </Switch>
           </React.Suspense>
