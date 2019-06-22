@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.project.security;
+package pt.ipp.isep.dei.project.io.ui.security;
 
 class JwtProperties {
     static final String SECRET = "SomeSecretForJWTGeneration";

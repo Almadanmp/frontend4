@@ -315,9 +315,31 @@ public class EnergyGridRoomService implements pt.ipp.isep.dei.project.dddplaceho
 
     public boolean removeRoomFromGrid(String roomID, String gridID) {
         EnergyGrid grid = energyGridRepository.getById(gridID);
-        boolean result = removeRoomById(grid, roomID);
-        energyGridRepository.addGrid(grid);
-        return result;
+        if(grid.removeRoomId(roomID)){
+            energyGridRepository.addGrid(grid);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * This method receives a roomID and detaches that room from its grid.
+     *
+     * @param roomID room ID
+     * @return true in case the room is detached, false otherwise
+     */
+    public boolean removeRoomFromGrid(String roomID) {
+        List<EnergyGrid> energyGrids = energyGridRepository.getAllGrids();
+        for (EnergyGrid e : energyGrids) {
+            List<String> gridRoomIDs = e.getRoomIdList();
+            if (gridRoomIDs.contains(roomID)) {
+                if (e.removeRoomId(roomID)) {
+                    energyGridRepository.addGrid(e);
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**

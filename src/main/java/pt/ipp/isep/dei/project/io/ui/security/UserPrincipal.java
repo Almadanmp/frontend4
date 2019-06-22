@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.project.security;
+package pt.ipp.isep.dei.project.io.ui.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,7 +13,7 @@ import java.util.List;
 public class UserPrincipal implements UserDetails {
     private User user;
 
-    public UserPrincipal(User user) {
+    UserPrincipal(User user) {
         this.user = user;
     }
 

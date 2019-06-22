@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.project.security;
+package pt.ipp.isep.dei.project.io.ui.security;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,59 +12,58 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
- class UserPrincipalTest {
+class UserPrincipalTest {
     private User user = new User("Arya", "Dana123", "ADMIN,DEVELOPER", "everything,work");
     private UserPrincipal userPrincipal = new UserPrincipal(user);
 
     @Test
     void seeIfGetAuthorities() {
-        List<String>roles = new ArrayList<>();
+        List<String> roles = new ArrayList<>();
         roles.add("everything");
         roles.add("work");
         roles.add("ROLE_ADMIN");
         roles.add("ROLE_DEVELOPER");
 
-        Collection<? extends GrantedAuthority> actualResult =  userPrincipal.getAuthorities();
-        assertEquals(roles.size(),actualResult.size());
+        Collection<? extends GrantedAuthority> actualResult = userPrincipal.getAuthorities();
+        assertEquals(roles.size(), actualResult.size());
     }
 
 
     @Test
-    void seeIfGetPassword(){
+    void seeIfGetPassword() {
         String expectedResult = "Dana123";
         String actualResult = userPrincipal.getPassword();
-        assertEquals(expectedResult,actualResult);
+        assertEquals(expectedResult, actualResult);
     }
 
 
     @Test
-    void seeIfGetUsername(){
+    void seeIfGetUsername() {
         String expectedResult = "Arya";
         String actualResult = userPrincipal.getUsername();
-        assertEquals(expectedResult,actualResult);
+        assertEquals(expectedResult, actualResult);
     }
 
 
     @Test
-    void seeIfIsAccountNonExpired(){
+    void seeIfIsAccountNonExpired() {
         assertTrue(userPrincipal.isAccountNonExpired());
 
     }
 
     @Test
-    void isAccountNonLocked(){
+    void isAccountNonLocked() {
         assertTrue(userPrincipal.isAccountNonLocked());
     }
 
     @Test
-    void isCredentialsNonExpired(){
+    void isCredentialsNonExpired() {
         assertTrue(userPrincipal.isCredentialsNonExpired());
     }
 
 
-
     @Test
-    void isEnabled(){
+    void isEnabled() {
         assertTrue(userPrincipal.isEnabled());
     }
 

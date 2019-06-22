@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.project.security;
+package pt.ipp.isep.dei.project.io.ui.security;
 
 import com.auth0.jwt.JWT;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,7 +20,7 @@ import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     private UserRepository userRepository;
 
-     JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserRepository userRepository) {
+    JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserRepository userRepository) {
         super(authenticationManager);
         this.userRepository = userRepository;
     }

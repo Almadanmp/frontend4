@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.project.security;
+package pt.ipp.isep.dei.project.io.ui.security;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
