@@ -124,7 +124,7 @@ public class EnergyGridsWebController {
      */
     @PostMapping(value = "/")
     public ResponseEntity<String> createEnergyGrid(@RequestBody EnergyGridDTO energyGridDTO) {
-        if (energyGridDTO.getHouseID() != null && energyGridDTO.getMaxContractedPower() != null && energyGridDTO.getName() != "") {
+        if (energyGridDTO.getHouseID() != null && energyGridDTO.getName() != null && energyGridDTO.getMaxContractedPower() != null && energyGridDTO.getName() != "") {
             if (energyGridRepository.createEnergyGrid(energyGridDTO)) {
                 return new ResponseEntity<>(
                         "Energy grid created and added to the house with success!",
