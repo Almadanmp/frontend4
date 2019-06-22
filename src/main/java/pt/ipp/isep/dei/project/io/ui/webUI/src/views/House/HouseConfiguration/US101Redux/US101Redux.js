@@ -73,8 +73,6 @@ class US101Redux extends React.Component {
 
       return (
         <div>
-          <Button onClick={this.toggle} style={{backgroundColor: '#FFFFFF', marginBottom: '1rem'}}>Configure the house location</Button>
-          <Collapse isOpen={this.state.collapse}>
             <Card>
               <CardBody>
                 <Form action="" method="post">
@@ -134,7 +132,7 @@ class US101Redux extends React.Component {
                                   longitude={this.state.longitude} altitude={this.state.altitude}/> : ''}
               </CardBody>
             </Card>
-          </Collapse>
+
         </div>
       );
     }

@@ -8,20 +8,21 @@ class CreateLocation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: ''
+      name: '',
+      mother: ''
     };
   }
 
   render() {
     const {added} = this.props;
     console.log(added)
-    const { childId, motherId} = this.props;
+    const {childId, motherId, mother} = this.props;
     console.log(motherId)
     if ((added.toString()).indexOf("409") !== -1) {
       return (
         <div>
           <div className="help-block"><Alert color="danger">Geographic area with ID: {childId} already belongs to
-            geographic area {motherId}. </Alert></div>
+            {mother}. </Alert></div>
         </div>
       )
     }
@@ -44,7 +45,7 @@ class CreateLocation extends React.Component {
     else {
       return (
         <div className="help-block"><Alert color="success">
-          <p>Geographic area with ID: {childId} was added to geographic area {motherId}.</p>
+          <p>Geographic area with ID: {childId} was added to {mother}.</p>
         </Alert></div>
       );
     }

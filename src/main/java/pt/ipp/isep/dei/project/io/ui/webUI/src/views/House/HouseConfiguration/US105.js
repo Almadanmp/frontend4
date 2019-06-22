@@ -6,6 +6,7 @@ import {
   CardBody,
   Card,
 } from 'reactstrap';
+import Col from "reactstrap/es/Col";
 
 class US105 extends Component {
   constructor(props) {
@@ -19,20 +20,21 @@ class US105 extends Component {
   }
 
   render() {
-      return (
-        <div>
-          <Button onClick={this.toggle} style={{backgroundColor: '#FFFFFF', marginBottom: '1rem'}}>Add a new room to the
-            house</Button>
-          <Collapse isOpen={this.state.collapse}>
-            <Card className="US105">
-              <CardBody>
-                <RoomCreator/>
-              </CardBody>
-            </Card>
-          </Collapse>
-        </div>
-      )
-    }
+    return (
+      <div>
+        <Button onClick={this.toggle} className={"btn-pill"} style={{backgroundColor: '#93c4c4', marginBottom: '1rem'}}><i
+          className="fa fa-plus-square-o fa-lg"/> Add a new room to the
+          house</Button>
+        <Collapse isOpen={this.state.collapse}>
+          <Card className="US105">
+            <CardBody>
+              <RoomCreator/>
+            </CardBody>
+          </Card>
+        </Collapse>
+      </div>
+    )
+  }
 }
 
 export default US105;

@@ -11,13 +11,12 @@ class RoomGrid extends Component {
   }
 
   render() {
-
     return (
       <>
         <Col xs="12" lg="10">
           <Card>
             <CardHeader>
-              <i className="fa fa-align-justify"></i><strong>Geographic Area</strong>
+              <strong>Geographic Area</strong>
             </CardHeader>
             <CardBody style={{
               textAlign: "right"
@@ -30,7 +29,6 @@ class RoomGrid extends Component {
           </Card>
         </Col>
       </>
-
     )
   }
 }

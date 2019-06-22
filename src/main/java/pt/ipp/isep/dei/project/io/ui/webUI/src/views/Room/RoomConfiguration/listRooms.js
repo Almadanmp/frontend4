@@ -3,24 +3,15 @@ import {
   Card,
   CardBody,
   Col,
-  Form,
-  FormGroup,
-  Input,
-  Label,
-  Table,
   Row,
   ListGroup,
   ListGroupItem,
-  ListGroupItemHeading,
-  ListGroupItemText,
   CardHeader,
-  Badge,
   TabContent, TabPane
 } from "reactstrap";
 import US250GetSensors from "./US250/US250GetSensors";
 import {fetchRooms} from "../../House/HouseConfiguration/US108/Actions108";
 import connect from "react-redux/es/connect/connect";
-import SensorTypesSelect from "./US253/SensorTypesSelect";
 
 
 class ListRooms extends Component {
@@ -49,26 +40,23 @@ class ListRooms extends Component {
 
     const {loading, rooms, error} = this.props;
     if (loading == true) {
-      return (<div className = "spinner-border" role = "status" >
-        <span className = "sr-only" > Loading...</span>
+      return (<div className="spinner-border" role="status">
+        <span className="sr-only"> Loading...</span>
       </div>)
     } else {
       return (
         <>
-
-
           <Row>
             <Col xs="12" sm="10" md="10">
               <Card>
                 <CardHeader>
-                  <i className="fa fa-align-justify"></i><strong>Room Sensors by Room</strong>
+                  <strong>Room Sensors by Room</strong>
                   <br></br>
                   <small>Please select the room</small>
                   <div className="card-header-actions">
                   </div>
                 </CardHeader>
                 <CardBody>
-
                   {rooms.map(item => (
                     <Row>
                       <Col xs="4">
@@ -77,22 +65,19 @@ class ListRooms extends Component {
                                          active={this.state.activeTab === item.name}>{item.name}</ListGroupItem>
                         </ListGroup>
                       </Col>
-
-
                       <TabContent activeTab={this.state.activeTab}>
                         <TabPane tabId={item.name}>
-                          <US250GetSensors link={item.links.find((hrefs) => hrefs.rel === 'Get Room Sensors')} roomID={item.name}  linkAdd={item.links.find((hrefs) => hrefs.rel === 'Add a new Room Sensor')}/>
+                          <US250GetSensors link={item.links.find((hrefs) => hrefs.rel === 'Get Room Sensors')}
+                                           roomID={item.name}
+                                           linkAdd={item.links.find((hrefs) => hrefs.rel === 'Add a new Room Sensor')}/>
                         </TabPane>
                       </TabContent>
-
                     </Row>
                   ))}
                 </CardBody>
               </Card>
             </Col>
           </Row>
-
-
         </>
       );
     }

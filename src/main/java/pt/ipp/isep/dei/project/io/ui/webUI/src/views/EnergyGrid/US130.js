@@ -27,7 +27,7 @@ class US130 extends Component {
         <Collapse isOpen={this.state.collapse}>
           <Card>
             <CardHeader>
-              Create a new Grid
+              <strong>Create a new Grid</strong>
             </CardHeader>
               <CardBody>
               <EnergyGridCreator/>

@@ -22,7 +22,7 @@ class US001 extends Component {
           <Col xs="12" lg="4">
           <Card style={{size: 10}} >
             <CardHeader>
-              Create a new Type
+              <strong> Create a new Type </strong>
             </CardHeader>
             <CardBody>
               <US001Redux/>
