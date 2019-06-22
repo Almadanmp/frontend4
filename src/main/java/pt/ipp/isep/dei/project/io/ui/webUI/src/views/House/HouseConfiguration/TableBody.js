@@ -43,7 +43,7 @@ class TableBody extends Component {
       remove: "Remove from grid",
       edit: "Edit Room"
     };
-    var {id, item} = this.state;
+    var {item} = this.state;
     return (
       <>
         <TableHeader headers={headers}/>
