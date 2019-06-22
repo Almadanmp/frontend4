@@ -20,7 +20,7 @@ import navigationAdmin from '../../_navAdministrator';
 import navigationRegular from '../../_navRegular';
 import navigationBasic from '../../_navBasic';
 // routes config
-import routes from '../../routes';
+import {routesAdmin, routesBasic, routesRegular} from '../../routes';
 import {logout} from "../../logOut/logoutActions";
 import {connect} from "react-redux";
 import {fetchUserRole} from "../../user/ActionsUserRole";
@@ -78,11 +78,11 @@ class DefaultLayout extends Component {
 
             </AppSidebar>
             <main className="main">
-              <AppBreadcrumb appRoutes={routes} router={router}/>
+              <AppBreadcrumb appRoutes={routesBasic} router={router}/>
               <Container fluid>
                 <Suspense fallback={this.loading()}>
                   <Switch>
-                    {routes.map((route, idx) => {
+                    {routesBasic.map((route, idx) => {
                       return route.component ? (
                         <Route
                           key={idx}
@@ -137,11 +137,11 @@ class DefaultLayout extends Component {
 
               </AppSidebar>
               <main className="main">
-                <AppBreadcrumb appRoutes={routes} router={router}/>
+                <AppBreadcrumb appRoutes={routesAdmin} router={router}/>
                 <Container fluid>
                   <Suspense fallback={this.loading()}>
                     <Switch>
-                      {routes.map((route, idx) => {
+                      {routesAdmin.map((route, idx) => {
                         return route.component ? (
                           <Route
                             key={idx}
@@ -199,11 +199,11 @@ class DefaultLayout extends Component {
 
                 </AppSidebar>
                 <main className="main">
-                  <AppBreadcrumb appRoutes={routes} router={router}/>
+                  <AppBreadcrumb appRoutes={routesRegular} router={router}/>
                   <Container fluid>
                     <Suspense fallback={this.loading()}>
                       <Switch>
-                        {routes.map((route, idx) => {
+                        {routesRegular.map((route, idx) => {
                           return route.component ? (
                             <Route
                               key={idx}
