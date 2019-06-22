@@ -26,7 +26,7 @@ class CreateGrid extends React.Component {
     else if ((grid.toString()).indexOf("409") != -1) {
       return (
         <div>
-          <div className="help-block"><Alert color="danger">A Grid with that name already exists.</Alert></div>
+          <div className="help-block"><Alert color="danger">An Energy Grid with that name already exists.</Alert></div>
 
         </div>
       )
@@ -34,7 +34,7 @@ class CreateGrid extends React.Component {
     else {
       return (
         <div>
-          <div className="help-block"><Alert color="success">The Grid has been successfully created.</Alert></div>
+          <div className="help-block"><Alert color="success">The Energy Grid has been successfully created.</Alert></div>
         </div>
       );
     }
