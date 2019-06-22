@@ -3,7 +3,7 @@ import US101Redux from './US101Redux/US101Redux';
 import US108Redux from "./US108/US108Redux";
 import Row from "reactstrap/es/Row";
 import Col from "reactstrap/es/Col";
-import {Card, CardBody, CardHeader} from "reactstrap";
+import {Button, Card, CardBody, CardHeader, Collapse} from "reactstrap";
 
 class HouseConfiguration extends Component {
   constructor(props) {
@@ -32,15 +32,16 @@ class HouseConfiguration extends Component {
               </CardBody>
             </Card>
           </Col>
+        </Row>
+        <Row>
           <Col xs="6" sm="4" md="4">
-            <Card >
-              <CardHeader>
-                <strong>Configure the house location</strong>
-              </CardHeader>
-              <CardBody>
+          <Button onClick={this.toggle} style={{backgroundColor: '#FFFFFF', marginBottom: '1rem'}}>Configure the house location</Button>
+          <Collapse isOpen={this.state.collapse}>
+
+
                 <US101Redux/>
-              </CardBody>
-            </Card>
+              
+          </Collapse>
           </Col>
         </Row>
       </div>
