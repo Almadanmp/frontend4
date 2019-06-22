@@ -7,17 +7,17 @@ class SensorTypesSelect extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      item: [],
+      types: [],
       isLoaded: false,
       roomID: 0,
-      value: ''
+      typeSensor: ''
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
-    const token = localStorage.getItem('loginToken')
-    fetch('https://localhost:8443/rooms/types',{
+    const token = localStorage.getItem('loginToken');
+    fetch('https://localhost:8443/rooms/types', {
         headers: {
           'Authorization': token,
           "Access-Control-Allow-Credentials": true,
@@ -30,44 +30,46 @@ class SensorTypesSelect extends Component {
       .then((json) => {
         this.setState({
           isLoaded: true,
-          item: json,
+          types: json,
         })
       })
       .catch(console.log)
   }
 
+
   handleChange(event) {
-    this.setState({value: event.target.value});
+    this.setState({typeSensor: event.target.value});
+    console.log(this.state.typeSensor)
   }
 
 
   render() {
 
-    var {isLoaded, item} = this.state;
+    var {isLoaded, types} = this.state;
     if (!isLoaded) {
       return (<div className = "spinner-border" role = "status" >
         <span className = "sr-only" > Loading...</span>
       </div>)
     } else {
-      if (!item.error) {
+      if (!types.error) {
       return (
         <div style={{
           textAlign: "center"
         }}>
-          <Form action="" method="post" >
+          <Form action="" method="post">
             <FormGroup>
               <Label>Select Sensor Type</Label>
               <Input type="select" name="select" id="select" value={this.state.value} onChange={this.handleChange}>
-                <option value="0" onChange={this.handleChange}>Please select</option>
-                {item.map(items => (
-                  <option value={items.name} key={items.name}>
-                    Type: {items.name}
+                <option value="" onChange={this.handleChange}>Please select the Sensor Type</option>
+                {types.map(type => (
+                  <option value={type.name} key={type.name}>
+                    Type: {type.name}
                   </option>
                 ))}
               </Input>
             </FormGroup>
           </Form>
-          <RoomSensorCreator roomID = {this.props.roomID} typeSensor = {this.state.value} link={this.props.link} />
+          <RoomSensorCreator roomID = {this.props.roomID} typeSensor = {this.state.typeSensor} link={this.props.linkAdd} />
         </div>
       );
       } else {

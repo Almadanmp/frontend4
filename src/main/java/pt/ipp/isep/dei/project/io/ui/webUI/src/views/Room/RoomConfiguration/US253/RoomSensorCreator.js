@@ -3,6 +3,10 @@ import 'react-day-picker/lib/style.css';
 import {fetchSensor} from "./Actions";
 import {connect} from 'react-redux';
 import US253Button from './US253Button';
+import {Button, Card, CardBody, Collapse, Form, FormGroup, Input, Label} from "reactstrap";
+import CardHeader from "semantic-ui-react/dist/commonjs/views/Card/CardHeader";
+import DatePicker from "../../../GeographicArea/US006Redux/DatePicker";
+import US253Post from "./US253Post";
 
 class RoomSensorCreator extends React.Component {
 
@@ -15,6 +19,7 @@ class RoomSensorCreator extends React.Component {
       name: '',
       sensorId: '',
       dateStartedFunctioning: '',
+      isHidden:true
     };
   }
 
@@ -24,14 +29,25 @@ class RoomSensorCreator extends React.Component {
       });
     };
 
+  handleDayPicker = (selectedDay) => {
+
+    console.log("handleDayPicker:" + JSON.stringify(selectedDay))
+    if (selectedDay !== undefined) {
+      const initialDay = selectedDay.toISOString().substring(0, 10);
+      this.setState({dateStartedFunctioning: initialDay});
+    }
+  }
 
   handleSubmit(){
-    this.props.onFetchSensor(this.props.link.href,this.state.typeSensor,this.state.name,this.state.sensorId,this.state.dateStartedFunctioning);
+    this.props.onFetchSensor(this.props.link.href,this.props.typeSensor,this.state.name,this.state.sensorId,this.state.dateStartedFunctioning);
+    this.setState({isHidden: false})
   }
 
 
   render() {
-    const {sensorId, name, dateStartedFunctioning} = this.state;
+    const numberOfMonths = 1;
+    const {sensorId, name} = this.state;
+    console.log(this.props.typeSensor)
     return (
       <div>
         <label>Sensor ID:
@@ -42,10 +58,26 @@ class RoomSensorCreator extends React.Component {
           <input value={name} placeholder="Sensor name" type="text" name="name" onChange={this.handleInputChange('name')}/>
         </label>
           <p></p>
+        <p></p>
         <label>Date it started functioning:
-        <input value={dateStartedFunctioning} placeholder="YYYY-MM-DD" type="text" name="dateStartedFunctioning" onChange={this.handleInputChange('dateStartedFunctioning')}/>
+          <p></p>
+          <div>
+            <CardHeader>
+              <CardBody style={{
+                backgroundColor: '#d1e7dd', border: '1px solid',
+                borderRadius: '0.35rem', borderColor: '#b9cfc5', marginBottom: '1rem'
+              }}>
+              <span>
+            <DatePicker getDays={this.handleDayPicker} numberOfMonths={numberOfMonths}/>
+              </span>
+              </CardBody>
+            </CardHeader>
+          </div>
         </label>
-          <US253Button roomID={this.props.roomID} typeSensor={this.props.typeSensor} sensorId={this.state.sensorId} name={this.state.name} dateStartedFunctioning={this.state.dateStartedFunctioning}/>
+        <p></p>
+        <Button style={{backgroundColor: '#e4e5e6', marginBottom: '1rem'}} onClick={this.handleSubmit}>Create a sensor of the type {this.props.typeSensor} in the room {this.props.roomID}</Button>
+        {this.state.isHidden === false ?
+          <US253Post link={this.props.link} typeSensor={this.props.typeSensor} sensorId={this.props.sensorId} name={this.props.name} dateStartedFunctioning={this.props.dateStartedFunctioning}/> : ''}
       </div>
     )
   }

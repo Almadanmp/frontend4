@@ -24,7 +24,7 @@ class US253Button extends Component {
     return(
       <div>
         <Button style={{backgroundColor: '#e4e5e6', marginBottom: '1rem'}} onClick={this.toggleHidden}>Create a sensor of the type {this.props.typeSensor} in the room {this.props.roomID}</Button>
-        {!this.state.isHidden && <US253Post  roomID={this.props.roomID} typeSensor={this.props.typeSensor} sensorId={this.props.sensorId} name={this.props.name} dateStartedFunctioning={this.props.dateStartedFunctioning}/>}
+        {!this.state.isHidden && <US253Post  link={this.props.link} typeSensor={this.props.typeSensor} sensorId={this.props.sensorId} name={this.props.name} dateStartedFunctioning={this.props.dateStartedFunctioning}/>}
       </div>
     )
   }

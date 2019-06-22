@@ -10,6 +10,7 @@ export const fetchSensor = ({link, typeSensor,name,sensorId,dateStartedFunctioni
   const token = localStorage.getItem('loginToken')
   return dispatch => {
     dispatch(fetchSensorInfo(link, typeSensor, name, sensorId, dateStartedFunctioning)); // antes de fazer o get, coloca o loading a true
+    console.log(typeSensor)
     const data = {link, typeSensor, name, sensorId, dateStartedFunctioning};
     axios
       .post(link, data, //falta autorização
@@ -39,11 +40,11 @@ export const fetchSensor = ({link, typeSensor,name,sensorId,dateStartedFunctioni
 };
 
 
-export function fetchSensorInfo(roomID, typeSensor,name,sensorId,dateStartedFunctioning) {
+export function fetchSensorInfo(link, typeSensor,name,sensorId,dateStartedFunctioning) {
   return {
     type: FETCH_SENSOR_INFO_STARTED,
     payload: {
-      roomID : roomID,
+      link : link,
       typeSensor:typeSensor,
       name: name,
       sensorId: sensorId,
@@ -56,7 +57,7 @@ export function fetchSensorInfoSuccess(data) { // cria uma açao
   return {
     type: FETCH_SENSOR_INFO_SUCCESS,
     payload: {
-      room: data //passa o array com os dados
+      sensor: data //passa o array com os dados
     }
   }
 }

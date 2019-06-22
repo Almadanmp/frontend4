@@ -65,6 +65,7 @@ class US006Redux extends React.Component {
 
   handleChange2(event) {
     this.setState({typeSensor: event.target.value});
+    console.log(this.state.typeSensor)
   }
 
   handleSubmit() {
@@ -83,7 +84,6 @@ class US006Redux extends React.Component {
 
   render() {
     const {types, name, sensorId, latitude, longitude, altitude} = this.state;
-    const {location, error} = this.props;
     const numberOfMonths = 1;
 
     return (

@@ -278,6 +278,9 @@ public class RoomsWebController {
             if (roomSensorDTO.getName().equals("")) {
                 return new ResponseEntity<>("The sensor name is not valid.", HttpStatus.UNPROCESSABLE_ENTITY);
             }
+            if (roomSensorDTO.getDateStartedFunctioning().equals("")) {
+                return new ResponseEntity<>("The date is not valid.", HttpStatus.UNPROCESSABLE_ENTITY);
+            }
             if (!typeNames.contains(roomSensorDTO.getType())) {
                 return new ResponseEntity<>("The sensor type is not valid.", HttpStatus.UNPROCESSABLE_ENTITY);
             }

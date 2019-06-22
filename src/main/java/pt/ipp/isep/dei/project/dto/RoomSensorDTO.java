@@ -20,7 +20,6 @@ public class RoomSensorDTO extends ResourceSupport {
         readingList = new ArrayList<>();
     }
 
-
     public String getName() {
         return name;
     }

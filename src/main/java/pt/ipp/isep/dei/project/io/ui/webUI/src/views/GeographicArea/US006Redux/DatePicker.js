@@ -31,7 +31,7 @@ export default class DatePicker extends React.Component {
         {!selectedDay}
         <DayPickerInput onDayChange={this.handleDayChange} />
         <p></p>
-        <Button style={{backgroundColor: '#e4e5e6', marginBottom: '1rem'}} onClick={this.handleDaysClick}>
+        <Button style={{backgroundColor: '#FFFFFF', marginBottom: '1rem'}} onClick={this.handleDaysClick}>
           Select date
         </Button>
       </div>

@@ -11,6 +11,7 @@ import Reducers101 from "./views/House/HouseConfiguration/US101Redux/Reducers101
 import Reducer108 from './views/House/HouseConfiguration/US108/Reducers108.js';
 import Reducers600 from './views/House/HouseMonitoring/USRedux/US600Redux/Reducers600.js';
 import Reducers605 from './views/Room/RoomMonitoring/US605/US605Redux/Reducers605.js';
+import Reducers253 from './views/Room/RoomConfiguration/US253/Reducers253.js';
 import Reducers620 from './views/House/HouseMonitoring/USRedux/US620Redux/Reducers620.js';
 import Reducers630 from './views/House/HouseMonitoring/USRedux/US630Redux/Reducers630.js';
 import Reducers631 from './views/House/HouseMonitoring/USRedux/US631Redux/Reducers631.js';
@@ -39,6 +40,7 @@ export default combineReducers({
   Reducer108,
   Reducers600,
   Reducers147,
+  Reducers253,
   Reducers605,
   Reducers620,
   Reducers623,

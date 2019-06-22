@@ -87,8 +87,7 @@ class US250GetSensors extends Component {
             <Card>
               <CardBody>
               <span>
-                  <SensorTypesSelect roomID={this.props.roomID} linkAdd={this.props.linkAdd}
-                                                />
+                  <SensorTypesSelect roomID={this.props.roomID} linkAdd={this.props.linkAdd}/>
               </span>
                 <span>
               </span>

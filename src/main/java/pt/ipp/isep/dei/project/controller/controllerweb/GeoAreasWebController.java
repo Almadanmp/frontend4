@@ -157,7 +157,8 @@ public class GeoAreasWebController {
         List<AreaSensorDTO> areaSensorDTOList = geographicAreaRepo.getDTOById(id).getSensors();
         for (AreaSensorDTO s : areaSensorDTOList) {
             if (userService.getUsernameFromToken().equals("admin")) {
-                Link deleteSelf = linkTo(methodOn(SensorSettingsWebController.class).removeAreaSensor(id, s.getSensorId())).
+                Link deleteSelf = linkTo
+                        (methodOn(SensorSettingsWebController.class).removeAreaSensor(id, s.getSensorId())).
                         withRel("Delete this Sensor");
                 Link deactivateSelf = linkTo(methodOn(SensorSettingsWebController.class).deactivateAreaSensor(id, s.getSensorId())).
                         withRel("Deactivate this Sensor");
