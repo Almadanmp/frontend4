@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.project.security;
+package pt.ipp.isep.dei.project.io.ui.security;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +13,7 @@ import pt.ipp.isep.dei.project.model.user.UserRepository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
- class UserPrincipalDetailsServiceTest {
+class UserPrincipalDetailsServiceTest {
     @Mock
     private UserRepository userRepository;
 
