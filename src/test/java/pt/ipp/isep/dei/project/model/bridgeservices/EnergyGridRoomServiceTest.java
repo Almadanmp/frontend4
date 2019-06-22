@@ -103,10 +103,6 @@ class EnergyGridRoomServiceTest {
         // Arrange
 
         List<EnergyGrid> twoGrids = new ArrayList<>();
-        List<Room> twoRooms = new ArrayList<>();
-
-        Room firstRoom = new Room("Room1", "2nd Floor Office", 2, 30, 30, 10, "Room1");
-        Room secondRoom = new Room("Room2", "2nd Floor Office", 2, 30, 30, 10, "Room1");
 
         EnergyGrid firstGrid = new EnergyGrid("FirstGrid", 400D, "34576");
         EnergyGrid secondGrid = new EnergyGrid("SecondGrid", 400D, "34576");
@@ -117,13 +113,8 @@ class EnergyGridRoomServiceTest {
         twoGrids.add(secondGrid);
         twoGrids.add(firstGrid);
 
-        twoRooms.add(firstRoom);
-        twoRooms.add(secondRoom);
-
         Mockito.when(energyGridRepository.getAllGrids()).thenReturn(twoGrids);
-        Mockito.when(energyGridRepository.getById("SecondGrid")).thenReturn(secondGrid);
         Mockito.when(energyGridRepository.addGrid(secondGrid)).thenReturn(secondGrid);
-        Mockito.when(roomRepository.getAllRooms()).thenReturn(twoRooms);
 
         //Act
 
@@ -270,7 +261,6 @@ class EnergyGridRoomServiceTest {
         list.add(validRoom2);
 
         Mockito.when(energyGridRepository.getById("Primary Grid")).thenReturn(validGrid);
-        Mockito.when(roomRepository.getAllRooms()).thenReturn(list);
 
         //Act
 
@@ -293,7 +283,6 @@ class EnergyGridRoomServiceTest {
         validGrid.addRoomId("validRoom2");
 
         Mockito.when(energyGridRepository.getById("Primary Grid")).thenReturn(validGrid);
-        Mockito.when(roomRepository.getAllRooms()).thenReturn(list);
 
         //Act
 

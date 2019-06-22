@@ -20,16 +20,16 @@ class AttachRoom extends React.Component {
         <div>
           <div className="help-block"><Alert color="danger">{error}</Alert></div>
 
-          </div>
-        )}
-        else
-      {
+        </div>
+      )
+    }
+    else {
         return (
-          <div>
-            <div className="help-block"><Alert color="success">The room has been successfully attached.</Alert></div>
-          </div>
-        );
-      }
+        <div>
+          <div className="help-block"><Alert color="success">The room has been successfully attached.</Alert></div>
+        </div>
+      );
+    }
 
   }
 }
