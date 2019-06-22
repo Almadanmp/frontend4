@@ -9,7 +9,7 @@ class SelectRoom extends Component {
     this.state = {
       item: [],
       isLoaded: false,
-      value: '',
+      value: [],
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -41,13 +41,14 @@ class SelectRoom extends Component {
 
   handleProperties(){
     return {
-      roomID: this.state.value,
+      value: this.state.value,
       day: this.props.day
     };
   }
 
   render() {
     console.log(this.handleProperties())
+    console.log(this.state.item)
     var {isLoaded, item} = this.state;
 
     if (!isLoaded) {
@@ -64,8 +65,9 @@ class SelectRoom extends Component {
               <Input type="select" name="select" id="select" value={this.state.value} onChange={this.handleChange}>
                 <option value="0" onChange={this.handleChange}>Please select</option>
                 {item.map(items => (
-                  <option value={items.name}  key={items.name}>
+                  <option value={[items.links.find((hrefs) => hrefs.rel === 'Get Maximum Temperature In Day')]} key={items.name}>
                     Name: {items.name}
+
                   </option>
                 ))}
               </Input>
@@ -73,9 +75,10 @@ class SelectRoom extends Component {
           </Form>
           <br></br>
           <br></br>
-          <US610Button day={this.props.day} roomID={this.state.value}/>
+          <US610Button day={this.props.day} link={this.state.value}/>
         </div>
-      );} else {
+      );
+      } else {
         return "ERROR: Non-authorized user."
       }
     }
