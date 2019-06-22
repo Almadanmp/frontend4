@@ -11,7 +11,7 @@ export const detachRoomFromGrid = ({name, grid}) => {
   return dispatch => {
     dispatch(fetchRoomFromGridInfo(name, grid));
     axios
-      .delete('https://localhost:8443/gridSettings/grids/' + grid,
+      .delete('https://localhost:8443/grids/' + grid,
         {
           headers: {
             'Authorization': token,
