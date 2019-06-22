@@ -23,6 +23,7 @@ class HouseConfiguration extends Component {
         <h2>Welcome to the Energy Grid Menu.</h2>
         <p></p>
         <RoomGrid/>
+        <p></p>
         <div className={"divCreateGrid"}><US130/></div>
 
       </div>

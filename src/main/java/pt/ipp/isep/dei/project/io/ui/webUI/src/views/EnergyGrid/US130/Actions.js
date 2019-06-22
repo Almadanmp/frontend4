@@ -47,7 +47,7 @@ export function fetchEnergyGridInfoSuccess(data) {
   return {
     type: FETCH_ENERGYGRID_INFO_SUCCESS,
     payload: {
-      room: data
+      grid: data
     }
   }
 }
