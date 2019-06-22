@@ -124,6 +124,7 @@ class US006Redux extends React.Component {
           <input value={longitude} placeholder="0" type="number" name="longitude"
                  onChange={this.handleInputChange('longitude')}/>
         </span>
+              <p></p>
               <span> Altitude:
           <input value={altitude} placeholder="0" type="number" name="altitude"
                  onChange={this.handleInputChange('altitude')}/>

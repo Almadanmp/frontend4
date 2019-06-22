@@ -16,8 +16,9 @@ class US108Put extends Component {
     const width = this.props.width;
     const length = this.props.length;
     const height = this.props.height;
+    const link = this.props.link.href;
     console.log(this.props);
-    fetch('https://localhost:8443/rooms/'+ name, {
+    fetch(link, {
       method: 'put',
       headers: {
         'Authorization': token,

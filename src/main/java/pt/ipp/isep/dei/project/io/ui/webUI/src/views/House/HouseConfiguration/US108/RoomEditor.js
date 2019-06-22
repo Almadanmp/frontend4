@@ -13,6 +13,7 @@ class RoomEditor extends React.Component {
       width: '',
       length: '',
       height: '',
+      link: this.props.link
     };
   }
 
@@ -52,7 +53,7 @@ class RoomEditor extends React.Component {
                  onChange={this.handleInputChange('height')}/>
         </label>
         <US108Button name={this.props.name} floor={this.state.floor} width={this.state.width} length={this.state.length}
-                     height={this.state.height}/>
+                     height={this.state.height} link={this.props.link}/>
       </div>
     )
   }
