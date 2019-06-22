@@ -192,10 +192,6 @@ public class RoomsWebController {
     public ResponseEntity<Object> deleteRoom(@PathVariable String roomId) {
         RoomDTO roomDTO = roomRepository.getRoomDTOByName(roomId);
         if (roomRepository.deleteRoom(roomDTO)) {
-//            if (userService.getUsernameFromToken().equals(ADMIN)) {
-//                Link addRoom = linkTo(methodOn(RoomsWebController.class).createRoom(roomId)).withRel("Re-add the deleted room.");
-//                roomDTOMinimal.add(addRoom);
-//            }
             return new ResponseEntity<>(roomDTO, HttpStatus.OK);
         }
         return new ResponseEntity<>("The room you are trying to delete does not exist in the database.", HttpStatus.NOT_FOUND);
