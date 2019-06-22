@@ -17,7 +17,7 @@ export default {
     },
     {
       name: 'Area',
-      url: '/area',
+      url: '/maintenance',
       icon: 'icon-globe',
     },
     {
