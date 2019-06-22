@@ -16,6 +16,7 @@ class TableHeaderUS108 extends Component {
         <th style={{textAlign: 'center'}}>{headers.length}</th>
         <th style={{textAlign: 'center'}}>{headers.width}</th>
         <th style={{textAlign: 'center'}}>{headers.edit}</th>
+        <th style={{textAlign: 'center'}}>{headers.remove}</th>
       </tr>
       </thead>
     );

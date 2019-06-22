@@ -16,15 +16,6 @@ class US108Redux extends Component {
   }
 
   render() {
-    const headers = {
-      name: "Name",
-      floor: "Floor",
-      height: "Height (m)",
-      length: "Length (m)",
-      width: "Width (m)",
-      edit: "Configure"
-    };
-
     const {loading, rooms} = this.props;
     if (loading === true) {
       return (
@@ -36,15 +27,15 @@ class US108Redux extends Component {
     if (rooms.length > 0) {
       {
         return (
-          <div style={{float:'left'}} className="animated fadeIn">
-                <Card>
-                  <CardBody>
-                    <Table responsive>
-                      <TableBodyUS108 headers={headers} rooms={rooms}/>
-                    </Table>
-                  </CardBody>
-                </Card>
-            <US105 style={{float:'right'}}/>
+          <div style={{float: 'left'}} className="animated fadeIn">
+            <Card>
+              <CardBody>
+                <Table responsive>
+                  <TableBodyUS108 rooms={rooms}/>
+                </Table>
+              </CardBody>
+            </Card>
+            <US105 style={{float: 'right'}}/>
           </div>
         );
       }
@@ -52,7 +43,6 @@ class US108Redux extends Component {
       return (
         <div className="help-block"><Alert color="warning">No rooms on the house</Alert></div>
       )
-
     }
   }
 }
