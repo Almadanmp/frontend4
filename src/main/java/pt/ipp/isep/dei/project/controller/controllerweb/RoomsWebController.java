@@ -1,6 +1,5 @@
 package pt.ipp.isep.dei.project.controller.controllerweb;
 
-import org.eclipse.persistence.internal.jpa.rs.metadata.model.LinkTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.Link;
@@ -31,20 +30,15 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001", "http://localhost:3002"}, maxAge = 3600)
 public class RoomsWebController {
 
+    private static final String ADMIN = "admin";
     @Autowired
     RoomRepository roomRepository;
-
     @Autowired
     SensorTypeRepository sensorTypeRepository; // This is an aggregate root.
-
-    @Autowired
-    private HouseRoomService houseRoomService;
-
     @Autowired
     UserService userService;
-
-    private static final String ADMIN = "admin";
-
+    @Autowired
+    private HouseRoomService houseRoomService;
 
     /**
      * Shows all the Rooms present in the database.
@@ -54,13 +48,13 @@ public class RoomsWebController {
     @GetMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> getRooms() {
         List<RoomDTOMinimal> roomDTOList = roomRepository.getAllRoomsAsMinimalDTOs();
-        if (roomDTOList == null){
+        if (roomDTOList == null) {
             List<RoomDTOMinimal> empty = new ArrayList<>();
             return new ResponseEntity<>(empty, HttpStatus.OK);
         }
         RoomSensorDTO roomSensorDTO = new RoomSensorDTO();
         for (RoomDTOMinimal r : roomDTOList) {
-            if (userService.getUsernameFromToken() == null){
+            if (userService.getUsernameFromToken() == null) {
                 break;
             }
             if (userService.getUsernameFromToken().equals(ADMIN)) {
@@ -68,25 +62,24 @@ public class RoomsWebController {
                 Link deleteRoom = linkTo(methodOn(RoomsWebController.class).deleteRoom(r.getName())).withRel("Delete this Room");
                 Link editRoom = linkTo(methodOn(RoomsWebController.class).configureRoom(r.getName(), new RoomDTOMinimal()))
                         .withRel("Edit this Room");
-                Link addSensor = linkTo(methodOn(RoomsWebController.class).createRoomSensor(roomSensorDTO,r.getName())).withRel("Add a new Room Sensor");
+                Link addSensor = linkTo(methodOn(RoomsWebController.class).createRoomSensor(roomSensorDTO, r.getName())).withRel("Add a new Room Sensor");
                 r.add(roomSensors);
                 r.add(deleteRoom);
                 r.add(addSensor);
                 r.add(editRoom);
-            } else
-                if (userService.getUsernameFromToken().equals("regularUser")) {
+            } else if (userService.getUsernameFromToken().equals("regularUser")) {
                 Link roomTemp = linkTo(methodOn(RoomsWebController.class).getCurrentRoomTemperature(r.getName())).
                         withRel("Get Room Temperature");
-                    Link getRoomMaxTempInDay = linkTo(methodOn(RoomsWebController.class).getRoomMaxTempInDay(r.getName(),"")).withRel("Get Maximum Temperature In Day");
-                    r.add(getRoomMaxTempInDay);
-                    r.add(roomTemp);
+                Link getRoomMaxTempInDay = linkTo(methodOn(RoomsWebController.class).getRoomMaxTempInDay(r.getName(), "")).withRel("Get Maximum Temperature In Day");
+                r.add(getRoomMaxTempInDay);
+                r.add(roomTemp);
             }
         }
         return new ResponseEntity<>(roomDTOList, HttpStatus.OK);
     }
 
     @GetMapping(path = "/{roomID}")
-    public ResponseEntity<Object> getRoom(@PathVariable String roomID){
+    public ResponseEntity<Object> getRoom(@PathVariable String roomID) {
         try {
             RoomDTOMinimal room = roomRepository.getRoomDTOMinimalByName(roomID);
             Link roomSensors = linkTo(methodOn(RoomsWebController.class).getSensors(room.getName())).withRel("Get Room" +
@@ -98,8 +91,7 @@ public class RoomsWebController {
             room.add(deleteRoom);
             room.add(editRoom);
             return new ResponseEntity<>(room, HttpStatus.OK);
-        }
-        catch (NullPointerException ok){
+        } catch (NullPointerException ok) {
             return new ResponseEntity<>("There's no room with that ID.", HttpStatus.NOT_FOUND);
         }
     }

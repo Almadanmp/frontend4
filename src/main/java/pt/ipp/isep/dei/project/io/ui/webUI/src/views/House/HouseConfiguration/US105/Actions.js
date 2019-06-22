@@ -30,7 +30,7 @@ export const fetchRoom = ({name, floor, width, length, height}) => {
           dispatch(fetchRoomNoData(err.message))
         } else {
           if (err.response !== undefined) {
-            dispatch(fetchInfoFailure(err.response.data));
+            dispatch(fetchInfoFailure(err.message));
           }
         }
       });

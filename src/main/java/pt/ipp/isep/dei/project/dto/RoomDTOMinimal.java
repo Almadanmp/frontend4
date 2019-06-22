@@ -119,7 +119,7 @@ public class RoomDTOMinimal extends ResourceSupport {
      * @return true in case is valid, false otherwise
      **/
     public boolean isNameValid() {
-        return this.name != null;
+        return this.name != null && this.name != "";
     }
 
     /**

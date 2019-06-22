@@ -14,7 +14,7 @@ class RoomCreator extends React.Component {
     this.state = {
       isHidden: true,
       name: '',
-      floor: '',
+      floor: 0,
       width: '',
       length: '',
       height: '',
@@ -22,7 +22,8 @@ class RoomCreator extends React.Component {
 
     this.handleInputChange = attribute => event => {
       this.setState({
-        [attribute]: event.target.value
+        [attribute]: event.target.value,
+        isHidden: true
       });
     };
 
@@ -32,6 +33,7 @@ class RoomCreator extends React.Component {
 
   handleSubmit() {
     this.props.onFetchRoom(this.state);
+    this.toggleHidden();
   }
 
   submit = () => {
@@ -83,17 +85,12 @@ class RoomCreator extends React.Component {
                  onChange={this.handleInputChange('height')}/>
         </label>
         <p></p>
-
-        <p>The room to be created has the following
-          details: {'Name: ' + name + ' | ' + 'Floor: ' + floor + ' | ' + 'Width: ' + width + ' | ' + 'Length: ' + length + ' | ' + 'Height: ' + height + '.'}</p>
-        <p></p>
-
         <Button style={{backgroundColor: '#e4e5e6', marginBottom: '1rem'}} onClick={
           this.submit
         }>Save new room
           configuration</Button>{!this.state.isHidden &&
       <Message105 name={this.state.name} floor={this.state.floor} width={this.state.width} length={this.state.width}
-                  height={this.state.height}/>}
+                  height={this.state.height} room={this.props.room} error={this.props.error}/>}
       </>
     )
   }
