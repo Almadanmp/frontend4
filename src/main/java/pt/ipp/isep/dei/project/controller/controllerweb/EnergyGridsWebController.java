@@ -104,12 +104,13 @@ public class EnergyGridsWebController {
     public ResponseEntity<Object> attachRoomToGrid(@RequestBody RoomDTO roomDTO, @PathVariable("energyGridId") String gridId) {
         if (roomRepository.findRoomByID(roomDTO.getName()).isPresent()) {
             try {
+                energyGridRoomService.removeRoomFromGrid(roomDTO.getName());
                 if (energyGridRoomService.attachRoomToGrid(roomDTO.getName(), gridId)) {
                     RoomDTOMinimal roomDTOMinimal = energyGridRoomService.getMinimalRoomDTOById(gridId, roomDTO.getName());
                     return new ResponseEntity<>(roomDTOMinimal,
                             HttpStatus.OK);
                 }
-                return new ResponseEntity<>("It wasn't possible to add the room. Please try again.", HttpStatus.CONFLICT);
+                return new ResponseEntity<>("This room is already attached to this grid.", HttpStatus.CONFLICT);
             } catch (NoSuchElementException e) {
                 return new ResponseEntity<>(NO_GRID, HttpStatus.NOT_FOUND);
             }
