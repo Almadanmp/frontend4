@@ -35,13 +35,11 @@ class HouseConfiguration extends Component {
         </Row>
         <Row>
           <Col xs="6" sm="4" md="4">
-          <Button onClick={this.toggle} style={{backgroundColor: '#FFFFFF', marginBottom: '1rem'}}>Configure the house location</Button>
-          <Collapse isOpen={this.state.collapse}>
-
-
-                <US101Redux/>
-              
-          </Collapse>
+            <Button onClick={this.toggle} style={{backgroundColor: '#FFFFFF', marginBottom: '1rem'}}>Configure the house
+              location</Button>
+            <Collapse isOpen={this.state.collapse}>
+              <US101Redux/>
+            </Collapse>
           </Col>
         </Row>
       </div>

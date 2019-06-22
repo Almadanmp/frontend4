@@ -78,7 +78,7 @@ public class RoomRepository {
      * @param roomDTO to be deleted
      * @return true in case the corresponding room was deleted, false otherwise.
      **/
-    public boolean deleteRoom(RoomDTOMinimal roomDTO) {
+    public boolean deleteRoom(RoomDTO roomDTO) {
         String roomDTOName = roomDTO.getName();
         Optional<Room> room = roomCrudRepo.findByRoomName(roomDTOName);
         if (room.isPresent()) {

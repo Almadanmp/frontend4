@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import US108Select from "./US108Select";
 import {Button} from 'reactstrap';
 import TableHeaderUS108 from "./TableHeaderUS108";
+import RemoveRoom from "../RemoveRoom/RemoveRoom.js";
 
 
 class TableBodyUS108 extends Component {
@@ -30,7 +31,8 @@ class TableBodyUS108 extends Component {
       height: "Height (m)",
       length: "Length (m)",
       width: "Width (m)",
-      edit: "Configure"
+      edit: "Configure",
+      remove: "Remove",
     };
     const {rooms} = this.props; // data = this.props.data;
     if (rooms.length > 0 && this.state.check === false) {
@@ -52,13 +54,17 @@ class TableBodyUS108 extends Component {
               }}> Edit
               </Button>
             </td>
+            <td style={{textAlign: 'center'}}>
+              <RemoveRoom link={todo.links.find((hrefs) => hrefs.rel === 'Delete this Room')} name={todo.name}/>
+            </td>
           </tr>
         ))}
         </tbody>
         </tbody>
       );
     } else if (rooms.length > 0 && this.state.check === true) {
-      return (<><US108Select name={this.state.name} link={this.state.links.find((hrefs) => hrefs.rel === 'Edit this Room')}/></>);
+      return (<><US108Select name={this.state.name}
+                             link={this.state.links.find((hrefs) => hrefs.rel === 'Edit this Room')}/></>);
     } else {
       return (<h1>No data ....</h1>);
     }

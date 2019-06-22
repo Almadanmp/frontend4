@@ -233,7 +233,8 @@ class RoomRepositoryTest {
     void seeIfDeleteRoomWorks() {
         // Arrange
 
-        RoomDTOMinimal roomDTO = RoomMinimalMapper.objectToDtoWeb(validRoom);
+        RoomDTO roomDTO = RoomMapper.objectToDTO(validRoom);
+
 
         Mockito.when(roomCrudRepo.findByRoomName("Kitchen")).thenReturn(Optional.of(validRoom));
 
@@ -250,7 +251,7 @@ class RoomRepositoryTest {
     void seeIfDeleteRoomWorksWhenRoomExistsInRepository() {
         // Arrange
 
-        RoomDTOMinimal roomDTO = RoomMinimalMapper.objectToDtoWeb(validRoom);
+        RoomDTO roomDTO = RoomMapper.objectToDTO(validRoom);
 
 
         Mockito.when(roomCrudRepo.findByRoomName("Kitchen")).thenReturn(Optional.empty());

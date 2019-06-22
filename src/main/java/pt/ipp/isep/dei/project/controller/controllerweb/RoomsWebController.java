@@ -65,7 +65,7 @@ public class RoomsWebController {
             }
             if (userService.getUsernameFromToken().equals(ADMIN)) {
                 Link roomSensors = linkTo(methodOn(RoomsWebController.class).getSensors(r.getName())).withRel("Get Room Sensors");
-                Link deleteRoom = linkTo(methodOn(RoomsWebController.class).deleteRoom(r)).withRel("Delete this Room");
+                Link deleteRoom = linkTo(methodOn(RoomsWebController.class).deleteRoom(r.getName())).withRel("Delete this Room");
                 Link editRoom = linkTo(methodOn(RoomsWebController.class).configureRoom(r.getName(), new RoomDTOMinimal()))
                         .withRel("Edit this Room");
                 Link addSensor = linkTo(methodOn(RoomsWebController.class).createRoomSensor(roomSensorDTO,r.getName())).withRel("Add a new Room Sensor");
@@ -94,7 +94,7 @@ public class RoomsWebController {
             room.add(roomSensors);
             Link editRoom = linkTo(methodOn(RoomsWebController.class).configureRoom(room.getName(), null))
                     .withRel("Edit this Room");
-            Link deleteRoom = linkTo(methodOn(RoomsWebController.class).deleteRoom(room)).withRel("Delete this Room");
+            Link deleteRoom = linkTo(methodOn(RoomsWebController.class).deleteRoom(room.getName())).withRel("Delete this Room");
             room.add(deleteRoom);
             room.add(editRoom);
             return new ResponseEntity<>(room, HttpStatus.OK);
@@ -184,18 +184,15 @@ public class RoomsWebController {
      * This method receives a room DTO Web and will try to remove the corresponding
      * room from repository
      *
-     * @param roomDTOMinimal roomDTOWeb to be deleted from repository
+     * @param roomId roomDTOWeb to be deleted from repository
      * @return the Room DTO Web and HTTP status OK in case the room is deleted, an error
      * message and HTTP status NOT FOUND in case the room is not deleted
      **/
-    @DeleteMapping(value = "/")
-    public ResponseEntity<Object> deleteRoom(@RequestBody RoomDTOMinimal roomDTOMinimal) {
-        if (roomRepository.deleteRoom(roomDTOMinimal)) {
-            if (userService.getUsernameFromToken().equals(ADMIN)) {
-                Link addRoom = linkTo(methodOn(RoomsWebController.class).createRoom(roomDTOMinimal)).withRel("Re-add the deleted room.");
-                roomDTOMinimal.add(addRoom);
-            }
-            return new ResponseEntity<>(roomDTOMinimal, HttpStatus.OK);
+    @PutMapping(value = "/delete/{roomId}")
+    public ResponseEntity<Object> deleteRoom(@PathVariable String roomId) {
+        RoomDTO roomDTO = roomRepository.getRoomDTOByName(roomId);
+        if (roomRepository.deleteRoom(roomDTO)) {
+            return new ResponseEntity<>(roomDTO, HttpStatus.OK);
         }
         return new ResponseEntity<>("The room you are trying to delete does not exist in the database.", HttpStatus.NOT_FOUND);
     }
@@ -218,7 +215,7 @@ public class RoomsWebController {
             return new ResponseEntity<>("The room you introduced is invalid.", HttpStatus.UNPROCESSABLE_ENTITY);
         }
         if (houseRoomService.addMinimalRoomDTOToHouse(roomDTOMinimal)) {
-            Link link = linkTo(methodOn(RoomsWebController.class).deleteRoom(roomDTOMinimal)).withRel("Delete the created room.");
+            Link link = linkTo(methodOn(RoomsWebController.class).deleteRoom(roomDTOMinimal.getName())).withRel("Delete the created room.");
             roomDTOMinimal.add(link);
             return new ResponseEntity<>(roomDTOMinimal, HttpStatus.CREATED);
         }
@@ -248,7 +245,6 @@ public class RoomsWebController {
     @GetMapping("/{roomId}/sensors")
     public ResponseEntity<List<RoomSensorDTOMinimal>> getSensors(@PathVariable String roomId) {
         List<RoomSensorDTOMinimal> roomSensorDTOList = roomRepository.getRoomDTOByName(roomId).getSensorDTOMinimalistList();
-        RoomSensorDTO roomSensorDTO =new RoomSensorDTO();
         for (RoomSensorDTOMinimal s : roomSensorDTOList) {
             if (userService.getUsernameFromToken().equals(ADMIN)) {
                 Link deleteSelf = linkTo(methodOn(RoomsWebController.class).removeRoomSensor(roomId, s.getSensorID())).
