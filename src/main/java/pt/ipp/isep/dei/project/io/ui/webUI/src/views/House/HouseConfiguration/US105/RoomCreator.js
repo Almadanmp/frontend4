@@ -59,29 +59,23 @@ class RoomCreator extends React.Component {
     const {name, floor, width, length, height} = this.state;
     return (
       <>
-        <label> Name:
-          <input value={this.state.name} placeholder={"Room name"} type="text" name="name"
+        <label> Name: <input value={this.state.name} placeholder={"Room name"} type="text" name="name"
                  onChange={this.handleInputChange('name')}/>
         </label>
         <p></p>
-        <label> Floor:
-          <input value={this.state.floor} placeholder={"0"} type="number" name="floor"
+        <label> Floor: <input value={this.state.floor} placeholder={"0"} type="number" name="floor"
                  onChange={this.handleInputChange('floor')}/>
         </label>
         <p></p>
-        <label> Width:
-          <input value={this.state.width} placeholder={"0"} type="number" min="0" name="width"
+        <label> Width: <input value={this.state.width} placeholder={"0"} type="number" min="0" name="width"
                  onChange={this.handleInputChange('width')}/>
         </label>
         <p></p>
-        <label> Length:
-          <input value={this.state.length} placeholder={"0"} type="number" min="0" name="length"
+        <label> Length: <input value={this.state.length} placeholder={"0"} type="number" min="0" name="length"
                  onChange={this.handleInputChange('length')}/>
         </label>
         <p></p>
-
-        <label> Height:
-          <input value={this.state.height} placeholder={"0"} type="number" min="0" name="height"
+        <label> Height: <input value={this.state.height} placeholder={"0"} type="number" min="0" name="height"
                  onChange={this.handleInputChange('height')}/>
         </label>
         <p></p>
