@@ -4,13 +4,13 @@ import {Button} from "reactstrap";
 import AttachRoom from "./AttachRoom"
 import {attachRoomGrid} from "./Actions";
 import {connect} from 'react-redux';
-import {deleteRoomFromGrid} from "../US149/Actions149Hateoas";
+import {detachRoomFromGrid} from "../US149/Actions149";
 
 class AttachRoomToGrid extends React.Component {
 
   constructor(props) {
     super(props);
-  //  this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       isHidden: true,
       formerGrid: '',
@@ -26,10 +26,10 @@ class AttachRoomToGrid extends React.Component {
 
   toggleHidden = () => this.setState((prevState) => ({isHidden: !prevState.isHidden}))
 
-  // handleSubmit() {
-  //   this.props.onDeleteRoomFromGrid(this.state.name, this.state.formerGrid);
-  //   this.props.onAttachRoomGrid(this.state.name, this.props.grid);
-  // }
+  handleSubmit() {
+    this.props.onDeleteRoomFromGrid(this.state.name, this.state.formerGrid);
+    this.props.onAttachRoomGrid(this.state.name, this.props.link.href);
+  }
 
   render() {
     const {name} = this.state;
@@ -47,9 +47,9 @@ class AttachRoomToGrid extends React.Component {
           </small>
         </p>
         <Button style={{backgroundColor: '#e4e5e6', marginBottom: '1rem'}}
-                onClick={this.toggleHidden}>Attach
+                onClick={this.handleSubmit}>Attach
           Room {name} to {this.props.grid}</Button>
-        {!this.state.isHidden && <AttachRoom link={this.props.link} name={ this.state.name} grid={this.props.grid} formerGrid={this.state.formerGrid}/>}
+        {/*{!this.state.isHidden && <AttachRoom link={this.props.link} name={ this.state.name} grid={this.props.grid} formerGrid={this.state.formerGrid}/>}*/}
       </>
     )
   }
@@ -69,11 +69,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAttachRoomGrid: (name, grid) => {
-      dispatch(attachRoomGrid({name, grid}))
+    onAttachRoomGrid: (name, link) => {
+      dispatch(attachRoomGrid({name, link}))
     },
     onDeleteRoomFromGrid: (name, grid) => {
-      dispatch(deleteRoomFromGrid({name, grid}))
+      dispatch(detachRoomFromGrid({name, grid}))
     },
   }
 };
