@@ -11,7 +11,7 @@ export function fetchTemp() {
   return dispatch => {
     dispatch(fetchTempStarted()); // antes de fazer o get, coloca o loading a true
     axios
-      .get(`https://localhost:8443/houseMonitoring/currentHouseAreaTemperature`, {
+      .get(`https://localhost:8443/house/currentHouseAreaTemperature`, {
           headers: {
             'Authorization': token,
             "Access-Control-Allow-Credentials": true,
