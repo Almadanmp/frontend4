@@ -1,8 +1,7 @@
 import React from 'react';
 import 'react-day-picker/lib/style.css';
-import {Alert, Button} from "reactstrap";
-import {attachRoomGrid, fetchRoom} from "./Actions";
-import {connect} from 'react-redux';
+import {Alert} from "reactstrap";
+import {attachRoomGrid} from "./Actions";
 
 class Message105 extends React.Component {
 
@@ -15,46 +14,56 @@ class Message105 extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.props.onFetchRoom(this.props.name, this.props.floor, this.props.width, this.props.length, this.props.height);
-  }
 
   render() {
-    const {room, error} = this.props;
-
-    if ((room.toString()).indexOf("ERROR") != -1) {
+    const {room, name, floor, width, length, height} = this.props;
+    if (room.toString().indexOf("422") != -1) {
       return (
         <div>
-          <div className="help-block"><Alert color="danger">ERROR: {error}</Alert></div>
-
+          <div className="help-block"><Alert color="danger">Invalid room dimensions. Please fix before continuing.</Alert></div>
+        </div>
+      )
+    }
+    else if ((room.toString()).indexOf("409") != -1) {
+      return (
+        <div>
+          <div className="help-block"><Alert color="danger">A Room with that name already exists.</Alert></div>
+        </div>
+      )
+    }
+    else if ((room.toString()).indexOf("400") != -1) {
+      return (
+        <div>
+          <div className="help-block"><Alert color="danger">Please complete every field before continuing.</Alert></div>
         </div>
       )
     } else {
       return (
-        <><h6><i className="fa fa-check-square-o fa-lg"/> The room has been created!</h6>
-        </>
+        <div className="help-block"><Alert color="success">
+          <p>The room was successfully created: </p>
+          <ul>
+            <li>
+              Name: {name}
+            </li>
+            <li>
+              Floor: {floor}
+            </li>
+            <li>
+              Width: {width}
+            </li>
+            <li>
+              Length: {length}
+            </li>
+            <li>
+              Height: {height}
+            </li>
+          </ul>
+        </Alert>
+        </div>
       );
     }
 
   }
 }
 
-
-const mapStateToProps = (state) => {
-  return {
-
-    loading: state.Reducers105.loading,
-    room: state.Reducers105.room,
-    error: state.Reducers105.error
-  }
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onFetchRoom: ({name, floor, width, length, height}) => {
-      dispatch(fetchRoom({name, floor, width, length, height}))
-    }
-  }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Message105);
+export default Message105;
