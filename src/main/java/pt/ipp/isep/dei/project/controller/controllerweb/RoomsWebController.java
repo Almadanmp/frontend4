@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.project.controller.controllerweb;
 
+import org.eclipse.persistence.internal.jpa.rs.metadata.model.LinkTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.hateoas.Link;
@@ -76,7 +77,9 @@ public class RoomsWebController {
                 if (userService.getUsernameFromToken().equals("regularUser")) {
                 Link roomTemp = linkTo(methodOn(RoomsWebController.class).getCurrentRoomTemperature(r.getName())).
                         withRel("Get Room Temperature");
-                r.add(roomTemp);
+                    Link getRoomMaxTempInDay = linkTo(methodOn(RoomsWebController.class).getRoomMaxTempInDay(r.getName(),"")).withRel("Get Maximum Temperature In Day");
+                    r.add(getRoomMaxTempInDay);
+                    r.add(roomTemp);
             }
         }
         return new ResponseEntity<>(roomDTOList, HttpStatus.OK);
