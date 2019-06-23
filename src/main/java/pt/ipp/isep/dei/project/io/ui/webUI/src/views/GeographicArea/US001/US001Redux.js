@@ -41,7 +41,7 @@ class US001Redux extends React.Component {
           type
         </Button>
         {this.state.isHidden === false ?
-          <MessageU001 name={this.state.name} addedSensor={this.props.addedSensor} error={this.props.error} /> : ''}
+          <MessageU001 name={this.state.name} addedSensor={this.props.addedSensor}/> : ''}
       </>
     );
   }
