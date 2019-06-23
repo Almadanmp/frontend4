@@ -20,7 +20,7 @@ import navigationAdmin from '../../_navadministrator';
 import navigationRegular from '../../_navregular';
 import navigationBasic from '../../_navbasic';
 // routes config
-import {routesAdmin, routesBasic, routesRegular} from '../../routes';
+import routes from '../../routes';
 import {logout} from "../../logOut/logoutActions";
 import {connect} from "react-redux";
 import {fetchUserRole} from "../../user/ActionsUserRole";
@@ -36,7 +36,7 @@ class DefaultLayout extends Component {
   signOut(e) {
     e.preventDefault()
     logout(e)
-    this.props.history.push('/login')
+    this.props.history.push('/')
     this.state = {
       showPopup: false
     };
@@ -64,15 +64,25 @@ class DefaultLayout extends Component {
               <Suspense>
                 <AppSidebarNav navConfig={navigationBasic} {...this.props} router={router}/>
               </Suspense>
+              <AppHeaderDropdown direction="left">
+                <DropdownToggle navigationAdmin>
+                  <img src={'https://imgur.com/4YjW6pf.png'} className="img-avatar" alt="admin@bootstrapmaster.com"/>
+                </DropdownToggle>
+                <DropdownMenu right style={{right: 'auto'}}>
+                  <DropdownItem> User: {localStorage.getItem("user")}</DropdownItem>
+                  <DropdownItem onClick={e => this.signOut(e)}><i className="fa fa-lock"></i> Logout</DropdownItem>
+                </DropdownMenu>
+              </AppHeaderDropdown>
               <AppSidebarFooter/>
               <AppSidebarMinimizer/>
+
             </AppSidebar>
             <main className="main">
-              <AppBreadcrumb appRoutes={routesBasic} router={router}/>
+              <AppBreadcrumb appRoutes={routes} router={router}/>
               <Container fluid>
                 <Suspense fallback={this.loading()}>
                   <Switch>
-                    {routesBasic.map((route, idx) => {
+                    {routes.map((route, idx) => {
                       return route.component ? (
                         <Route
                           key={idx}
@@ -127,11 +137,11 @@ class DefaultLayout extends Component {
 
               </AppSidebar>
               <main className="main">
-                <AppBreadcrumb appRoutes={routesAdmin} router={router}/>
+                <AppBreadcrumb appRoutes={routes} router={router}/>
                 <Container fluid>
                   <Suspense fallback={this.loading()}>
                     <Switch>
-                      {routesAdmin.map((route, idx) => {
+                      {routes.map((route, idx) => {
                         return route.component ? (
                           <Route
                             key={idx}
@@ -189,11 +199,11 @@ class DefaultLayout extends Component {
 
                 </AppSidebar>
                 <main className="main">
-                  <AppBreadcrumb appRoutes={routesRegular} router={router}/>
+                  <AppBreadcrumb appRoutes={routes} router={router}/>
                   <Container fluid>
                     <Suspense fallback={this.loading()}>
                       <Switch>
-                        {routesRegular.map((route, idx) => {
+                        {routes.map((route, idx) => {
                           return route.component ? (
                             <Route
                               key={idx}

@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import {logInUser} from './sessionActions';
 import {Alert} from 'reactstrap';
 import {fetchUserRole} from "../user/ActionsUserRole";
-import {Redirect} from "react-router";
 
 export class LogInPage extends Component {
   constructor(props) {
@@ -46,13 +45,6 @@ export class LogInPage extends Component {
 
   render() {
     const {credentials} = this.state;
-    console.log("dana");
-    console.log(localStorage.getItem("loginToken"));
-    if (localStorage.getItem("loginToken") != null) {
-      return <Redirect to={'/about'}/>;
-
-    }
-
     if ((this.state.loggedIn === false)) {
       return (
         <>
@@ -162,7 +154,7 @@ const mapDispatchToProps = (dispatch) => {
     onFetchUserRole: () => {
       dispatch(fetchUserRole())
     },
-    actions: (logInUser)
+    actions:(logInUser)
 
   }
 };
