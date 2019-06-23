@@ -1,5 +1,6 @@
 import {combineReducers} from 'redux';
 
+import Reducers001 from "./views/GeographicArea/US001/Reducers001";
 import Reducer002 from "./views/GeographicArea/US002/Reducers002";
 import Reducers003 from "./views/GeographicArea/US003/Reducers003";
 import Reducers004 from "./views/GeographicArea/US004/Reducers004";
@@ -30,6 +31,7 @@ import ReducersHouseReadings from "./views/ImportFiles/importHouseReadings/Reduc
 
 export default combineReducers({
 
+  Reducers001,
   Reducer002,
   Reducers003,
   Reducers004,

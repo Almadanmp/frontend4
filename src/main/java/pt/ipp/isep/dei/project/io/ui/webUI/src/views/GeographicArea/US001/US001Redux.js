@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {addAreaType} from './Actions001';
 import {Button} from "reactstrap";
+import MessageU001 from "./MessageU001";
 
 class US001Redux extends React.Component {
 
@@ -9,12 +10,14 @@ class US001Redux extends React.Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
+      isHidden: true,
       name: ''
     };
 
     this.handleInputChange = attribute => event => {
       this.setState({
-        [attribute]: event.target.value
+        [attribute]: event.target.value,
+        isHidden: true
       });
     };
 
@@ -22,6 +25,7 @@ class US001Redux extends React.Component {
 
   handleSubmit() {
     this.props.onPostType(this.state);
+    this.setState({isHidden: false})
   }
 
   render() {
@@ -32,9 +36,12 @@ class US001Redux extends React.Component {
           <input value={this.state.name} type="text" name="name" placeholder="Name of the area type"
                  onChange={this.handleInputChange('name')}/>
         </label>
-        <p>After creating this type, you'll be able to have areas that are - {name} -.</p>
+        <p></p>
         <Button style={{backgroundColor: '#e4e5e6', marginBottom: '1rem'}} onClick={this.handleSubmit}>Add area
-          type</Button>
+          type
+        </Button>
+        {this.state.isHidden === false ?
+          <MessageU001 name={this.state.name} addedSensor={this.props.addedSensor} error={this.props.error} /> : ''}
       </>
     );
   }
@@ -48,8 +55,15 @@ const mapDispatchToProps = (dispatch) => {
     }
   }
 };
+const mapStateToProps = (state) => {
+  return {
+    loading: state.Reducers001.loading,
+    addedSensor: state.Reducers001.addedSensor,
+    error: state.Reducers001.error
+  }
+};
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(US001Redux);
