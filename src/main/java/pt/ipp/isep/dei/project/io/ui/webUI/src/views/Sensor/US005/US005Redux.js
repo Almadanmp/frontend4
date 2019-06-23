@@ -20,7 +20,8 @@ class US005Redux extends React.Component {
 
     this.handleInputChange = attribute => event => {
       this.setState({
-        [attribute]: event.target.value
+        [attribute]: event.target.value,
+        isHidden: true
       });
     };
 
@@ -54,13 +55,13 @@ class US005Redux extends React.Component {
     const {name, units} = this.state;
     return (
       <div className="animated fadeIn">
-        <Card><CardBody> Name:<span>  </span>
-          <input value={this.state.name} type="text" name="name" placeholder="Name of the new sensor type"
+        <Card><CardBody> Name: <span>  </span>
+          <input value={this.state.name} type="text" name="name" placeholder="Name"
                  onChange={this.handleInputChange('name')}/>
 
           <p></p>
-          <label> Units:<span>  </span>
-            <input value={this.state.units} type="text" name="units" placeholder="Unit measure used for this type"
+          <label> Unit: <span>  </span>
+            <input value={this.state.units} type="text" name="units" placeholder="Measurement unit"
                    onChange={this.handleInputChange('units')}/>
           </label>
           <p/>
@@ -70,7 +71,7 @@ class US005Redux extends React.Component {
           }}>Add sensor
             type</Button>
           {this.state.isHidden === false ?
-            <Message005 name={this.state.name} units={this.state.units}/>:''}
+            <Message005 name={this.state.name} units={this.state.units} listSensorTypes={this.props.listSensorTypes} error={this.props.error}/>:''}
         </CardBody>
         </Card>
       </div>
@@ -82,7 +83,6 @@ class US005Redux extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-
     loading: state.Reducers005.loading,
     listSensorTypes: state.Reducers005.listSensorTypes,
     error: state.Reducers005.error

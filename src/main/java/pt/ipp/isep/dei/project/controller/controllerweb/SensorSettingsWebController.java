@@ -131,16 +131,10 @@ public class SensorSettingsWebController {
 
     @PostMapping(value = "/sensorTypes")
     public ResponseEntity<Object> addSensorType(@RequestBody SensorTypeDTO sensorTypeDTO) {
-        if (sensorTypeDTO.getName() == null) {
+        if (sensorTypeDTO.getName() == null || sensorTypeDTO.getUnits() == null) {
             return new ResponseEntity<>("Null.", HttpStatus.BAD_REQUEST);
         }
-        if (sensorTypeDTO.getUnits() == null) {
-            return new ResponseEntity<>("Null.", HttpStatus.BAD_REQUEST);
-        }
-        if (sensorTypeDTO.getUnits().equals("")) {
-            return new ResponseEntity<>("Empty information.", HttpStatus.BAD_REQUEST);
-        }
-        if (sensorTypeDTO.getName().equals("")) {
+        if (sensorTypeDTO.getUnits().equals("") || sensorTypeDTO.getName().equals("")) {
             return new ResponseEntity<>("Empty information.", HttpStatus.BAD_REQUEST);
         }
         List<SensorTypeDTO> repoTypes = sensorTypeRepository.getAllSensorTypeDTO();

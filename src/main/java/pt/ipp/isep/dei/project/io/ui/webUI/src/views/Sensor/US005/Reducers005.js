@@ -34,14 +34,7 @@ export default function Reducers005(state = initialstate, action) {
         ...state,
         loading: false,
         error: action.payload.error,
-        listSensorTypes: "ERROR: " + action.payload.error
-      };
-    case POST_SENSOR_TYPE_DATA:
-      return {
-        ...state,
-        loading: false,
-        errorData: action.payload.error,
-        listSensorTypes: "ERROR: " + action.payload.error
+        listSensorTypes: action.payload.error
       };
     default:
       return state;
