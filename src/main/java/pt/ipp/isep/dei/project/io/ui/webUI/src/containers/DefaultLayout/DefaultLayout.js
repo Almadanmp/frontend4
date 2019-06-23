@@ -64,18 +64,8 @@ class DefaultLayout extends Component {
               <Suspense>
                 <AppSidebarNav navConfig={navigationBasic} {...this.props} router={router}/>
               </Suspense>
-              <AppHeaderDropdown direction="left">
-                <DropdownToggle navigationAdmin>
-                  <img src={'https://imgur.com/4YjW6pf.png'} className="img-avatar" alt="admin@bootstrapmaster.com"/>
-                </DropdownToggle>
-                <DropdownMenu right style={{right: 'auto'}}>
-                  <DropdownItem> User: {localStorage.getItem("user")}</DropdownItem>
-                  <DropdownItem onClick={e => this.signOut(e)}><i className="fa fa-lock"></i> Logout</DropdownItem>
-                </DropdownMenu>
-              </AppHeaderDropdown>
               <AppSidebarFooter/>
               <AppSidebarMinimizer/>
-
             </AppSidebar>
             <main className="main">
               <AppBreadcrumb appRoutes={routesBasic} router={router}/>
@@ -94,7 +84,7 @@ class DefaultLayout extends Component {
                           )}/>
                       ) : (null);
                     })}
-                    <Redirect from="/" to="/about"/>
+                    <Redirect from="/" to="/pleaseLogIn"/>
                   </Switch>
                 </Suspense>
               </Container>
