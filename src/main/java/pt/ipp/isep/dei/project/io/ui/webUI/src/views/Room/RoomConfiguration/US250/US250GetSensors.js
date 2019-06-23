@@ -28,6 +28,7 @@ class US250GetSensors extends Component {
 
   componentDidMount() {
     const token = localStorage.getItem('loginToken');
+    console.log(this.props.link)
     fetch(this.props.link.href, {
         headers: {
           'Authorization': token,

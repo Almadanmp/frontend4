@@ -31,7 +31,7 @@ class US610 extends Component {
     return (
       <Row>
         <Col >
-          <Card className="card-accent-warning">
+          <Card>
             <CardHeader>
               Temperature on a selected day
             </CardHeader>

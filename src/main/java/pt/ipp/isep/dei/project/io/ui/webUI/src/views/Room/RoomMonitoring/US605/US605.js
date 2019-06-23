@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Card, CardBody, Col, Form, FormGroup, Input, Label, Table, Row, CardHeader, Alert} from "reactstrap";
+import {Card, CardBody, Col, Table, Row, CardHeader, Alert} from "reactstrap";
 import US605GetCurrentTemperature from "./US605GetCurrentTemperature";
 import {fetchRooms} from "../../../House/HouseConfiguration/US108/Actions108";
 import connect from "react-redux/es/connect/connect";
@@ -27,7 +27,7 @@ class US605 extends Component {
         <>
           <Row>
             <Col>
-              <Card className="card-accent-warning">
+              <Card>
                 <CardHeader>
                   Current Temperature
                 </CardHeader>

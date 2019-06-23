@@ -19,7 +19,6 @@ class RoomMonitoring extends Component {
     return (
       <div>
         <h2>Welcome to the Room Monitoring Menu</h2>
-        <h4>Please select the option you want to run</h4>
         <br></br>
         <Row>
 <Col  xs="8" sm="4" md="3">

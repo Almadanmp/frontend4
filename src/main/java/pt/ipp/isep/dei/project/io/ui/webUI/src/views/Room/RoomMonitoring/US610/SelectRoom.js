@@ -65,7 +65,7 @@ class SelectRoom extends Component {
               <Input type="select" name="select" id="select" value={this.state.value} onChange={this.handleChange}>
                 <option value="0" onChange={this.handleChange}>Please select</option>
                 {item.map(items => (
-                  <option value={[items.links.find((hrefs) => hrefs.rel === 'Get Maximum Temperature In Day')]} key={items.name}>
+                  <option value={items.name} key={items.name}>
                     Name: {items.name}
 
                   </option>
@@ -75,7 +75,7 @@ class SelectRoom extends Component {
           </Form>
           <br></br>
           <br></br>
-          <US610Button day={this.props.day} link={this.state.value}/>
+          <US610Button day={this.props.day} roomID={this.state.value}/>
         </div>
       );
       } else {

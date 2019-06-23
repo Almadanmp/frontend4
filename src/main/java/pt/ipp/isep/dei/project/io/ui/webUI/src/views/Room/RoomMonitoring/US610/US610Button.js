@@ -19,13 +19,12 @@ class US610Button extends Component {
   toggleHidden = ()=>this.setState((prevState)=>({isHidden: !prevState.isHidden}))
 
   render(){
-    console.log(this.props.link.href)
     return(
       <div>
         <Button style={{backgroundColor: '#e4e5e6', marginBottom: '1rem'}} onClick={this.toggleHidden}>Get the Maximum temperature in the day {this.props.day} in the room {this.props.roomID}</Button>
         <br></br>
         {!this.state.isHidden &&
-        <US610GetTemperature day={this.props.day} link={this.props.link}/>}
+        <US610GetTemperature day={this.props.day} roomID={this.props.roomID}/>}
       </div>
     )
   }
