@@ -22,27 +22,13 @@ export default {
     },
     {
       name: 'House',
-      url: '/house',
+      url: '/house/configuration',
       icon: 'icon-home',
-      children: [
-        {
-          name: 'House Configuration',
-          url: '/house/configuration',
-          icon: 'fa fa-wrench fa-lg',
-        },
-      ],
     },
     {
       name: 'Room',
-      url: '/theme/room',
+      url: '/room/configuration',
       icon: 'fa fa-bed fa-lg',
-      children: [
-        {
-          name: 'Room Configuration',
-          url: '/room/configuration',
-          icon: 'fa fa-wrench fa-lg',
-        },
-      ],
     },
     {
       name: 'Energy',

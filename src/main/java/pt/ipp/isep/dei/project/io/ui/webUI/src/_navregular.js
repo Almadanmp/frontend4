@@ -16,43 +16,14 @@ export default {
       class: ''             // optional class names space delimited list for title item ex: "text-center"
     },
     {
-      name: 'Area',
-      url: '/maintenance',
-      icon: 'icon-globe',
-    },
-    {
       name: 'House',
-      url: '/house',
+      url: '/house/monitoring',
       icon: 'icon-home',
-      children: [
-        {
-          name: 'House Monitoring',
-          url: '/house/monitoring',
-          icon: 'cui-sun icons',
-          },
-      ],
     },
     {
       name: 'Room',
-      url: '/theme/room',
+      url: '/room/monitoring',
       icon: 'fa fa-bed fa-lg',
-      children: [
-        {
-          name: 'Room Monitoring',
-          url: '/room/monitoring',
-          icon: 'fa fa-thermometer fa-lg',
-        },
-      ],
-    },
-    {
-      name: 'Energy',
-      url: '/maintenance',
-      icon: 'icon-energy\n',
-    },
-    {
-      name: 'Sensor',
-      url: '/maintenance',
-      icon: 'icon-speedometer\n',
     },
 
     {
