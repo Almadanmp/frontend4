@@ -12,7 +12,7 @@ class US605GetCurrentTemperature extends Component {
 
   componentDidMount() {
     const token = localStorage.getItem('loginToken')
-    fetch( this.props.link.href, {
+    fetch(this.props.link.href, {
         headers: {
           'Authorization': token,
           "Access-Control-Allow-Credentials": true,
@@ -32,15 +32,14 @@ class US605GetCurrentTemperature extends Component {
 
   render() {
     var {item} = this.state;
-
+    console.log(item)
     return (
       <div>
         <p></p>
-        {item.rel == "This room does not exist." ? 'No data available': item.toString() + 'Cº'}
+        {item.length == 0 ? 'No data available' : item.toString() + 'Cº'}
       </div>
     );
   }
-
 }
 
 export default US605GetCurrentTemperature;
