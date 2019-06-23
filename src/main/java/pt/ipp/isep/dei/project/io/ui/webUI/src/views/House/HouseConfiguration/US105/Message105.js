@@ -7,7 +7,6 @@ class Message105 extends React.Component {
 
   constructor(props) {
     super(props);
-    //  this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       formerGrid: '',
       name: '',
@@ -49,13 +48,13 @@ class Message105 extends React.Component {
               Floor: {floor}
             </li>
             <li>
-              Width: {width}
+              Width: {width} m
             </li>
             <li>
-              Length: {length}
+              Length: {length} m
             </li>
             <li>
-              Height: {height}
+              Height: {height} m
             </li>
           </ul>
         </Alert>
