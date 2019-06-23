@@ -16,9 +16,9 @@ import {
   AppSidebarNav2 as AppSidebarNav,
 } from '@coreui/react';
 // sidebar nav config
-import navigationAdmin from '../../_navAdministrator';
-import navigationRegular from '../../_navRegular';
-import navigationBasic from '../../_navBasic';
+import navigationAdmin from '../../_navadministrator';
+import navigationRegular from '../../_navregular';
+import navigationBasic from '../../_navbasic';
 // routes config
 import {routesAdmin, routesBasic, routesRegular} from '../../routes';
 import {logout} from "../../logOut/logoutActions";
@@ -36,7 +36,7 @@ class DefaultLayout extends Component {
   signOut(e) {
     e.preventDefault()
     logout(e)
-    this.props.history.push('/')
+    this.props.history.push('/login')
     this.state = {
       showPopup: false
     };
@@ -84,7 +84,7 @@ class DefaultLayout extends Component {
                           )}/>
                       ) : (null);
                     })}
-                    <Redirect from="/" to="/pleaseLogIn"/>
+                    <Redirect from="/" to="/about"/>
                   </Switch>
                 </Suspense>
               </Container>
