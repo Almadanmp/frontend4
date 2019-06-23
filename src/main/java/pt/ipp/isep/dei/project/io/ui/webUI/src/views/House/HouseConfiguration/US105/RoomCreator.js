@@ -14,7 +14,7 @@ class RoomCreator extends React.Component {
     this.state = {
       isHidden: true,
       name: '',
-      floor: 0,
+      floor: '',
       width: '',
       length: '',
       height: '',
