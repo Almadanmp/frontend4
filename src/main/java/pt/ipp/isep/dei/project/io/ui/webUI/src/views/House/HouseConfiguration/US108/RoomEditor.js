@@ -1,5 +1,6 @@
 import React from 'react';
-import 'react-day-picker/lib/style.css';import US108Put from "./US108Put";
+import 'react-day-picker/lib/style.css';
+import US108Put from "./US108Put";
 import US108BackButton from "./US108BackButton";
 import {confirmAlert} from "react-confirm-alert";
 import {Button} from "reactstrap";
@@ -57,24 +58,20 @@ class RoomEditor extends React.Component {
     const {floor, width, length, height} = this.state;
     return (
       <div>
-        <label>Floor:
-          <input value={floor} type="number" name="sensorId" placeholder="Floor"
-                 onChange={this.handleInputChange('floor')}/>
+        <label>Floor: <input value={floor} type="number" name="sensorId" placeholder="0"
+                             onChange={this.handleInputChange('floor')}/>
         </label>
         <p></p>
-        <label>Width:
-          <input value={width} type="number" min="0" name="width" placeholder="Width"
-                 onChange={this.handleInputChange('width')}/>
+        <label>Width: <input value={width} type="number" min="0" name="width" placeholder="0"
+                             onChange={this.handleInputChange('width')}/>
         </label>
         <p></p>
-        <label>Length:
-          <input value={length} type="number" min="0" name="length" placeholder="Length"
-                 onChange={this.handleInputChange('length')}/>
+        <label>Length: <input value={length} type="number" min="0" name="length" placeholder="0"
+                              onChange={this.handleInputChange('length')}/>
         </label>
         <p></p>
-        <label>Height:
-          <input value={height} type="number" min="0" name="height" placeholder="Height"
-                 onChange={this.handleInputChange('height')}/>
+        <label>Height: <input value={height} type="number" min="0" name="height" placeholder="0"
+                              onChange={this.handleInputChange('height')}/>
         </label>
         <p></p>
         <Button style={{backgroundColor: '#e4e5e6', marginBottom: '1rem'}} onClick={(event) => {
@@ -83,7 +80,7 @@ class RoomEditor extends React.Component {
           room {this.props.name}</Button><US108BackButton/>
         {this.state.isHidden === false ?
           <US108Put name={this.props.name} floor={this.state.floor} width={this.state.width} length={this.state.length}
-                    height={this.state.height} link={this.props.link}/>:''}
+                    height={this.state.height} link={this.props.link}/> : ''}
       </div>
     )
   }
