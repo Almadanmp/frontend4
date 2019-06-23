@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {fetchTotalRainfallDay} from './USRedux/US620Redux/Actions620';
-import {Alert, Button, Card, CardBody, Collapse} from "reactstrap";
+import {Alert, Button, Card, CardBody, Col, Collapse, Container, Row} from "reactstrap";
 import DatePickerOneDay620 from "./USRedux/US620Redux/DatePickerOneDay620.js";
 
 class US620 extends Component {
@@ -41,11 +41,20 @@ class US620 extends Component {
           return (
             <>
                   <CardBody>
+                    <Container>
+                      <Row className="justify-content-start">
+                        <Col md="7">
                     <DatePickerOneDay620 getDays={this.handleDayPicker} numberOfMonths={numberOfMonths}/>
 
-                    <h5 key={totalRainfall}>
+                    <h5 key={totalRainfall} >
                     {totalRainfall.toString().indexOf("ERROR") != 0 ? 'There is no data available, please select another day' : 'The total rainfall was' + totalRainfall} </h5>
+                        </Col>
+                        <Col md ="5" style={{textAlign: "right"}}>
 
+                          <img src={"https://imgur.com/EoYAa5f.png"} width="50%" height="45%" style={{display: "inline-block"}}/>
+                        </Col>
+                      </Row>
+                    </Container>
                   </CardBody>
             </>
           );

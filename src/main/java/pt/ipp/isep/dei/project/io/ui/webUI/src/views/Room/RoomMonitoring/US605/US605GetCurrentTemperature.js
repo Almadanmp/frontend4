@@ -32,7 +32,6 @@ class US605GetCurrentTemperature extends Component {
 
   render() {
     var {item} = this.state;
-    console.log(item)
 
     return (
       <div>

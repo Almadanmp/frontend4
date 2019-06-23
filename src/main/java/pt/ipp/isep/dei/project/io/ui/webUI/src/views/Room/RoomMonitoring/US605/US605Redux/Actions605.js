@@ -6,7 +6,8 @@ export const FETCH_ROOM_T_FAILURE = 'FETCH_ROOM_T_FAILURE';
 export const FETCH_NO_DATA = 'FETCH_NO_DATA';
 
 
-export function fetchRoomTemp(href) {
+export function fetchRoomTemp({href}) {
+  console.log(href)
   const token = localStorage.getItem('loginToken');
   return dispatch => {
     dispatch(fetchRoomTempStarted(href)); // antes de fazer o get, coloca o loading a true

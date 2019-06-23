@@ -20,7 +20,8 @@ class HouseMonitoring extends Component {
 
       <div>
         <h2>Welcome to the House Monitoring Menu.</h2>
-        <h4>Please select the option you want to run.</h4>
+        <br></br>
+        <br></br>
         <Row>
           <Col xs="12" sm="10" md="4">
             <Card className="card-accent-warning">
@@ -28,8 +29,6 @@ class HouseMonitoring extends Component {
                 Current Temperature
               </CardHeader>
               <CardBody>
-                <br></br>
-                <br></br>
                 <US600Redux/>
                 <br></br>
 

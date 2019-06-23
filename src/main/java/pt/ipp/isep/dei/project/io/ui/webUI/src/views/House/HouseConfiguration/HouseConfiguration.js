@@ -30,7 +30,7 @@ class HouseConfiguration extends Component {
               </CardHeader>
               <CardBody>
                 <US108Redux/>
-                <US105 style={{float: 'right'}}/>
+                <US105 style={{float: 'left'}}/>
               </CardBody>
             </Card>
           </Col>
