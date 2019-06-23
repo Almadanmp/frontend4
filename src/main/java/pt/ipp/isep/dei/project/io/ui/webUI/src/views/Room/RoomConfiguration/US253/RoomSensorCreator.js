@@ -30,8 +30,6 @@ class RoomSensorCreator extends React.Component {
     };
 
   handleDayPicker = (selectedDay) => {
-
-    console.log("handleDayPicker:" + JSON.stringify(selectedDay))
     if (selectedDay !== undefined) {
       const initialDay = selectedDay.toISOString().substring(0, 10);
       this.setState({dateStartedFunctioning: initialDay});
@@ -47,15 +45,12 @@ class RoomSensorCreator extends React.Component {
   render() {
     const numberOfMonths = 1;
     const {sensorId, name} = this.state;
-    console.log(this.props.typeSensor)
     return (
       <div>
-        <label>Sensor ID:
-        <input value={sensorId} placeholder="Sensor00" type="text" name="sensorId" onChange={this.handleInputChange('sensorId')}/>
+        <label>Sensor ID: <input value={sensorId} placeholder="Sensor ID" type="text" name="sensorId" onChange={this.handleInputChange('sensorId')}/>
         </label>
         <p></p>
-        <label>Sensor name:
-          <input value={name} placeholder="Sensor name" type="text" name="name" onChange={this.handleInputChange('name')}/>
+        <label>Sensor name: <input value={name} placeholder="Sensor name" type="text" name="name" onChange={this.handleInputChange('name')}/>
         </label>
           <p></p>
         <p></p>
@@ -77,7 +72,9 @@ class RoomSensorCreator extends React.Component {
         <p></p>
         <Button style={{backgroundColor: '#e4e5e6', marginBottom: '1rem'}} onClick={this.handleSubmit}>Create a sensor of the type {this.props.typeSensor} in the room {this.props.roomID}</Button>
         {this.state.isHidden === false ?
-          <US253Post link={this.props.link} typeSensor={this.props.typeSensor} sensorId={this.props.sensorId} name={this.props.name} dateStartedFunctioning={this.props.dateStartedFunctioning}/> : ''}
+          <US253Post link={this.props.link} typeSensor={this.props.typeSensor} sensorId={this.state.sensorId}
+                     name={this.state.name} dateStartedFunctioning={this.state.dateStartedFunctioning}
+                     roomID={this.state.roomID}/> : ''}
       </div>
     )
   }

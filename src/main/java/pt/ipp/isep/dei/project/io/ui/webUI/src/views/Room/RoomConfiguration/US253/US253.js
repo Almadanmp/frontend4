@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Button, Card, CardBody, Collapse} from 'reactstrap';
-import US108Select from "./US108Select";
 import SensorTypesSelect from "./SensorTypesSelect";
 
 class US253 extends Component {

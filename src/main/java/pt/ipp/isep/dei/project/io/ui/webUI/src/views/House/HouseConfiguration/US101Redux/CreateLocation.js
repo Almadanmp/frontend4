@@ -17,13 +17,14 @@ class CreateLocation extends React.Component {
     console.log(location)
     const {geographicAreaId, street, number, zip, town, country, latitude, longitude, altitude} = this.props;
 
-    if ((location.toString()).indexOf("422") != -1) {
+    if ((location.toString()).indexOf("422") !== -1) {
       return (
         <div>
           <div className="help-block"><Alert color="danger">Please complete every field before continuing.</Alert></div>
         </div>
       )
-    } else {
+    }
+    else {
       return (
         <div className="help-block"><Alert color="success">
           <p>House's updated location:</p>

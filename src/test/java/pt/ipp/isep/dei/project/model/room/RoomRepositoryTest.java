@@ -92,6 +92,42 @@ class RoomRepositoryTest {
     }
 
     @Test
+    void seeIfSensorExistsWorks() {
+        // Arrange
+
+        validRoom.addSensor(firstValidRoomSensor);
+        validRoom.addSensor(secondValidRoomSensor);
+
+        Mockito.when(roomCrudRepo.findAll()).thenReturn(roomList);
+
+        // Act
+
+        boolean actualResult = validRoomRepository.sensorExists("T32876");
+
+        // Assert
+
+        assertTrue(actualResult);
+    }
+
+    @Test
+    void seeIfSensorExistsWorksWhenSensorDoesNotExist() {
+        // Arrange
+
+        validRoom.addSensor(firstValidRoomSensor);
+        validRoom.addSensor(secondValidRoomSensor);
+
+        Mockito.when(roomCrudRepo.findAll()).thenReturn(roomList);
+
+        // Act
+
+        boolean actualResult = validRoomRepository.sensorExists("SensorNotPresent");
+
+        // Assert
+
+        assertFalse(actualResult);
+    }
+
+    @Test
     void seeIfGetRoomMaxTempByIDWorks() {
         // Arrange
 

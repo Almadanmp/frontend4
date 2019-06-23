@@ -14,16 +14,25 @@ class US253Post extends React.Component {
 
   render() {
     const {sensor, error} = this.props;
-    console.log(sensor)
-    const {geographicAreaId, typeSensor, name, sensorId, dateStartedFunctioning} = this.props;
+    const {roomID, typeSensor, name, sensorId, dateStartedFunctioning} = this.props;
 
-    if ((sensor.toString()).indexOf("ERROR") != -1 ) {
+    if ((sensor.toString()).indexOf("422") !== -1 || (sensor.toString()).indexOf("400") !== -1) {
       return (
         <div>
-          <div className="help-block"><Alert color="danger">{sensor}</Alert></div>
+          <div className="help-block"><Alert color="danger">Please complete every field before continuing.
+            <br></br>
+            Make sure you select the date.</Alert></div>
         </div>
       )
-    }else {
+    }
+    if ((sensor.toString()).indexOf("409") !== -1 ) {
+      return (
+        <div>
+          <div className="help-block"><Alert color="danger">A sensor with that ID already exists in your house.</Alert></div>
+        </div>
+      )
+    }
+    else {
       return (
         <div className="help-block"><Alert color="success">
           <p>The following sensor was added:</p>
@@ -35,7 +44,7 @@ class US253Post extends React.Component {
               Type: {typeSensor}
             </li>
             <li>
-              Geographic Area ID: {geographicAreaId}
+              Room ID: {roomID}
             </li>
             <li>
               Start Date: {dateStartedFunctioning}

@@ -39,7 +39,6 @@ class SensorTypesSelect extends Component {
 
   handleChange(event) {
     this.setState({typeSensor: event.target.value});
-    console.log(this.state.typeSensor)
   }
 
 

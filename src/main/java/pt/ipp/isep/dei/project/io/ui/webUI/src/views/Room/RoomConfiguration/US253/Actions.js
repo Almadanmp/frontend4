@@ -32,7 +32,7 @@ export const fetchSensor = ({link, typeSensor,name,sensorId,dateStartedFunctioni
         }
         else {
           if (err.response !== undefined) {
-            dispatch(fetchSensorInfoFailure(err.response.data));
+            dispatch(fetchSensorInfoFailure(err.message));
           }
         }
       });

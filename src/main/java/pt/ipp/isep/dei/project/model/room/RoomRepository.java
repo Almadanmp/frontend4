@@ -58,6 +58,26 @@ public class RoomRepository {
     }
 
     /**
+     * This method receives a room sensor ID and checks if already exists
+     * a sensor with that ID in the database.
+     *
+     * @return true in case it exists, false otherwise.
+     * **/
+    public boolean sensorExists(String roomSensorID){
+        List<Room> rooms = getAllRooms();
+        for(Room r: rooms){
+            List<RoomSensor> sensors = r.getRoomSensors();
+            for(RoomSensor s: sensors){
+                if(s.getId().equals(roomSensorID)){
+                    return true;
+                }
+            }
+
+        }
+        return false;
+    }
+
+    /**
      * This method gets every room from the Room Crud Repository
      * and returns as an ArrayList.
      *

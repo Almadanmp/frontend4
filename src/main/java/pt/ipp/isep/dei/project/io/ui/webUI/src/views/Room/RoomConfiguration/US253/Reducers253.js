@@ -12,7 +12,7 @@ const initialstate = {
 };
 
 
-export default function Reducers600 (state = initialstate, action) {
+export default function Reducers253 (state = initialstate, action) {
   switch (action.type) {
     case FETCH_SENSOR_INFO_STARTED:
       return {

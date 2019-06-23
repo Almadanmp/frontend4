@@ -56,7 +56,8 @@ class US250GetSensors extends Component {
 
             <thead>
             <tr>
-              <th>Sensor</th>
+              <th>Sensor ID</th>
+              <th>Name</th>
               <th>Type</th>
               <th>Activation</th>
               <th>State</th>
@@ -66,10 +67,11 @@ class US250GetSensors extends Component {
 
             {item.map(item => (
               <tr key={item.name}>
+                <td>{item.sensorID}</td>
                 <td>{item.name}</td>
                 <td>{item.type}</td>
                 <td>{item.dateStartedFunctioning}</td>
-                <td>{item.active == true ? <Badge color="success"> Active </Badge> :
+                <td>{item.active === true ? <Badge color="success"> Active </Badge> :
                   <Badge color="danger"> Inactive </Badge>}</td>
 
               </tr>

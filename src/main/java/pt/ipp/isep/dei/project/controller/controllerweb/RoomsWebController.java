@@ -275,14 +275,17 @@ public class RoomsWebController {
             if (!typeNames.contains(roomSensorDTO.getType())) {
                 return new ResponseEntity<>("The sensor type is not valid.", HttpStatus.UNPROCESSABLE_ENTITY);
             }
-            if (roomRepository.addSensorDTO(roomDTO, roomSensorDTO)) {
+            if(roomRepository.sensorExists(roomSensorDTO.getSensorId())){
+                return new ResponseEntity<>("The sensor already exists in the database", HttpStatus.CONFLICT);
+            }
+            if (roomRepository.addSensorDTO(roomDTO, roomSensorDTO)) { //esta validação só está a verificar os sensores dentro do quarto
                 roomRepository.updateRoomDTO(roomDTO);
                 Link link = linkTo(methodOn(RoomsWebController.class).removeRoomSensor(idRoom, roomSensorDTO.getSensorId()
                 )).withRel("Delete the created sensor");
                 roomSensorDTO.add(link);
                 return new ResponseEntity<>(roomSensorDTO, HttpStatus.CREATED);
             }
-            return new ResponseEntity<>("The sensor already exists in the database", HttpStatus.CONFLICT);
+            return new ResponseEntity<>("The sensor already exists in this room", HttpStatus.CONFLICT);
         }
         return new ResponseEntity<>("There was a problem creating the Room Sensor, because one or more components are missing!",
                 HttpStatus.BAD_REQUEST);
