@@ -5,17 +5,19 @@ export const FETCH_HOT_SUCCESS = 'FETCH_HOT_SUCCESS';
 export const FETCH_HOT_FAILURE = 'FETCH_HOT_FAILURE';
 
 
-export const fetchHottestDay = ({ from, to }) => {
+export const fetchHottestDay = ({from, to}) => {
   const token = localStorage.getItem('loginToken')
   return dispatch => {
     dispatch(fetchHottestDayStarted(from, to)); // antes de fazer o get, coloca o loading a true
     axios
-      .get(`https://localhost:8443/houseMonitoring/hottestDay?initialDate=`+from+`&finalDate=`+to, {
-        headers: {
-          'Authorization': token,
-          "Access-Control-Allow-Credentials": true,
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json"}}
+      .get(`https://localhost:8443/house/hottestDay?initialDate=` + from + `&finalDate=` + to, {
+          headers: {
+            'Authorization': token,
+            "Access-Control-Allow-Credentials": true,
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json"
+          }
+        }
       )
       .then(res => {
         dispatch(fetchHottestDaySuccess(res.data)); // chegaram os resultados (dados) , loading fica a falso
@@ -27,7 +29,7 @@ export const fetchHottestDay = ({ from, to }) => {
   };
 }
 
-export function fetchHottestDayStarted (from, to) {
+export function fetchHottestDayStarted(from, to) {
   return {
     type: FETCH_HOT_STARTED,
     payload: {
@@ -37,7 +39,7 @@ export function fetchHottestDayStarted (from, to) {
   }
 }
 
-export function fetchHottestDaySuccess (data) { // cria uma açao
+export function fetchHottestDaySuccess(data) { // cria uma açao
   return {
     type: FETCH_HOT_SUCCESS,
     payload: {
@@ -46,13 +48,13 @@ export function fetchHottestDaySuccess (data) { // cria uma açao
   }
 }
 
-export function fetchHottestDayFailure (message) {
-return {
-  type: FETCH_HOT_FAILURE,
-  payload: {
-    errorHot: message
+export function fetchHottestDayFailure(message) {
+  return {
+    type: FETCH_HOT_FAILURE,
+    payload: {
+      errorHot: message
+    }
   }
-}
 }
 
 

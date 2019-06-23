@@ -5,17 +5,19 @@ export const FETCH_COLD_SUCCESS = 'FETCH_COLD_SUCCESS';
 export const FETCH_COLD_FAILURE = 'FETCH_COLD_FAILURE';
 
 
-export const fetchColdDay = ({ from, to }) => {
+export const fetchColdDay = ({from, to}) => {
   const token = localStorage.getItem('loginToken')
   return dispatch => {
     dispatch(fetchColdDayStarted(from, to)); // antes de fazer o get, coloca o loading a true
     axios
-      .get(`https://localhost:8443/houseMonitoring/coldestDay?initialDate=`+from+`&finalDate=`+to, {
-        headers: {
-          'Authorization': token,
-          "Access-Control-Allow-Credentials": true,
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json"}}
+      .get(`https://localhost:8443/house/coldestDay?initialDate=` + from + `&finalDate=` + to, {
+          headers: {
+            'Authorization': token,
+            "Access-Control-Allow-Credentials": true,
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json"
+          }
+        }
       )
       .then(res => {
         dispatch(fetchColdDaySuccess(res.data)); // chegaram os resultados (dados) , loading fica a falso
@@ -27,7 +29,7 @@ export const fetchColdDay = ({ from, to }) => {
   };
 }
 
-export function fetchColdDayStarted (from, to) {
+export function fetchColdDayStarted(from, to) {
   return {
     type: FETCH_COLD_STARTED,
     payload: {
@@ -37,7 +39,7 @@ export function fetchColdDayStarted (from, to) {
   }
 }
 
-export function fetchColdDaySuccess (data) { // cria uma açao
+export function fetchColdDaySuccess(data) { // cria uma açao
   return {
     type: FETCH_COLD_SUCCESS,
     payload: {
@@ -46,13 +48,13 @@ export function fetchColdDaySuccess (data) { // cria uma açao
   }
 }
 
-export function fetchColdDayFailure (message) {
-return {
-  type: FETCH_COLD_FAILURE,
-  payload: {
-    errorCold: message
+export function fetchColdDayFailure(message) {
+  return {
+    type: FETCH_COLD_FAILURE,
+    payload: {
+      errorCold: message
+    }
   }
-}
 }
 
 

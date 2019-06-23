@@ -5,17 +5,19 @@ export const FETCH_RAINFALL_SUCCESS = 'FETCH_RAINFALL_SUCCESS';
 export const FETCH_RAINFALL_FAILURE = 'FETCH_RAINFALL_FAILURE';
 
 
-export const fetchRainfall = ({ from, to }) => {
+export const fetchRainfall = ({from, to}) => {
   const token = localStorage.getItem('loginToken')
   return dispatch => {
     dispatch(fetchRainfallStarted(from, to)); // antes de fazer o get, coloca o loading a true
     axios
-      .get(`https://localhost:8443/houseMonitoring/averageRainfall?initialDate=`+from+`&finalDate=`+to, {
-        headers: {
-          'Authorization': token,
-          "Access-Control-Allow-Credentials": true,
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json"}}
+      .get(`https://localhost:8443/house/averageRainfall?initialDate=` + from + `&finalDate=` + to, {
+          headers: {
+            'Authorization': token,
+            "Access-Control-Allow-Credentials": true,
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json"
+          }
+        }
       )
       .then(res => {
         dispatch(fetchRainfallSuccess(res.data)); // chegaram os resultados (dados) , loading fica a falso
@@ -26,7 +28,8 @@ export const fetchRainfall = ({ from, to }) => {
 
   };
 }
-export function fetchRainfallStarted (from, to) {
+
+export function fetchRainfallStarted(from, to) {
   return {
     type: FETCH_RAINFALL_STARTED,
     payload: {
@@ -36,7 +39,7 @@ export function fetchRainfallStarted (from, to) {
   }
 }
 
-export function fetchRainfallSuccess (data) { // cria uma açao
+export function fetchRainfallSuccess(data) { // cria uma açao
   return {
     type: FETCH_RAINFALL_SUCCESS,
     payload: {
@@ -45,13 +48,13 @@ export function fetchRainfallSuccess (data) { // cria uma açao
   }
 }
 
-export function fetchRainfallFailure (message) {
-return {
-  type: FETCH_RAINFALL_FAILURE,
-  payload: {
-    errorRainfall: message
+export function fetchRainfallFailure(message) {
+  return {
+    type: FETCH_RAINFALL_FAILURE,
+    payload: {
+      errorRainfall: message
+    }
   }
-}
 }
 
 
