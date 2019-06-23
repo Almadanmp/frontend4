@@ -29,7 +29,7 @@ import java.nio.file.Paths;
 @RequestMapping("/import")
 public class ImportFilesWebController {
     private static final String IMPORT_TIME = "Import time: ";
-    private static final String EMPTY_FILE = "ERROR: Imported file is empty.";
+    private static final String EMPTY_FILE = "WARNING: Imported file is empty.";
     private static final String MILLISECONDS = " millisecond(s).";
     private static final String SUCCESS = "Successfully imported - ";
 
@@ -117,7 +117,7 @@ public class ImportFilesWebController {
     }
 
 
-    private ResponseEntity<Object> dataImportProcessor(MultipartFile file, String operation) {
+    public ResponseEntity<Object> dataImportProcessor(MultipartFile file, String operation) {
         String result;
         long startTime = System.currentTimeMillis();
 
@@ -144,7 +144,7 @@ public class ImportFilesWebController {
                     result = houseConfigurationUI.selectImportHouseReadingsMethod(path.toString());
                     break;
                 default:
-                    return createBadRequestResponse(new IllegalArgumentException());
+                    return createBadRequestResponse(new IOException("Internal Error (Invalid Operation)"));
             }
             Files.delete(path);
         } catch (IOException e) {
@@ -166,7 +166,7 @@ public class ImportFilesWebController {
     private String importHouseResult(Path path, long startTime){
         House house = houseRepository.getHouses().get(0);
         readerController.readJSONAndDefineHouse(house, path.toString());
-        return " \n" + createIntervalMsg(startTime);
+        return "House imported \n" + createIntervalMsg(startTime);
     }
 
     private String importHouseSensorsResult(Path path, long startTime){
@@ -202,11 +202,11 @@ public class ImportFilesWebController {
 
     }
 
-    private ResponseEntity <Object> createEmptyFileResponse() {
+    private ResponseEntity<Object> createEmptyFileResponse() {
         return new ResponseEntity<>(EMPTY_FILE, HttpStatus.OK);
     }
 
-    private ResponseEntity <Object> createBadRequestResponse(Exception e) {
+    private ResponseEntity<Object> createBadRequestResponse(Exception e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 
     }
