@@ -19,7 +19,7 @@ class MessageU001 extends React.Component {
     if ((addedSensor.toString()).indexOf("400") !== -1) {
       return (
         <div>
-          <div className="help-block"><Alert color="danger">Please complete every field before continuing.</Alert></div>
+          <div className="help-block"><Alert color="danger">Please complete the field before continuing.</Alert></div>
         </div>
       )
     } else if ((addedSensor.toString()).indexOf("409") !== -1) {
