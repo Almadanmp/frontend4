@@ -142,6 +142,30 @@ class GeographicAreaRepositoryTest {
     }
 
     @Test
+    void seeIfAddReadingsToGeographicAreaSensorsWorks() {
+        // Arrange
+
+        List<GeographicArea> geographicAreas = new ArrayList<>();
+        geographicAreas.add(firstValidArea);
+        firstValidArea.addSensor(secondValidAreaSensor);
+
+        Mockito.when(geographicAreaCrudRepo.findAll()).thenReturn(geographicAreas);
+
+        List<ReadingDTO> readingDTOS = new ArrayList<>();
+        for (Reading r : validReadingList) {
+            readingDTOS.add(ReadingMapper.objectToDTO(r));
+        }
+
+        //Act
+
+        int actualResult = geographicAreaRepository.addReadingsToGeographicAreaSensors(readingDTOS);
+
+        // Assert
+
+        assertEquals(2, actualResult);
+    }
+
+    @Test
     void seeIfSensorExistsWorks() {
         // Arrange
 
