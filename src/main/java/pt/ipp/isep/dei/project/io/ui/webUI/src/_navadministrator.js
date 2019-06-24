@@ -63,10 +63,5 @@ export default {
       url: '/team',
       icon: 'icon-star',
     },
-    {
-      name: 'PleaseLogin',
-      url: '/pleaseLogIn',
-      icon: 'icon-star',
-    },
   ],
 };

@@ -20,10 +20,9 @@ import navigationAdmin from '../../_navadministrator';
 import navigationRegular from '../../_navregular';
 import navigationBasic from '../../_navbasic';
 // routes config
-import routes from '../../routes';
+import {routesAdmin, routesBasic, routesRegular} from '../../routes';
 import {logout} from "../../logOut/logoutActions";
 import {connect} from "react-redux";
-import {fetchUserRole} from "../../user/ActionsUserRole";
 
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
@@ -42,12 +41,7 @@ class DefaultLayout extends Component {
     };
   }
 
-  getUserRole() {
-    fetchUserRole()
-  }
-
   render() {
-    this.getUserRole()
     console.log(localStorage.getItem("userRole"))
     if (localStorage.getItem("userRole") === null) {
       return (
@@ -78,11 +72,11 @@ class DefaultLayout extends Component {
 
             </AppSidebar>
             <main className="main">
-              <AppBreadcrumb appRoutes={routes} router={router}/>
+              <AppBreadcrumb appRoutes={routesBasic} router={router}/>
               <Container fluid>
                 <Suspense fallback={this.loading()}>
                   <Switch>
-                    {routes.map((route, idx) => {
+                    {routesBasic.map((route, idx) => {
                       return route.component ? (
                         <Route
                           key={idx}
@@ -124,9 +118,11 @@ class DefaultLayout extends Component {
                   <AppSidebarNav navConfig={navigationAdmin} {...this.props} router={router}/>
                 </Suspense>
                 <AppHeaderDropdown direction="left">
-                  <DropdownToggle navigationAdmin style={{color:'#23282c',
+                  <DropdownToggle navigationAdmin style={{
+                    color: '#23282c',
                     backgroundColor: '#d8c2a5',
-                    borderColor: '#d8c2a5'}}>
+                    borderColor: '#d8c2a5'
+                  }}>
                     <img src={'https://imgur.com/4YjW6pf.png'} className="img-avatar" alt="admin@bootstrapmaster.com"/>
                   </DropdownToggle>
                   <DropdownMenu right style={{right: 'auto'}}>
@@ -139,11 +135,11 @@ class DefaultLayout extends Component {
 
               </AppSidebar>
               <main className="main">
-                <AppBreadcrumb appRoutes={routes} router={router}/>
+                <AppBreadcrumb appRoutes={routesAdmin} router={router}/>
                 <Container fluid>
                   <Suspense fallback={this.loading()}>
                     <Switch>
-                      {routes.map((route, idx) => {
+                      {routesAdmin.map((route, idx) => {
                         return route.component ? (
                           <Route
                             key={idx}
@@ -169,7 +165,7 @@ class DefaultLayout extends Component {
           </div>
         );
       } else {
-        if (localStorage.getItem("userRole") === "REGULAR"||"POWER"||"ROOM") {
+        if (localStorage.getItem("userRole") === "REGULAR" || "POWER" || "ROOM") {
           return (
             <div className="app">
               <AppHeader fixed>
@@ -185,11 +181,13 @@ class DefaultLayout extends Component {
                     <AppSidebarNav navConfig={navigationRegular} {...this.props} router={router}/>
                   </Suspense>
                   <AppHeaderDropdown direction="left">
-                    <DropdownToggle navigationRegular style={{color:'#23282c',
+                    <DropdownToggle navigationRegular style={{
+                      color: '#23282c',
                       backgroundColor: '#d8c2a5',
-                      borderColor: '#d8c2a5'}}>
+                      borderColor: '#d8c2a5'
+                    }}>
                       <img src={'https://imgur.com/4YjW6pf.png'} className="img-avatar"
-                           alt="user" />
+                           alt="user"/>
                     </DropdownToggle>
                     <DropdownMenu right style={{right: 'auto'}}>
                       <DropdownItem> User: {localStorage.getItem("user")}</DropdownItem>
@@ -201,11 +199,11 @@ class DefaultLayout extends Component {
 
                 </AppSidebar>
                 <main className="main">
-                  <AppBreadcrumb appRoutes={routes} router={router}/>
+                  <AppBreadcrumb appRoutes={routesRegular} router={router}/>
                   <Container fluid>
                     <Suspense fallback={this.loading()}>
                       <Switch>
-                        {routes.map((route, idx) => {
+                        {routesRegular.map((route, idx) => {
                           return route.component ? (
                             <Route
                               key={idx}

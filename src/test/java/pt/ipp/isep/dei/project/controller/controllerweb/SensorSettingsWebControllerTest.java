@@ -44,9 +44,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class SensorSettingsWebControllerTest {
 
     @Mock
-    UserService userService;
-
-    @Mock
     GeographicAreaRepository geographicAreaRepository;
 
     @Mock
@@ -279,6 +276,167 @@ class SensorSettingsWebControllerTest {
     }
 
     @Test
+    void seeIfCreateAreaSensorFailsNullIdAndName() {
+
+        // Arrange
+
+        List<AreaSensor> sensors = new ArrayList<>();
+        sensors.add(validAreaSensor);
+        validGeographicArea.setAreaSensors(sensors);
+        AreaSensorDTO areaSensorDTO = new AreaSensorDTO();
+        areaSensorDTO.setName(null);
+        areaSensorDTO.setId(null);
+        areaSensorDTO.setUnits("mm");
+        areaSensorDTO.setTypeSensor("temperature");
+        areaSensorDTO.setDateStartedFunctioning("2018-10-12");
+
+        // Perform
+
+
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.createAreaSensor(areaSensorDTO, id);
+
+        assertEquals(HttpStatus.BAD_REQUEST, actualResult.getStatusCode());
+    }
+
+    @Test
+    void seeIfCreateAreaSensorFailsNullIdAndUnit() {
+
+        // Arrange
+
+        List<AreaSensor> sensors = new ArrayList<>();
+        sensors.add(validAreaSensor);
+        validGeographicArea.setAreaSensors(sensors);
+        AreaSensorDTO areaSensorDTO = new AreaSensorDTO();
+        areaSensorDTO.setName("RF1234");
+        areaSensorDTO.setId(null);
+        areaSensorDTO.setUnits(null);
+        areaSensorDTO.setTypeSensor("temperature");
+        areaSensorDTO.setDateStartedFunctioning("2018-10-12");
+
+        // Perform
+
+
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.createAreaSensor(areaSensorDTO, id);
+
+        assertEquals(HttpStatus.BAD_REQUEST, actualResult.getStatusCode());
+    }
+
+    @Test
+    void seeIfCreateAreaSensorFailsNullIdAndType() {
+
+        // Arrange
+
+        List<AreaSensor> sensors = new ArrayList<>();
+        sensors.add(validAreaSensor);
+        validGeographicArea.setAreaSensors(sensors);
+        AreaSensorDTO areaSensorDTO = new AreaSensorDTO();
+        areaSensorDTO.setName("RF1234");
+        areaSensorDTO.setId(null);
+        areaSensorDTO.setUnits("mm");
+        areaSensorDTO.setTypeSensor(null);
+        areaSensorDTO.setDateStartedFunctioning("2018-10-12");
+
+        // Perform
+
+
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.createAreaSensor(areaSensorDTO, id);
+
+        assertEquals(HttpStatus.BAD_REQUEST, actualResult.getStatusCode());
+    }
+
+    @Test
+    void seeIfCreateAreaSensorFailsNullIdAndDate() {
+
+        // Arrange
+
+        List<AreaSensor> sensors = new ArrayList<>();
+        sensors.add(validAreaSensor);
+        validGeographicArea.setAreaSensors(sensors);
+        AreaSensorDTO areaSensorDTO = new AreaSensorDTO();
+        areaSensorDTO.setName("RF1234");
+        areaSensorDTO.setId(null);
+        areaSensorDTO.setUnits("mm");
+        areaSensorDTO.setTypeSensor("temperature");
+        areaSensorDTO.setDateStartedFunctioning(null);
+
+        // Perform
+
+
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.createAreaSensor(areaSensorDTO, id);
+
+        assertEquals(HttpStatus.BAD_REQUEST, actualResult.getStatusCode());
+    }
+
+    @Test
+    void seeIfCreateAreaSensorFailsEverythingNull() {
+
+        // Arrange
+
+        List<AreaSensor> sensors = new ArrayList<>();
+        sensors.add(validAreaSensor);
+        validGeographicArea.setAreaSensors(sensors);
+        AreaSensorDTO areaSensorDTO = new AreaSensorDTO();
+        areaSensorDTO.setName(null);
+        areaSensorDTO.setId(null);
+        areaSensorDTO.setUnits(null);
+        areaSensorDTO.setTypeSensor(null);
+        areaSensorDTO.setDateStartedFunctioning(null);
+
+        // Perform
+
+
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.createAreaSensor(areaSensorDTO, id);
+
+        assertEquals(HttpStatus.BAD_REQUEST, actualResult.getStatusCode());
+    }
+
+    @Test
+    void seeIfCreateAreaSensorFailsNullIdNameAndType() {
+
+        // Arrange
+
+        List<AreaSensor> sensors = new ArrayList<>();
+        sensors.add(validAreaSensor);
+        validGeographicArea.setAreaSensors(sensors);
+        AreaSensorDTO areaSensorDTO = new AreaSensorDTO();
+        areaSensorDTO.setName(null);
+        areaSensorDTO.setId(null);
+        areaSensorDTO.setUnits("mm");
+        areaSensorDTO.setTypeSensor(null);
+        areaSensorDTO.setDateStartedFunctioning("2018-10-12");
+
+        // Perform
+
+
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.createAreaSensor(areaSensorDTO, id);
+
+        assertEquals(HttpStatus.BAD_REQUEST, actualResult.getStatusCode());
+    }
+
+    @Test
+    void seeIfCreateAreaSensorFailsNullIdAndNameAndDate() {
+
+        // Arrange
+
+        List<AreaSensor> sensors = new ArrayList<>();
+        sensors.add(validAreaSensor);
+        validGeographicArea.setAreaSensors(sensors);
+        AreaSensorDTO areaSensorDTO = new AreaSensorDTO();
+        areaSensorDTO.setName(null);
+        areaSensorDTO.setId(null);
+        areaSensorDTO.setUnits("mm");
+        areaSensorDTO.setTypeSensor("temperature");
+        areaSensorDTO.setDateStartedFunctioning(null);
+
+        // Perform
+
+
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.createAreaSensor(areaSensorDTO, id);
+
+        assertEquals(HttpStatus.BAD_REQUEST, actualResult.getStatusCode());
+    }
+
+    @Test
     void seeIfGetSensorTypesWorks() {
         // Arrange
 
@@ -302,6 +460,50 @@ class SensorSettingsWebControllerTest {
 
         List<SensorTypeDTO> emptyList = new ArrayList<>();
         Mockito.when(sensorTypeRepository.getAllSensorTypeDTO()).thenReturn(emptyList);
+        SensorTypeDTO typeToAdd = new SensorTypeDTO();
+        typeToAdd.setName("rain");
+        typeToAdd.setUnits("mm");
+        ResponseEntity<Object> expectedResult = new ResponseEntity<>(typeToAdd, HttpStatus.OK);
+
+        // Act
+
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.addSensorType(typeToAdd);
+
+        // Assert
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void seeIfRemoveAreaSensorFails(){
+        // Arrange
+
+        ResponseEntity<String> expectedResult = new ResponseEntity<>("Sensor doesn't exist or wasn't found.", HttpStatus.NOT_FOUND);
+
+        Mockito.when(geographicAreaRepository.removeSensorDTO(any(GeographicAreaDTO.class), any(String.class))).thenReturn(false);
+
+        // Act
+
+        ResponseEntity<String> actualResult = sensorSettingsWebController.removeAreaSensor(20, "identifier");
+
+        // Assert
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void seeIfAddSensorTypeDifferentNameFromRepoWorks() {
+        // Arrange
+
+        List<SensorTypeDTO> listWithDifferentName = new ArrayList<>();
+
+        SensorTypeDTO sensorTypeDTO = new SensorTypeDTO();
+        sensorTypeDTO.setName("number one");
+
+
+        listWithDifferentName.add(sensorTypeDTO);
+
+        Mockito.when(sensorTypeRepository.getAllSensorTypeDTO()).thenReturn(listWithDifferentName);
         SensorTypeDTO typeToAdd = new SensorTypeDTO();
         typeToAdd.setName("rain");
         typeToAdd.setUnits("mm");
@@ -439,6 +641,8 @@ typeToAdd.setUnits("mm");
 
         assertEquals(expectedResult, actualResult);
     }
+
+
 
     @Test
     void seeIfDeactivateAreaSensorWorks() {
