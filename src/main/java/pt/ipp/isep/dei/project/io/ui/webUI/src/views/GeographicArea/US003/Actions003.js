@@ -27,9 +27,7 @@ export const fetchGA = ({name, typeArea, length, width, latitude, longitude, alt
         dispatch(fetchGASuccess(res.data));
       })
       .catch(err => {
-        if (err.response !== undefined) {
-          dispatch(fetchGAFailure(err.response.data));
-        }
+          dispatch(fetchGAFailure(err.message));
       });
   };
 };

@@ -13,9 +13,9 @@ class SaveGASensor extends React.Component {
   }
 
   render() {
-    const {addedSensor, error} = this.props;
+    const {addedSensor} = this.props;
     console.log(addedSensor)
-    const {geographicAreaId, typeSensor, name, sensorId, dateStartedFunctioning, latitude, longitude, altitude} = this.props;
+    const {geographicAreaId, typeSensor, name, sensorId, dateStartedFunctioning} = this.props;
 
     if ((addedSensor.toString()).indexOf("400") !== -1 || (addedSensor.toString()).indexOf("Network Error") !== -1
       || (addedSensor.toString()).indexOf("422") !== -1) {
