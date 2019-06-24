@@ -215,6 +215,54 @@ class SensorSettingsWebControllerTest {
     }
 
     @Test
+    void seeIfCreateAreaSensorFailsEmptyDate() {
+
+        // Arrange
+
+        List<AreaSensor> sensors = new ArrayList<>();
+        sensors.add(validAreaSensor);
+        validGeographicArea.setAreaSensors(sensors);
+        AreaSensorDTO areaSensorDTO = new AreaSensorDTO();
+        areaSensorDTO.setName("Dsads");
+        areaSensorDTO.setId("RF1234");
+        areaSensorDTO.setUnits("mm");
+        areaSensorDTO.setTypeSensor("temperature");
+        areaSensorDTO.setDateStartedFunctioning("");
+
+        Mockito.doReturn(GeographicAreaMapper.objectToDTO(validGeographicArea)).when(this.geographicAreaRepository).getDTOById(id);
+
+        // Perform
+
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.createAreaSensor(areaSensorDTO, id);
+
+        assertEquals(HttpStatus.BAD_REQUEST, actualResult.getStatusCode());
+    }
+
+    @Test
+    void seeIfCreateAreaSensorFailsEmptyType() {
+
+        // Arrange
+
+        List<AreaSensor> sensors = new ArrayList<>();
+        sensors.add(validAreaSensor);
+        validGeographicArea.setAreaSensors(sensors);
+        AreaSensorDTO areaSensorDTO = new AreaSensorDTO();
+        areaSensorDTO.setName("");
+        areaSensorDTO.setId("RF1234");
+        areaSensorDTO.setUnits("mm");
+        areaSensorDTO.setTypeSensor("");
+        areaSensorDTO.setDateStartedFunctioning("2018-10-12");
+
+        Mockito.doReturn(GeographicAreaMapper.objectToDTO(validGeographicArea)).when(this.geographicAreaRepository).getDTOById(id);
+
+        // Perform
+
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.createAreaSensor(areaSensorDTO, id);
+
+        assertEquals(HttpStatus.BAD_REQUEST, actualResult.getStatusCode());
+    }
+
+    @Test
     void seeIfCreateAreaSensorFailsWrongGA() {
 
         // Arrange
