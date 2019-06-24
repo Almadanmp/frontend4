@@ -32,7 +32,7 @@ export default function Reducer003(state = initialstate, action) {
         ...state,
         loading: false,
         error: action.payload.error,
-        areas: "ERROR: NO DATA Available"
+        areas: action.payload.error
       };
 
     default:

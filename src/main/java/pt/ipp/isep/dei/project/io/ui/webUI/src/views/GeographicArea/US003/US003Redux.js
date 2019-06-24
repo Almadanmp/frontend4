@@ -24,7 +24,8 @@ class US003Redux extends React.Component {
 
     this.handleInputChange = attribute => event => {
       this.setState({
-        [attribute]: event.target.value
+        [attribute]: event.target.value,
+        isHidden: true
       });
     };
 
@@ -52,7 +53,10 @@ class US003Redux extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({typeArea: event.target.value});
+    this.setState({
+      typeArea: event.target.value,
+      isHidden: true
+    });
   }
 
   handleSubmit() {
@@ -62,16 +66,6 @@ class US003Redux extends React.Component {
 
   render() {
     const {item, name, typeArea, length, width, latitude, longitude, altitude, description} = this.state;
-    const {areas, error} = this.props;
-
-    if ((areas.toString()).indexOf("ERROR") !== -1) {
-      return (
-        <div>
-          <div className="help-block"><Alert color="danger">ERROR: {error}</Alert></div>
-
-        </div>
-      )
-    } else {
       return (
         <>
           <label> Name:<span>  </span>
@@ -127,11 +121,12 @@ class US003Redux extends React.Component {
             geographic area
           </Button>
           {this.state.isHidden === false ?
-            <CreateArea name={this.state.name}/> : ''}
+            <CreateArea name={this.state.name} typeArea={this.state.typeArea} length={this.state.length} width={this.state.width}
+                        latitude={this.state.latitude} longitude={this.state.longitude} altitude={this.state.altitude}
+                        areas={this.props.areas} error={this.props.error}/> : ''}
         </>
       );
     }
-  }
 }
 
 const mapStateToProps = (state) => {

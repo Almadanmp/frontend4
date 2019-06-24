@@ -3,7 +3,7 @@ import {Card, CardBody, CardHeader, Col, Table} from "reactstrap";
 import TableBody from "./TableBody";
 import US003 from "../US003";
 
-class RoomGrid extends Component {
+class AreasList extends Component {
 
   constructor(props) {
     super(props);
@@ -33,4 +33,4 @@ class RoomGrid extends Component {
   }
 }
 
-export default RoomGrid;
+export default AreasList;

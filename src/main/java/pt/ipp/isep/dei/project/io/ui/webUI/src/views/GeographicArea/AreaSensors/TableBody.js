@@ -43,7 +43,9 @@ class TableBody extends Component {
         <thead>
         <tr>
           <th style={{
-            textAlign: "center"}}>Sensor</th>
+            textAlign: "center"}}>Sensor ID</th>
+          <th style={{
+            textAlign: "center"}}>Name</th>
           <th style={{
             textAlign: "center"}}>Type</th>
           <th style={{
@@ -58,6 +60,8 @@ class TableBody extends Component {
 
         {item.map(item => (
           <tr key={item.name}>
+            <td style={{
+              textAlign: "center"}}>{item.sensorId}</td>
             <td style={{
               textAlign: "center"}}>{item.name}</td>
             <td style={{

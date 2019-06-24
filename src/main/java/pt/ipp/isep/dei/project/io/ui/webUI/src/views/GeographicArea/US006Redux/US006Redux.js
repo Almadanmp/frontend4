@@ -153,8 +153,7 @@ class US006Redux extends React.Component {
                 <SaveGASensor geographicAreaId={this.state.geographicAreaId} typeSensor={this.state.typeSensor}
                               name={this.state.name}
                               sensorId={this.state.sensorId} dateStartedFunctioning={this.state.dateStartedFunctioning}
-                              latitude={this.state.latitude}
-                              longitude={this.state.longitude} altitude={this.state.altitude}/> : ''}
+                              /> : ''}
             </CardBody>
           </Card>
         </Collapse>

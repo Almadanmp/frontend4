@@ -215,6 +215,54 @@ class SensorSettingsWebControllerTest {
     }
 
     @Test
+    void seeIfCreateAreaSensorFailsEmptyDate() {
+
+        // Arrange
+
+        List<AreaSensor> sensors = new ArrayList<>();
+        sensors.add(validAreaSensor);
+        validGeographicArea.setAreaSensors(sensors);
+        AreaSensorDTO areaSensorDTO = new AreaSensorDTO();
+        areaSensorDTO.setName("Dsads");
+        areaSensorDTO.setId("RF1234");
+        areaSensorDTO.setUnits("mm");
+        areaSensorDTO.setTypeSensor("temperature");
+        areaSensorDTO.setDateStartedFunctioning("");
+
+        Mockito.doReturn(GeographicAreaMapper.objectToDTO(validGeographicArea)).when(this.geographicAreaRepository).getDTOById(id);
+
+        // Perform
+
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.createAreaSensor(areaSensorDTO, id);
+
+        assertEquals(HttpStatus.BAD_REQUEST, actualResult.getStatusCode());
+    }
+
+    @Test
+    void seeIfCreateAreaSensorFailsEmptyType() {
+
+        // Arrange
+
+        List<AreaSensor> sensors = new ArrayList<>();
+        sensors.add(validAreaSensor);
+        validGeographicArea.setAreaSensors(sensors);
+        AreaSensorDTO areaSensorDTO = new AreaSensorDTO();
+        areaSensorDTO.setName("");
+        areaSensorDTO.setId("RF1234");
+        areaSensorDTO.setUnits("mm");
+        areaSensorDTO.setTypeSensor("");
+        areaSensorDTO.setDateStartedFunctioning("2018-10-12");
+
+        Mockito.doReturn(GeographicAreaMapper.objectToDTO(validGeographicArea)).when(this.geographicAreaRepository).getDTOById(id);
+
+        // Perform
+
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.createAreaSensor(areaSensorDTO, id);
+
+        assertEquals(HttpStatus.BAD_REQUEST, actualResult.getStatusCode());
+    }
+
+    @Test
     void seeIfCreateAreaSensorFailsWrongGA() {
 
         // Arrange
@@ -266,6 +314,213 @@ class SensorSettingsWebControllerTest {
         areaSensorDTO.setUnits("mm");
         areaSensorDTO.setTypeSensor("temperature");
         areaSensorDTO.setDateStartedFunctioning("2018-10-12");
+
+        // Perform
+
+
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.createAreaSensor(areaSensorDTO, id);
+
+        assertEquals(HttpStatus.BAD_REQUEST, actualResult.getStatusCode());
+    }
+
+    @Test
+    void seeIfCreateAreaSensorFailsEmptyId() {
+
+        // Arrange
+
+        List<AreaSensor> sensors = new ArrayList<>();
+        sensors.add(validAreaSensor);
+        validGeographicArea.setAreaSensors(sensors);
+        AreaSensorDTO areaSensorDTO = new AreaSensorDTO();
+        areaSensorDTO.setName("RF1234");
+        areaSensorDTO.setId("");
+        areaSensorDTO.setUnits("mm");
+        areaSensorDTO.setTypeSensor("temperature");
+        areaSensorDTO.setDateStartedFunctioning("2018-10-12");
+
+        // Perform
+
+
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.createAreaSensor(areaSensorDTO, id);
+
+        assertEquals(HttpStatus.BAD_REQUEST, actualResult.getStatusCode());
+    }
+
+    @Test
+    void seeIfCreateAreaSensorFailsEmptyIdAndRestNull() {
+
+        // Arrange
+
+        List<AreaSensor> sensors = new ArrayList<>();
+        sensors.add(validAreaSensor);
+        validGeographicArea.setAreaSensors(sensors);
+        AreaSensorDTO areaSensorDTO = new AreaSensorDTO();
+        areaSensorDTO.setName("aasd");
+        areaSensorDTO.setId("");
+        areaSensorDTO.setUnits("mm");
+        areaSensorDTO.setTypeSensor("");
+        areaSensorDTO.setDateStartedFunctioning("");
+
+        // Perform
+
+
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.createAreaSensor(areaSensorDTO, id);
+
+        assertEquals(HttpStatus.BAD_REQUEST, actualResult.getStatusCode());
+    }
+
+    @Test
+    void seeIfCreateAreaSensorFailsNullIdAndName() {
+
+        // Arrange
+
+        List<AreaSensor> sensors = new ArrayList<>();
+        sensors.add(validAreaSensor);
+        validGeographicArea.setAreaSensors(sensors);
+        AreaSensorDTO areaSensorDTO = new AreaSensorDTO();
+        areaSensorDTO.setName(null);
+        areaSensorDTO.setId(null);
+        areaSensorDTO.setUnits("mm");
+        areaSensorDTO.setTypeSensor("temperature");
+        areaSensorDTO.setDateStartedFunctioning("2018-10-12");
+
+        // Perform
+
+
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.createAreaSensor(areaSensorDTO, id);
+
+        assertEquals(HttpStatus.BAD_REQUEST, actualResult.getStatusCode());
+    }
+
+    @Test
+    void seeIfCreateAreaSensorFailsNullIdAndUnit() {
+
+        // Arrange
+
+        List<AreaSensor> sensors = new ArrayList<>();
+        sensors.add(validAreaSensor);
+        validGeographicArea.setAreaSensors(sensors);
+        AreaSensorDTO areaSensorDTO = new AreaSensorDTO();
+        areaSensorDTO.setName("RF1234");
+        areaSensorDTO.setId(null);
+        areaSensorDTO.setUnits(null);
+        areaSensorDTO.setTypeSensor("temperature");
+        areaSensorDTO.setDateStartedFunctioning("2018-10-12");
+
+        // Perform
+
+
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.createAreaSensor(areaSensorDTO, id);
+
+        assertEquals(HttpStatus.BAD_REQUEST, actualResult.getStatusCode());
+    }
+
+    @Test
+    void seeIfCreateAreaSensorFailsNullIdAndType() {
+
+        // Arrange
+
+        List<AreaSensor> sensors = new ArrayList<>();
+        sensors.add(validAreaSensor);
+        validGeographicArea.setAreaSensors(sensors);
+        AreaSensorDTO areaSensorDTO = new AreaSensorDTO();
+        areaSensorDTO.setName("RF1234");
+        areaSensorDTO.setId(null);
+        areaSensorDTO.setUnits("mm");
+        areaSensorDTO.setTypeSensor(null);
+        areaSensorDTO.setDateStartedFunctioning("2018-10-12");
+
+        // Perform
+
+
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.createAreaSensor(areaSensorDTO, id);
+
+        assertEquals(HttpStatus.BAD_REQUEST, actualResult.getStatusCode());
+    }
+
+    @Test
+    void seeIfCreateAreaSensorFailsNullIdAndDate() {
+
+        // Arrange
+
+        List<AreaSensor> sensors = new ArrayList<>();
+        sensors.add(validAreaSensor);
+        validGeographicArea.setAreaSensors(sensors);
+        AreaSensorDTO areaSensorDTO = new AreaSensorDTO();
+        areaSensorDTO.setName("RF1234");
+        areaSensorDTO.setId(null);
+        areaSensorDTO.setUnits("mm");
+        areaSensorDTO.setTypeSensor("temperature");
+        areaSensorDTO.setDateStartedFunctioning(null);
+
+        // Perform
+
+
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.createAreaSensor(areaSensorDTO, id);
+
+        assertEquals(HttpStatus.BAD_REQUEST, actualResult.getStatusCode());
+    }
+
+    @Test
+    void seeIfCreateAreaSensorFailsEverythingNull() {
+
+        // Arrange
+
+        List<AreaSensor> sensors = new ArrayList<>();
+        sensors.add(validAreaSensor);
+        validGeographicArea.setAreaSensors(sensors);
+        AreaSensorDTO areaSensorDTO = new AreaSensorDTO();
+        areaSensorDTO.setName(null);
+        areaSensorDTO.setId(null);
+        areaSensorDTO.setUnits(null);
+        areaSensorDTO.setTypeSensor(null);
+        areaSensorDTO.setDateStartedFunctioning(null);
+
+        // Perform
+
+
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.createAreaSensor(areaSensorDTO, id);
+
+        assertEquals(HttpStatus.BAD_REQUEST, actualResult.getStatusCode());
+    }
+
+    @Test
+    void seeIfCreateAreaSensorFailsNullIdNameAndType() {
+
+        // Arrange
+
+        List<AreaSensor> sensors = new ArrayList<>();
+        sensors.add(validAreaSensor);
+        validGeographicArea.setAreaSensors(sensors);
+        AreaSensorDTO areaSensorDTO = new AreaSensorDTO();
+        areaSensorDTO.setName(null);
+        areaSensorDTO.setId(null);
+        areaSensorDTO.setUnits("mm");
+        areaSensorDTO.setTypeSensor(null);
+        areaSensorDTO.setDateStartedFunctioning("2018-10-12");
+
+        // Perform
+
+
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.createAreaSensor(areaSensorDTO, id);
+
+        assertEquals(HttpStatus.BAD_REQUEST, actualResult.getStatusCode());
+    }
+
+    @Test
+    void seeIfCreateAreaSensorFailsNullIdAndNameAndDate() {
+
+        // Arrange
+
+        List<AreaSensor> sensors = new ArrayList<>();
+        sensors.add(validAreaSensor);
+        validGeographicArea.setAreaSensors(sensors);
+        AreaSensorDTO areaSensorDTO = new AreaSensorDTO();
+        areaSensorDTO.setName(null);
+        areaSensorDTO.setId(null);
+        areaSensorDTO.setUnits("mm");
+        areaSensorDTO.setTypeSensor("temperature");
+        areaSensorDTO.setDateStartedFunctioning(null);
 
         // Perform
 
