@@ -453,6 +453,40 @@ class GeoAreasWebControllerTest {
     }
 
     @Test
+    void getAllGeoAreasDTOBadUser() {
+        // Arrange
+        GeographicAreaDTO validGeographicAreaDTO = new GeographicAreaDTO();
+
+        LocalDTO localDTO = new LocalDTO();
+
+        localDTO.setLatitude(41D);
+        localDTO.setLongitude(-8D);
+        localDTO.setAltitude(100D);
+
+        validGeographicAreaDTO.setLocal(localDTO);
+        validGeographicAreaDTO.setDescription("3rd biggest city");
+        validGeographicAreaDTO.setName("Gaia");
+        validGeographicAreaDTO.setId(66L);
+        validGeographicAreaDTO.setWidth(100);
+        validGeographicAreaDTO.setLength(500);
+        validGeographicAreaDTO.setTypeArea("urban area");
+
+        List<GeographicAreaDTO> geographicAreas = new ArrayList<>();
+        geographicAreas.add(validGeographicAreaDTO);
+
+        Mockito.when(geographicAreaRepository.getAllDTO()).thenReturn(geographicAreas);
+        Mockito.when(userService.getUsernameFromToken()).thenReturn("qwerty");
+
+        ResponseEntity<Object> expectedResult = new ResponseEntity<>(geographicAreas, HttpStatus.OK);
+
+        // Act
+        ResponseEntity<Object> actualResult = geoAreasWebController.getAllGeographicAreas();
+
+        // Assert
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
     void addChildArea() {
         GeographicAreaDTO validGeographicAreaDTO = new GeographicAreaDTO();
         GeographicAreaDTO validGeographicAreaDTO2 = new GeographicAreaDTO();
