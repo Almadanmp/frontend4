@@ -276,4 +276,59 @@ class GeographicAreaWebDTOTest {
         assertFalse(actualResult);
     }
 
+    @Test
+    void seeIfEqualsGeographicAreaPlainLocalDTOWorks() {
+        //Arrange
+        GeographicAreaPlainLocalDTO dto1 = new GeographicAreaPlainLocalDTO();
+        dto1.setName("Porto");
+        dto1.setTypeArea("District");
+
+        GeographicAreaPlainLocalDTO sameDTO = new GeographicAreaPlainLocalDTO();
+        sameDTO.setName("Porto");
+        sameDTO.setTypeArea("District");
+
+
+        GeographicAreaPlainLocalDTO diffDTO = new GeographicAreaPlainLocalDTO();
+        diffDTO.setName("Gaia");
+        diffDTO.setTypeArea("City");
+
+        GeographicAreaPlainLocalDTO diffTypeDTO = new GeographicAreaPlainLocalDTO();
+        diffTypeDTO.setName("Porto");
+        diffTypeDTO.setTypeArea("City");
+
+        GeographicAreaPlainLocalDTO diffNameDTO = new GeographicAreaPlainLocalDTO();
+        diffNameDTO.setName("Chaves");
+        diffNameDTO.setTypeArea("District");
+
+
+        //Act
+
+        boolean actualResult1 = sameDTO.equals(sameDTO);
+        boolean actualResult3 = sameDTO.equals(dto1);
+        boolean actualResult2 = sameDTO.equals(diffDTO);
+        boolean actualResult4 = sameDTO.equals(2);
+        boolean actualResult5 = sameDTO.equals(null);
+        boolean actualResult6 = sameDTO.equals(diffTypeDTO);
+        boolean actualResult7 = sameDTO.equals(diffNameDTO);
+
+        //Assert
+
+        assertTrue(actualResult1);
+        assertTrue(actualResult3);
+        assertFalse(actualResult2);
+        assertFalse(actualResult4);
+        assertFalse(actualResult5);
+        assertFalse(actualResult6);
+        assertFalse(actualResult7);
+    }
+
+    @Test
+    void seeIfHashcodeGeographicAreaPlainLocalDTOWorks() {
+        //Arrange
+        GeographicAreaPlainLocalDTO dto1 = new GeographicAreaPlainLocalDTO();
+        //Assert
+        assertEquals(1, dto1.hashCode());
+    }
+
+
 }

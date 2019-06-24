@@ -19,9 +19,9 @@ class US101Redux extends React.Component {
       zip: '',
       town: '',
       country: '',
-      latitude: 0,
-      longitude: 0,
-      altitude: 0
+      latitude: '',
+      longitude: '',
+      altitude: ''
     };
 
     this.handleInputChange = attribute => event => {
@@ -91,22 +91,22 @@ class US101Redux extends React.Component {
               <input value={this.state.street} type="text" name="street" placeholder="Street"
                      onChange={this.handleInputChange('street')}/>
             </label>
-            <span> Number:
+            <label> Number:
           <input value={this.state.number} type="number" name="number" placeholder="Number"
                  onChange={this.handleInputChange('number')}/>
-        </span>
-            <span> Zip:
+        </label>
+            <label> Zip:
           <input value={this.state.zip} type="number" name="zip" placeholder="Zip"
                  onChange={this.handleInputChange('zip')}/>
-        </span>
+        </label>
             <label>Town:
               <input value={this.state.town} type="text" name="town" placeholder="Town"
                      onChange={this.handleInputChange('town')}/>
             </label>
-            <span> Country:
+            <label> Country:
           <input value={this.state.country} type="text" name="country" placeholder="Country"
                  onChange={this.handleInputChange('country')}/>
-        </span>
+        </label>
             <p></p>
             <span> Latitude:
           <input value={this.state.latitude} type="number" name="latitude" placeholder="0"
