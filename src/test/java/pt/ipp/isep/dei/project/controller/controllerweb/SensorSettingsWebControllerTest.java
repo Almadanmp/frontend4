@@ -31,8 +31,10 @@ import pt.ipp.isep.dei.project.model.user.UserService;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -437,4 +439,46 @@ typeToAdd.setUnits("mm");
 
         assertEquals(expectedResult, actualResult);
     }
+
+    @Test
+    void seeIfDeactivateAreaSensorWorks() {
+
+        Mockito.doReturn(true).when(geographicAreaRepository).deactivateAreaSensor(any(long.class), any(String.class));
+
+        ResponseEntity<Object> expectedResult = new ResponseEntity<>("The area sensor has been deactivated.", HttpStatus.OK);
+
+        //Act
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.deactivateAreaSensor(1L, "id");
+
+        //Assert
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void seeIfDeactivateAreaSensorNotFoundOrNonExistent() {
+        // Arrange
+
+        Mockito.doReturn(false).when(geographicAreaRepository).deactivateAreaSensor(any(long.class), any(String.class));
+
+        ResponseEntity<Object> expectedResult = new ResponseEntity<>("There is no sensor with that ID.", HttpStatus.NOT_FOUND);
+
+        //Act
+
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.deactivateAreaSensor(6L, "ID");
+
+        //Assert
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void seeIfDeactivateAreaSensorNotFound() {
+
+        Mockito.doThrow(NoSuchElementException.class).when(geographicAreaRepository).deactivateAreaSensor(any(long.class), any(String.class));
+
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.deactivateAreaSensor(6L, "id");
+
+        assertEquals(HttpStatus.NOT_FOUND, actualResult.getStatusCode());
+    }
+
 }

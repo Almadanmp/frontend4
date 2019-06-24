@@ -14,6 +14,7 @@ import pt.ipp.isep.dei.project.model.sensortype.SensorTypeRepository;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @RestController
 @ApplicationScope
@@ -59,8 +60,8 @@ public class SensorSettingsWebController {
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>("That ID does not belong to any Geographic Area", HttpStatus.NOT_FOUND);
         }
-        if (!areaSensorDTO.getSensorId().equals("") && areaSensorDTO.getSensorId() != null && !areaSensorDTO.getDateStartedFunctioning().equals("")
-                && !areaSensorDTO.getType().equals("")) {
+        if (!Objects.equals(areaSensorDTO.getSensorId(), "") && areaSensorDTO.getSensorId() != null && !Objects.equals(areaSensorDTO.getDateStartedFunctioning(), "")
+                && !Objects.equals(areaSensorDTO.getType(), "")) {
             if (areaSensorDTO.getName().equals("")) {
                 return new ResponseEntity<>("The sensor name is not valid.", HttpStatus.UNPROCESSABLE_ENTITY);
             }
