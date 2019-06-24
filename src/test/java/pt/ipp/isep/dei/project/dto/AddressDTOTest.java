@@ -11,6 +11,7 @@ class AddressDTOTest {
     // Common testing artifacts for testing in this class.
 
     private AddressDTO validAddressDTO;
+    private AddressLocalGeographicAreaIdDTO validAddressLocalDTO;
 
     @BeforeEach
     void arrangeArtifacts() {
@@ -18,6 +19,11 @@ class AddressDTOTest {
         validAddressDTO.setStreet("Rua R. Dr. António Bernardino de Almeida 431");
         validAddressDTO.setTown("Porto");
         validAddressDTO.setZip("4200-072");
+        validAddressLocalDTO = new AddressLocalGeographicAreaIdDTO();
+        validAddressLocalDTO.setStreet("Rua R. Dr. António Bernardino de Almeida 431");
+        validAddressLocalDTO.setTown("Porto");
+        validAddressLocalDTO.setGeographicAreaId(23L);
+        validAddressLocalDTO.setZip("4200-072");
     }
 
     @Test
@@ -127,5 +133,52 @@ class AddressDTOTest {
         //Assert
 
         assertEquals(1, validAddressDTO.hashCode());
+    }
+
+    @Test
+    void seeIfHashcodeValidAddressWorks() {
+        //Assert
+
+        assertEquals(1, validAddressLocalDTO.hashCode());
+    }
+
+    @Test
+    void seeIfEqualsWorksAddress() {
+
+        //Arrange
+
+        AddressLocalGeographicAreaIdDTO validAddressDTO2 = new AddressLocalGeographicAreaIdDTO();
+        validAddressDTO2.setTown("Porto");
+        validAddressDTO2.setGeographicAreaId(23L);
+        validAddressDTO2.setStreet("Rua R. Dr. António Bernardino de Almeida 431");
+        validAddressDTO2.setZip("4200-072");
+
+        AddressLocalGeographicAreaIdDTO validAddressDTO3 = new AddressLocalGeographicAreaIdDTO();
+        validAddressDTO3.setTown("Lisbon");
+        validAddressDTO2.setGeographicAreaId(23L);
+        validAddressDTO3.setStreet("Rua R. Dr. António Bernardino de Almeida 431");
+        validAddressDTO3.setZip("4200-072");
+
+        AddressLocalGeographicAreaIdDTO validAddressDTO4 = new AddressLocalGeographicAreaIdDTO();
+        validAddressDTO4.setTown("Porto");
+        validAddressDTO2.setGeographicAreaId(22L);
+        validAddressDTO4.setStreet("Rua R. Dr. António Bernardino de Almeida 431");
+        validAddressDTO4.setZip("4200-073");
+
+        //Act
+
+        boolean actualResult1 = validAddressLocalDTO.equals(validAddressLocalDTO);
+        boolean actualResult2 = validAddressLocalDTO.equals(validAddressDTO2);
+        boolean actualResult3 = validAddressLocalDTO.equals(validAddressDTO3);
+        boolean actualResult4 = validAddressLocalDTO.equals(4D);
+        boolean actualResult5 = validAddressLocalDTO.equals(validAddressDTO4);
+
+        //Assert
+
+        assertTrue(actualResult1);
+        assertFalse(actualResult2);
+        assertFalse(actualResult3);
+        assertFalse(actualResult4);
+        assertFalse(actualResult5);
     }
 }
