@@ -40,19 +40,19 @@ class US620 extends Component {
     return (
       <>
         <CardBody>
-            <Row className="justify-content-start">
-              <Col md="7">
-                <DatePickerOneDay620 getDays={this.handleDayPicker} numberOfMonths={numberOfMonths}/>
+          <Row className="justify-content-start">
+            <Col md="7">
+              <DatePickerOneDay620 getDays={this.handleDayPicker} numberOfMonths={numberOfMonths}/>
 
-                {!this.state.isHidden &&
-                <h5 key={totalRainfall}>
-                  {totalRainfall.toString().indexOf("ERROR") != 0 ? 'There is no readings available, please select another day' : 'The total rainfall was' + totalRainfall} </h5>
-                }
-              </Col>
-              <Col md="5" style={{textAlign: "right"}}>
-                <img src={"https://imgur.com/EoYAa5f.png"} width="50%" height="45%" style={{display: "inline-block"}}/>
-              </Col>
-            </Row>
+              {!this.state.isHidden &&
+              <h5 key={totalRainfall}>
+                {totalRainfall.toString().indexOf("ERROR") != 0 ? 'There are no readings available, please select another day' : 'The total rainfall was' + totalRainfall} </h5>
+              }
+            </Col>
+            <Col md="5" style={{textAlign: "right"}}>
+              <img src={"https://imgur.com/EoYAa5f.png"} width="50%" height="45%" style={{display: "inline-block"}}/>
+            </Col>
+          </Row>
         </CardBody>
       </>
     );
