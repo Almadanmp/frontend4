@@ -30,7 +30,7 @@ export default class MyForm extends React.Component {
         {selectedDay && <p>Day: {selectedDay.toLocaleDateString()}</p>}
         {!selectedDay && <p>Choose a day</p>}
         <DayPickerInput onDayChange={this.handleDayChange} dateFormat="yyyy/MM/dd"/>
-        <br></br>
+        <p></p>
         <Button style={{backgroundColor: '#e4e5e6', marginBottom: '1rem'}} onClick={this.handleDaysClick}>
           Select date
         </Button>
