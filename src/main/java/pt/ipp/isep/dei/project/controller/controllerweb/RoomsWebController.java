@@ -131,6 +131,9 @@ public class RoomsWebController {
         double currentRoomTemperature;
         try {
             currentRoomTemperature = roomRepository.getCurrentRoomTempByRoomId(roomId);
+            currentRoomTemperature = currentRoomTemperature*100;
+            currentRoomTemperature = Math.round(currentRoomTemperature);
+            currentRoomTemperature = currentRoomTemperature /100;
             return new ResponseEntity<>(currentRoomTemperature, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>("The room does not exist.", HttpStatus.BAD_REQUEST);
