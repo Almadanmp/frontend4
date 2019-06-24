@@ -67,7 +67,6 @@ class US005Redux extends React.Component {
           <p/>
           <Button style={{marginBottom: '1rem'}} onClick={(event) => {
             this.submit();
-            this.toggleHidden()
           }}>Add sensor
             type</Button>
           {this.state.isHidden === false ?
