@@ -22,7 +22,7 @@ class AreaSensorInactivation extends React.Component {
     this.setState( { isChecked: true } );
     confirmAlert({
       title: 'Confirm inactivation',
-      message: 'Are you sure to inactivate ' + this.props.sensorId +'?',
+      message: 'Are you sure to inactivate ' + this.props.sensorId +'? This action can not be undone.',
       buttons: [
         {
           label: 'Yes',

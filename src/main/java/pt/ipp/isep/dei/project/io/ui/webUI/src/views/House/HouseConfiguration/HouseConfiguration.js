@@ -21,7 +21,7 @@ class HouseConfiguration extends Component {
     return (
       <div>
         <h2>Welcome to the House Configuration Menu</h2>
-        <h4>Please select the option you want to run</h4>
+        <br></br>
         <Row>
           <Col xs="12" sm="10" md="8">
             <Card>
