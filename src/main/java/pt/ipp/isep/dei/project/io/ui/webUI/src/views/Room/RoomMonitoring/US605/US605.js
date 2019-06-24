@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Card, CardBody, Col, Table, Row, CardHeader, Alert} from "reactstrap";
+import {Card, CardBody, Col, Table, Row, CardHeader, Alert, Container} from "reactstrap";
 import US605GetCurrentTemperature from "./US605GetCurrentTemperature";
 import {fetchRooms} from "../../../House/HouseConfiguration/US108/Actions108";
 import connect from "react-redux/es/connect/connect";
@@ -26,28 +26,36 @@ class US605 extends Component {
       return (
         <>
           <Row>
-            <Col>
+            <Col md="15">
               <Card>
                 <CardHeader>
                   Current Temperature
                 </CardHeader>
                 <CardBody>
+                  <Row className="justify-content-start">
+                    <Col md="9">
                   <Table responsive>
                     <CardBody>
                       <tr>
                         <th>Room</th>
-                        <th>Temperature</th>
+                        <th style={{textAlign:"center"}}>Temperature</th>
                       </tr>
                       {rooms.map(items => (
                         <tr>
                           <td value={items.name} key={items.name}> {items.name} </td>
-                          <td><US605GetCurrentTemperature
-                            link={items.links.find((hrefs) => hrefs.rel === 'Get Room Temperature')} />
+                          <td style={{textAlign:"center"}}><US605GetCurrentTemperature
+                            link={items.links.find((hrefs) => hrefs.rel === 'Get Room Temperature')} roomID={items.name}/>
                           </td>
                         </tr>
                       ))}
                     </CardBody>
                   </Table>
+                    </Col>
+                    <Col style={{textAlign: "right"}}>
+                      <img src={"https://imgur.com/QHIi5EA.png"} width="100%" height="11%" style={{display: "inline-block"}}/>
+                      <p></p>
+                    </Col>
+                  </Row>
                 </CardBody>
               </Card>
             </Col>

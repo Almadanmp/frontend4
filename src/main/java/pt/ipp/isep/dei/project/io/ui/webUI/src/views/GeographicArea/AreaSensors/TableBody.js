@@ -64,8 +64,6 @@ class TableBody extends Component {
               textAlign: "center"}}>{item.type}</td>
             <td style={{
               textAlign: "center"}}>{item.dateStartedFunctioning}</td>
-            {/*<td>{item.active == true ? <Badge color="success"> Active </Badge> :*/}
-              {/*<Badge color="danger"> Inactive </Badge>}</td>*/}
             <td style={{
               textAlign: "left"}}><AreaSensorInactivation link={item.links.find((hrefs) => hrefs.rel === 'Deactivate this Sensor')} sensorId={item.name} active={item.active}/> </td>
             <td style={{

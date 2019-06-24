@@ -34,6 +34,8 @@ public class GeoAreasWebController {
     @Autowired
     private AreaTypeRepository areaTypeRepository;
 
+    static final String ADMIN = "admin";
+
     // USER STORY 01 - As an Administrator, I want to add a new type of Geographic Area.
 
     @PostMapping(value = "/areaTypes")
@@ -107,7 +109,7 @@ public class GeoAreasWebController {
         }
         AreaSensorDTO sensorDTO = new AreaSensorDTO();
         for (GeographicAreaDTO g : allDTO) {
-            if (userService.getUsernameFromToken().equals("admin")) {
+            if (userService.getUsernameFromToken().equals(ADMIN)) {
                 Link getChildAreas = linkTo(methodOn(GeoAreasWebController.class).getChildAreas(g.getGeographicAreaId())).
                         withRel("List child areas.");
                 Link addChildArea = linkTo(methodOn(GeoAreasWebController.class).addChildArea(0L
@@ -136,7 +138,7 @@ public class GeoAreasWebController {
     public ResponseEntity<Object> getChildAreas(@PathVariable long id) {
         List<GeographicAreaDTO> childAreaDTOList = geographicAreaRepo.getDTOById(id).getDaughterAreas();
         for (GeographicAreaDTO g : childAreaDTOList) {
-            if (userService.getUsernameFromToken().equals("admin")) {
+            if (userService.getUsernameFromToken().equals(ADMIN)) {
                 Link removeChildArea = linkTo(methodOn(GeoAreasWebController.class).removeChildArea(
                         g.getGeographicAreaId(), id)).withRel("Remove Child Area");
                 g.add(removeChildArea);
@@ -156,7 +158,7 @@ public class GeoAreasWebController {
     public ResponseEntity<List<AreaSensorDTO>> getAreaSensors(@PathVariable long id) {
         List<AreaSensorDTO> areaSensorDTOList = geographicAreaRepo.getDTOById(id).getSensors();
         for (AreaSensorDTO s : areaSensorDTOList) {
-            if (userService.getUsernameFromToken().equals("admin")) {
+            if (userService.getUsernameFromToken().equals(ADMIN)) {
                 Link deleteSelf = linkTo
                         (methodOn(SensorSettingsWebController.class).removeAreaSensor(id, s.getSensorId())).
                         withRel("Delete this Sensor");
