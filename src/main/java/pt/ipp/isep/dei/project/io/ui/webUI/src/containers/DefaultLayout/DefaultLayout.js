@@ -59,7 +59,7 @@ class DefaultLayout extends Component {
                 <AppSidebarNav navConfig={navigationBasic} {...this.props} router={router}/>
               </Suspense>
               <AppHeaderDropdown direction="left">
-                <DropdownToggle navigationAdmin>
+                <DropdownToggle navigationBasic>
                   <img src={'https://imgur.com/4YjW6pf.png'} className="img-avatar" alt="admin@bootstrapmaster.com"/>
                 </DropdownToggle>
                 <DropdownMenu right style={{right: 'auto'}}>
