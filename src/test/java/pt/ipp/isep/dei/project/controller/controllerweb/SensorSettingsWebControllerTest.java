@@ -455,6 +455,21 @@ typeToAdd.setUnits("mm");
     }
 
     @Test
+    void seeIfActivateAreaSensorWorks() {
+
+        Mockito.doReturn(false).when(geographicAreaRepository).deactivateAreaSensor(any(long.class), any(String.class));
+        Mockito.doReturn(true).when(geographicAreaRepository).activateAreaSensor(any(long.class), any(String.class));
+
+        ResponseEntity<Object> expectedResult = new ResponseEntity<>("The area sensor has been activated.", HttpStatus.OK);
+
+        //Act
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.deactivateAreaSensor(1L, "id");
+
+        //Assert
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
     void seeIfDeactivateAreaSensorNotFoundOrNonExistent() {
         // Arrange
 
