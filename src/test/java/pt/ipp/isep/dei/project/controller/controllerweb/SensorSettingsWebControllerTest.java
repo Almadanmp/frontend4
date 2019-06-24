@@ -314,6 +314,23 @@ class SensorSettingsWebControllerTest {
     }
 
     @Test
+    void seeIfRemoveAreaSensorFails(){
+        // Arrange
+
+        ResponseEntity<String> expectedResult = new ResponseEntity<>("Sensor doesn't exist or wasn't found.", HttpStatus.NOT_FOUND);
+
+        Mockito.when(geographicAreaRepository.removeSensorDTO(any(GeographicAreaDTO.class), any(String.class))).thenReturn(false);
+
+        // Act
+
+        ResponseEntity<String> actualResult = sensorSettingsWebController.removeAreaSensor(20, "identifier");
+
+        // Assert
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
     void seeIfAddSensorTypeDifferentNameFromRepoWorks() {
         // Arrange
 
