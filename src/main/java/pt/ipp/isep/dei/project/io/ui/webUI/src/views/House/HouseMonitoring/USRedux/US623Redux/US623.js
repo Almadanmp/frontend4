@@ -39,7 +39,7 @@ class US623 extends Component {
                   style={{backgroundColor: '#FFFFFF', marginBottom: '1rem'}}> Average rainfall:</Button>
           <Collapse isOpen={this.state.collapse}>
             <h5
-              key={rainfall}> {rainfall.toString().indexOf("ERROR") != -1 ? 'There is no data available' : 'The average rainfall was ' + rainfall + '%'} </h5>
+              key={rainfall}> {rainfall.toString().indexOf("ERROR") != -1 ? 'There are no readings available for this period' : 'The average rainfall was ' + rainfall + '%'} </h5>
           </Collapse>
         </>
       );

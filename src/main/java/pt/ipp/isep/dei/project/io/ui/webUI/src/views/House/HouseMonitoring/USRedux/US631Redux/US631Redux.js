@@ -41,7 +41,7 @@ class US631Redux extends Component {
             day (higher maximum temperature): </Button>
           <Collapse isOpen={this.state.collapse}>
             <h5
-              key={hottestDay.value}>{hottestDay.toString().indexOf("ERROR") != -1 ? 'There is no data available' : 'The hottest day was ' + hottestDay.date + ' and the temperature was ' + hottestDay.value + 'ºC'}</h5>
+              key={hottestDay.value}>{hottestDay.toString().indexOf("ERROR") != -1 ? 'There are no readings available for this period' : 'The hottest day was ' + hottestDay.date + ' and the temperature was ' + hottestDay.value + 'ºC'}</h5>
 
           </Collapse>
         </div>
