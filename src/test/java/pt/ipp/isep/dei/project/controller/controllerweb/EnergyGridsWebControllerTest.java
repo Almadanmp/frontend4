@@ -477,7 +477,7 @@ class EnergyGridsWebControllerTest {
         assertEquals(HttpStatus.CONFLICT, actualResult.getStatusCode());
     }
 
-        @Test
+    @Test
     void seeIfGetRoomsWebDtoInGridWorks() {
         //Arrange
         List<RoomDTOMinimal> roomDTOMinimals = new ArrayList<>();
@@ -497,6 +497,32 @@ class EnergyGridsWebControllerTest {
 
         //Assert
         assertEquals(HttpStatus.OK, actualResult.getStatusCode());
+    }
+
+    @Test
+    void seeIfGetRoomsWebDtoInGridLinksWork() {
+        //Arrange
+        List<RoomDTOMinimal> roomDTOMinimals = new ArrayList<>();
+        RoomDTOMinimal roomDTOMinimal = new RoomDTOMinimal();
+        roomDTOMinimal.setFloor(3);
+        roomDTOMinimal.setLength(3);
+        roomDTOMinimal.setWidth(3);
+        roomDTOMinimal.setName("B107");
+        roomDTOMinimal.setHeight(3);
+        roomDTOMinimals.add(roomDTOMinimal);
+
+        Link linkDelete = linkTo(methodOn(EnergyGridsWebController.class).detachRoomFromGrid(roomDTOMinimal, "B building")).withRel("1. Detach the room from the grid.");
+        roomDTOMinimal.add(linkDelete);
+
+        Mockito.doReturn(roomDTOMinimals).when(energyGridRoomService).getRoomsDtoWebInGrid("B building");
+        Mockito.when(userService.getUsernameFromToken()).thenReturn("ADMIN");
+
+
+        //Act
+        ResponseEntity<Object> actualResult = energyGridsWebController.getRoomsWebDtoInGrid("B building");
+
+        //Assert
+        assertEquals(roomDTOMinimals, actualResult.getBody());
     }
 
     @Test
