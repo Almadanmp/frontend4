@@ -32,6 +32,14 @@ class CreateArea extends React.Component {
         </div>
       )
     }
+    else if ((areas.toString()).indexOf("409") !== -1) {
+      return (
+        <div>
+          <div className="help-block"><Alert color="danger">That geographic area already exists in the system.
+          </Alert></div>
+        </div>
+      )
+    }
     else {
       return (
         <div className="help-block"><Alert color="success">
