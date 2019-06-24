@@ -9,6 +9,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +36,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -382,7 +385,7 @@ class EnergyGridsWebControllerTest {
 
     @Test
     void seeIfGetAllGridsWorks() {
-        //Arrange
+        // Arrange
 
         EnergyGrid validGrid = new EnergyGrid("Valid Grid", 45D, "01");
         EnergyGrid validGrid2 = new EnergyGrid("Valid Grid 2", 20D, "7");
@@ -392,11 +395,45 @@ class EnergyGridsWebControllerTest {
         Mockito.when(energyGridRepository.getAllGrids()).thenReturn(list);
         Mockito.when(userService.getUsernameFromToken()).thenReturn("ADMIN");
 
-        //Act
+        // Act
+
         ResponseEntity<Object> actualResult = energyGridsWebController.getAllGrids();
 
-        //Assert
+        // Assert
+
         assertEquals(HttpStatus.OK, actualResult.getStatusCode());
+
+    }
+
+    @Test
+    void seeIfGetAllGridsWorksWithAdmin() {
+        // Arrange
+
+        List<EnergyGridDTO> result = new ArrayList<>();
+        EnergyGrid validGrid = new EnergyGrid("Valid Grid", 45D, "01");
+        List<EnergyGrid> list = new ArrayList<>();
+        list.add(validGrid);
+
+        Mockito.when(energyGridRepository.getAllGrids()).thenReturn(list);
+        Mockito.when(userService.getUsernameFromToken()).thenReturn("admin");
+
+        EnergyGridDTO dto = EnergyGridMapper.objectToDTO(validGrid);
+
+        RoomDTO roomDTO = new RoomDTO();
+        Link link = linkTo(methodOn(EnergyGridsWebController.class).getRoomsWebDtoInGrid(dto.getName())).withRel("1. Get rooms in Grid.");
+        Link linkAttach = linkTo(methodOn(EnergyGridsWebController.class).attachRoomToGrid(roomDTO,dto.getName())).withRel("2. Attach a new room to a Grid.");
+        dto.add(link);
+        dto.add(linkAttach);
+        result.add(dto);
+
+        // Act
+
+        ResponseEntity<Object> actualResult = energyGridsWebController.getAllGrids();
+
+        // Assert
+
+        assertEquals(result, actualResult.getBody());
+
     }
 
     @Test
