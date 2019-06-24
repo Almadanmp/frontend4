@@ -36,27 +36,9 @@ class RoomCreator extends React.Component {
     this.toggleHidden();
   }
 
-  submit = () => {
-    confirmAlert({
-      title: 'Confirm your room configuration',
-      message: 'The new room has the following new configuration: Name: ' + this.state.name + '. | Floor: ' + this.state.floor + '. | Width: ' + this.state.width + 'm. | Length: ' + this.state.length + 'm. | Height: ' + this.state.height + 'm. Do you want to proceed?',
-      buttons: [
-        {
-          label: 'Yes',
-          onClick: () => this.handleSubmit()
-        },
-        {
-          label: 'No',
-          onClick: () => {
-          }
-        }
-      ]
-    });
 
-  };
 
   render() {
-    const {name, floor, width, length, height} = this.state;
     return (
       <>
         <label> Name: <input value={this.state.name} placeholder={"Room name"} type="text" name="name"
@@ -80,7 +62,7 @@ class RoomCreator extends React.Component {
         </label>
         <p></p>
         <Button style={{backgroundColor: '#e4e5e6', marginBottom: '1rem'}} onClick={
-          this.submit
+          this.handleSubmit
         }>Save new room
           configuration</Button>{!this.state.isHidden &&
       <Message105 name={this.state.name} floor={this.state.floor} width={this.state.width} length={this.state.width}

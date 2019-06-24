@@ -165,6 +165,9 @@ public class RoomsWebController {
         }
         try {
             result = roomRepository.getRoomMaxTempById(roomId, date);
+            result = result*100;
+            result = Math.round(result);
+            result = result /100;
             return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>("This room does not exist.", HttpStatus.OK);
