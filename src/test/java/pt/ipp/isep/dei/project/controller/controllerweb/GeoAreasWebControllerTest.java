@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -19,6 +20,7 @@ import pt.ipp.isep.dei.project.dto.*;
 import pt.ipp.isep.dei.project.dto.mappers.GeographicAreaMapper;
 import pt.ipp.isep.dei.project.model.areatype.AreaType;
 import pt.ipp.isep.dei.project.model.areatype.AreaTypeRepository;
+import pt.ipp.isep.dei.project.model.geographicarea.GeographicArea;
 import pt.ipp.isep.dei.project.model.geographicarea.GeographicAreaRepository;
 import pt.ipp.isep.dei.project.model.user.UserService;
 
@@ -481,6 +483,76 @@ class GeoAreasWebControllerTest {
 
         // Act
         ResponseEntity<Object> actualResult = geoAreasWebController.getAllGeographicAreas();
+
+        // Assert
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void seeIfGetChildAreas() {
+        // Arrange
+        long id = 1L;
+
+        GeographicAreaDTO validGeographicAreaDTO = new GeographicAreaDTO();
+        LocalDTO localDTO = new LocalDTO();
+        localDTO.setLatitude(41D);
+        localDTO.setLongitude(-8D);
+        localDTO.setAltitude(100D);
+
+        validGeographicAreaDTO.setLocal(localDTO);
+        validGeographicAreaDTO.setDescription("3rd biggest city");
+        validGeographicAreaDTO.setName("Gaia");
+        validGeographicAreaDTO.setId(66L);
+        validGeographicAreaDTO.setWidth(100);
+        validGeographicAreaDTO.setLength(500);
+        validGeographicAreaDTO.setTypeArea("urban area");
+
+        List<GeographicAreaDTO> geographicAreas = new ArrayList<>();
+        geographicAreas.add(validGeographicAreaDTO);
+        validGeographicAreaDTO.setDaughterAreaList(geographicAreas);
+
+        Mockito.when(geographicAreaRepository.getDTOById(id)).thenReturn(validGeographicAreaDTO);
+        Mockito.when(userService.getUsernameFromToken()).thenReturn("admin");
+
+        ResponseEntity<Object> expectedResult = new ResponseEntity<>(geographicAreas, HttpStatus.OK);
+
+        // Act
+        ResponseEntity<Object> actualResult = geoAreasWebController.getChildAreas(id);
+
+        // Assert
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void seeIfGetChildAreasBadUser() {
+        // Arrange
+        long id = 1L;
+
+        GeographicAreaDTO validGeographicAreaDTO = new GeographicAreaDTO();
+        LocalDTO localDTO = new LocalDTO();
+        localDTO.setLatitude(41D);
+        localDTO.setLongitude(-8D);
+        localDTO.setAltitude(100D);
+
+        validGeographicAreaDTO.setLocal(localDTO);
+        validGeographicAreaDTO.setDescription("3rd biggest city");
+        validGeographicAreaDTO.setName("Gaia");
+        validGeographicAreaDTO.setId(66L);
+        validGeographicAreaDTO.setWidth(100);
+        validGeographicAreaDTO.setLength(500);
+        validGeographicAreaDTO.setTypeArea("urban area");
+
+        List<GeographicAreaDTO> geographicAreas = new ArrayList<>();
+        geographicAreas.add(validGeographicAreaDTO);
+        validGeographicAreaDTO.setDaughterAreaList(geographicAreas);
+
+        Mockito.when(geographicAreaRepository.getDTOById(id)).thenReturn(validGeographicAreaDTO);
+        Mockito.when(userService.getUsernameFromToken()).thenReturn("qwerty");
+
+        ResponseEntity<Object> expectedResult = new ResponseEntity<>(geographicAreas, HttpStatus.OK);
+
+        // Act
+        ResponseEntity<Object> actualResult = geoAreasWebController.getChildAreas(id);
 
         // Assert
         assertEquals(expectedResult, actualResult);
