@@ -18,6 +18,7 @@ import pt.ipp.isep.dei.project.model.user.UserService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -124,7 +125,7 @@ public class EnergyGridsWebController {
      */
     @PostMapping(value = "/")
     public ResponseEntity<String> createEnergyGrid(@RequestBody EnergyGridDTO energyGridDTO) {
-        if (energyGridDTO.getHouseID() != null && energyGridDTO.getName() != null && energyGridDTO.getMaxContractedPower() != null && energyGridDTO.getName() != "") {
+        if (energyGridDTO.getHouseID() != null && energyGridDTO.getName() != null && energyGridDTO.getMaxContractedPower() != null && !Objects.equals(energyGridDTO.getName(), "")) {
             if (energyGridRepository.createEnergyGrid(energyGridDTO)) {
                 return new ResponseEntity<>(
                         "Energy grid created and added to the house with success!",

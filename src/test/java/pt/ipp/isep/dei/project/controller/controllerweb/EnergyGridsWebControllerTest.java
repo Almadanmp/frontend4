@@ -217,6 +217,24 @@ class EnergyGridsWebControllerTest {
     }
 
     @Test
+    void seeIfCreateEnergyGridBadRequestEmptyName() {
+        // Arrange
+
+        EnergyGrid validGrid = new EnergyGrid("", 45D, "7");
+        EnergyGridDTO energyGridDTO = EnergyGridMapper.objectToDTO(validGrid);
+
+        Mockito.doReturn(true).when(energyGridRepository).createEnergyGrid(energyGridDTO);
+
+        HttpStatus expectedResult = HttpStatus.BAD_REQUEST;
+
+        // Act
+        HttpStatus actualResult = energyGridsWebController.createEnergyGrid(energyGridDTO).getStatusCode();
+
+        // Assert
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
     void seeIfCreateEnergyGridGeneratesConflict() {
         // Arrange
 
