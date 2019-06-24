@@ -194,7 +194,7 @@ public class GeoAreasWebController {
         }
         try {
             if (geographicAreaRepo.addChildArea(childLong, idAreaParent)) {
-                result = geographicAreaRepo.getDTOByIdWithParent(idAreaParent);
+                result = geographicAreaRepo.getDTOById(idAreaParent);
                 link = linkTo(methodOn(GeoAreasWebController.class).getGeographicArea(childLong)).withRel("See geographic area");
                 result.add(link);
                 return new ResponseEntity<>(result, HttpStatus.OK);
@@ -213,10 +213,10 @@ public class GeoAreasWebController {
         Link link;
         try {
             if (geographicAreaRepo.removeChildArea(idAreaChild, idAreaParent)) {
-                result = geographicAreaRepo.getDTOByIdWithParent(idAreaParent);
+                result = geographicAreaRepo.getDTOById(idAreaParent);
                 link = linkTo(methodOn(GeoAreasWebController.class).getGeographicArea(idAreaChild)).withRel("See geographic area");
                 result.add(link);
-                return new ResponseEntity<>(geographicAreaRepo.getDTOByIdWithParent(idAreaParent), HttpStatus.OK);
+                return new ResponseEntity<>(result, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>("The Geographic Area hasn't been removed. The daughter area is already not contained in the mother area.", HttpStatus.CONFLICT);
             }
@@ -272,7 +272,7 @@ public class GeoAreasWebController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Object> getGeographicArea(@PathVariable("id") long id) {
-        return new ResponseEntity<>(geographicAreaRepo.getDTOByIdWithParent(id), HttpStatus.OK);
+        return new ResponseEntity<>(geographicAreaRepo.getDTOById(id), HttpStatus.OK);
     }
 
 }

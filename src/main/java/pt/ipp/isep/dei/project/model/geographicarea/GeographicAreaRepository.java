@@ -64,20 +64,6 @@ public class GeographicAreaRepository {
         return GeographicAreaMapper.objectToDTOWithMother(aux.get());
     }
 
-    /**
-     * get DTO (with list of daughterAreas) from id
-     *
-     * @param id of the geoAreaDTO
-     * @return geoAreaDTO with the id
-     */
-    public GeographicAreaDTO getDTOByIdWithParent(long id) {
-        Optional<GeographicArea> aux = geographicAreaCrudRepo.findById(id);
-        if (!aux.isPresent()) {
-            throw new IllegalArgumentException("Geographic Area not found - 404");
-        }
-        return GeographicAreaMapper.objectToDTOWithMother(aux.get());
-    }
-
     boolean addAndPersistDTO(GeographicAreaDTO geographicAreaToAddDTO) {
         List<GeographicArea> geographicAreas = getAll();
         GeographicArea geographicAreaToAdd = GeographicAreaMapper.dtoToObject(geographicAreaToAddDTO);

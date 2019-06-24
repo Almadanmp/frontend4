@@ -214,5 +214,66 @@ class GeographicAreaWebDTOTest {
         //Assert
         assertFalse(actualResult);
     }
+    @Test
+    void seeIfRemoveSensorWorksPlainLocal4() {
+        //Arrange
+        GeographicAreaPlainLocalDTO geographicAreaWebDTO = new GeographicAreaPlainLocalDTO();
+        List<AreaSensorDTO> list = new ArrayList<>();
+        AreaSensorDTO areaSensorWebDTO = new AreaSensorDTO();
+        areaSensorWebDTO.setName("Sensor 1");
+        areaSensorWebDTO.setId("T1234");
+        list.add(areaSensorWebDTO);
+        geographicAreaWebDTO.setAreaSensorDTOList(list);
+
+        //Act
+        boolean actualResult = geographicAreaWebDTO.removeSensor(areaSensorWebDTO.getSensorId());
+        //Assert
+        assertTrue(actualResult);
+    }
+
+    @Test
+    void seeIfRemoveSensorDoesntWorkPlainLocal3() {
+        //Arrange
+        GeographicAreaPlainLocalDTO geographicAreaWebDTO = new GeographicAreaPlainLocalDTO();
+        AreaSensorWebDTO areaSensorWebDTO = new AreaSensorWebDTO();
+        areaSensorWebDTO.setName("Sensor 1");
+        areaSensorWebDTO.setId("T1234");
+        //Act
+        boolean actualResult = geographicAreaWebDTO.removeSensor(areaSensorWebDTO.getId());
+        //Assert
+        assertFalse(actualResult);
+    }
+
+    @Test
+    void seeIfRemoveSensorFailsPlainLocal2() {
+        //Arrange
+        GeographicAreaPlainLocalDTO geographicAreaWebDTO = new GeographicAreaPlainLocalDTO();
+        List<AreaSensorDTO> list = new ArrayList<>();
+        AreaSensorDTO areaSensorWebDTO = new AreaSensorDTO();
+        areaSensorWebDTO.setName("Sensor 1");
+        areaSensorWebDTO.setId("T12345");
+        list.add(areaSensorWebDTO);
+        geographicAreaWebDTO.setAreaSensorDTOList(list);
+        //Act
+        boolean actualResult = geographicAreaWebDTO.removeSensor(areaSensorWebDTO.getSensorId());
+        //Assert
+        assertTrue(actualResult);
+    }
+
+    @Test
+    void seeIfRemoveSensorFailsPlainLocal() {
+        //Arrange
+        GeographicAreaPlainLocalDTO geographicAreaWebDTO = new GeographicAreaPlainLocalDTO();
+        List<AreaSensorDTO> list = new ArrayList<>();
+        AreaSensorDTO areaSensorWebDTO = new AreaSensorDTO();
+        areaSensorWebDTO.setName("Sensor 1");
+        areaSensorWebDTO.setId("T12345");
+        list.add(areaSensorWebDTO);
+        geographicAreaWebDTO.setAreaSensorDTOList(list);
+        //Act
+        boolean actualResult = geographicAreaWebDTO.removeSensor("T123457");
+        //Assert
+        assertFalse(actualResult);
+    }
 
 }
