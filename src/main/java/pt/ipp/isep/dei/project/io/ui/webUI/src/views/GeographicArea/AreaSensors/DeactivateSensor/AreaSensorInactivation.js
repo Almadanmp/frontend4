@@ -19,24 +19,30 @@ class AreaSensorInactivation extends React.Component {
   }
 
   submit = () => {
-    this.setState( { isChecked: true } );
-    confirmAlert({
-      title: 'Confirm inactivation',
-      message: 'Are you sure to inactivate ' + this.props.sensorId +'? This action can not be undone.',
-      buttons: [
-        {
-          label: 'Yes',
-          onClick: () => this.handleSubmit()
-        },
-        {
-          label: 'No',
-          onClick: () => {
-            this.setState( { isChecked: false } );
+    if (this.state.isChecked === false) {
+      this.setState({isChecked: true});
+      confirmAlert({
+        title: 'Confirm inactivation',
+        message: 'Are you sure to inactivate ' + this.props.sensorId + '?',
+        buttons: [
+          {
+            label: 'Yes',
+            onClick: () => this.handleSubmit()
+          },
+          {
+            label: 'No',
+            onClick: () => {
+              this.setState({isChecked: false});
 
+            }
           }
-        }
-      ]
-    });
+        ]
+      });
+    }
+    else {
+      this.handleSubmit();
+      this.setState({isChecked: false});
+    }
   };
 
   handleSubmit() {
@@ -45,13 +51,13 @@ class AreaSensorInactivation extends React.Component {
 
 
   render() {
-    const isEnabled = this.state.isChecked;
     return (
       <>
 
-        <div className="switch-container" >
+        <div className="switch-container">
           <label>
-            <input ref="switch" checked={this.state.isChecked } disabled={isEnabled} onChange={ this.submit } className="switch" type="checkbox" />
+            <input ref="switch" checked={this.state.isChecked} onChange={this.submit} className="switch"
+                   type="checkbox"/>
             <div>
               <div> </div>
             </div>
@@ -71,4 +77,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-export default connect(null, mapDispatchToProps)( AreaSensorInactivation);
+export default connect(null, mapDispatchToProps)(AreaSensorInactivation);

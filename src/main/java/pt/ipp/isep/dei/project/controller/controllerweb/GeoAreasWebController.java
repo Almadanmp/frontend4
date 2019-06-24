@@ -232,6 +232,9 @@ public class GeoAreasWebController {
             if (geographicAreaRepo.deactivateAreaSensor(id, sensorId)) {
                 return new ResponseEntity<>("The sensor was successfully deactivated from the selected geographic area.", HttpStatus.OK);
             }
+            if (geographicAreaRepo.activateAreaSensor(id, sensorId)){
+                return new ResponseEntity<>("The sensor was successfully activated from the selected geographic area.", HttpStatus.OK);
+            }
             return new ResponseEntity<>("There is no sensor with that ID in this geographic area.", HttpStatus.NOT_FOUND);
         } catch (NoSuchElementException ok) {
             return new ResponseEntity<>("There is no geographic area", HttpStatus.NOT_FOUND);

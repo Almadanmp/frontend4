@@ -166,6 +166,7 @@ public class GeographicAreaRepository {
         geographicAreaCrudRepo.save(area);
     }
 
+
     public boolean deactivateAreaSensor(long idArea, String idSensor) {
         Optional<GeographicArea> geographicArea = geographicAreaCrudRepo.findById(idArea);
         if (geographicArea.isPresent()) {
@@ -173,6 +174,20 @@ public class GeographicAreaRepository {
             AreaSensor areaSensor = geoArea.getAreaSensorByID(idSensor);
             if (areaSensor.isActive()) {
                 geoArea.deactivateSensor(areaSensor);
+                geographicAreaCrudRepo.save(geoArea);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean activateAreaSensor(long idArea, String idSensor) {
+        Optional<GeographicArea> geographicArea = geographicAreaCrudRepo.findById(idArea);
+        if (geographicArea.isPresent()) {
+            GeographicArea geoArea = geographicArea.get();
+            AreaSensor areaSensor = geoArea.getAreaSensorByID(idSensor);
+            if (!areaSensor.isActive()) {
+                geoArea.activateSensor(areaSensor);
                 geographicAreaCrudRepo.save(geoArea);
                 return true;
             }

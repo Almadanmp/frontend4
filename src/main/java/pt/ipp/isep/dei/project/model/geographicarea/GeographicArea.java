@@ -387,6 +387,15 @@ public class GeographicArea implements Root {
         return false;
     }
 
+    public boolean activateSensor(AreaSensor areaSensor) {
+        if (this.removeSensorWithID(areaSensor.getId())) {
+            areaSensor.setActive(true);
+            this.addSensor(areaSensor);
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Method 'equals' is required so that each 'Geographic Area' can be added to a 'Geographic Area List'. Two
      * Geographic Areas cannot have the same Localization, name and AreaType

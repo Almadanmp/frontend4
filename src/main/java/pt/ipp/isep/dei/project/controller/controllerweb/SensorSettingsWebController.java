@@ -86,12 +86,14 @@ public class SensorSettingsWebController {
     public ResponseEntity<Object> deactivateAreaSensor(@PathVariable("id") long idArea, @PathVariable("id2") String idSensor) {
         try {
             if (geographicAreaRepository.deactivateAreaSensor(idArea, idSensor)) {
-                return new ResponseEntity<>("The Area Sensor has been deactivated.", HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>("The Area Sensor is already deactivated", HttpStatus.CONFLICT);
+                return new ResponseEntity<>("The area sensor has been deactivated.", HttpStatus.OK);
             }
+            if (geographicAreaRepository.activateAreaSensor(idArea, idSensor)) {
+                return new ResponseEntity<>("The area sensor has been activated.", HttpStatus.OK);
+            }
+            return new ResponseEntity<>("There is no sensor with that ID.", HttpStatus.NOT_FOUND);
         } catch (NoSuchElementException ok) {
-            return new ResponseEntity<>("There is no Geographic Area or Sensor with that ID.", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("There is no geographic area with that ID.", HttpStatus.NOT_FOUND);
         }
     }
 
