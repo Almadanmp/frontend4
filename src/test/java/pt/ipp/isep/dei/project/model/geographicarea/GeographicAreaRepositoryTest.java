@@ -142,6 +142,66 @@ class GeographicAreaRepositoryTest {
     }
 
     @Test
+    void seeIfSensorExistsWorks() {
+        // Arrange
+
+        List<GeographicArea> geographicAreas = new ArrayList<>();
+        geographicAreas.add(firstValidArea);
+        firstValidArea.addSensor(secondValidAreaSensor);
+
+        Mockito.when(geographicAreaCrudRepo.findAll()).thenReturn(geographicAreas);
+
+        //Act
+
+        boolean actualResult = geographicAreaRepository.sensorExists(secondValidAreaSensor.getId());
+
+        // Assert
+
+        assertTrue(actualResult);
+    }
+
+    @Test
+    void seeIfSensorExistsWorksWhenItDoesNotExist() {
+        // Arrange
+
+        List<GeographicArea> geographicAreas = new ArrayList<>();
+        geographicAreas.add(firstValidArea);
+        firstValidArea.addSensor(secondValidAreaSensor);
+
+        Mockito.when(geographicAreaCrudRepo.findAll()).thenReturn(geographicAreas);
+
+        //Act
+
+        boolean actualResult = geographicAreaRepository.sensorExists("222");
+
+        // Assert
+
+        assertFalse(actualResult);
+    }
+
+    @Test
+    void seeIfSensorExistsWorksWhenGeographicAreasAreEmpty() { //this test improves coverage
+        // Arrange
+
+        GeographicArea geographicArea = new GeographicArea("Portugal", "Country", 300, 200,
+                new Local(50, 50, 10));
+
+
+        List<GeographicArea> geographicAreas = new ArrayList<>();
+        geographicAreas.add(geographicArea);
+
+        Mockito.when(geographicAreaCrudRepo.findAll()).thenReturn(geographicAreas);
+
+        //Act
+
+        boolean actualResult = geographicAreaRepository.sensorExists("222");
+
+        // Assert
+
+        assertFalse(actualResult);
+    }
+
+    @Test
     void seeIfUpdateGeoAreaWorks() {
         // Arrange
 
@@ -689,28 +749,6 @@ class GeographicAreaRepositoryTest {
 
         // Assert
         assertEquals(geographicAreaWebDTOS, actualResult);
-    }
-
-    @Test
-    void seeIfGetDTOByIdWithMotherWorks() {
-        //Arrange
-        Mockito.when(geographicAreaCrudRepo.findById(4L)).thenReturn(Optional.of(firstValidArea));
-        GeographicAreaDTO geographicAreaDTO = GeographicAreaMapper.objectToDTO(firstValidArea);
-        //Act
-        GeographicAreaDTO actualResult = geographicAreaRepository.getDTOByIdWithParent(4L);
-        //Assert
-        assertEquals(geographicAreaDTO, actualResult);
-    }
-
-    @Test
-    void seeIfGetDTOByIdWithMotherDoesNotWork() {
-        //Arrange
-        Mockito.when(geographicAreaCrudRepo.findById(4L)).thenReturn(Optional.empty());
-        //Act
-        Throwable exception = assertThrows(IllegalArgumentException.class, () -> geographicAreaRepository.getDTOByIdWithParent(4L));
-        //Assert
-        assertEquals("Geographic Area not found - 404", exception.getMessage());
-
     }
 
     @Test
