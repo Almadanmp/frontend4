@@ -42,7 +42,7 @@ class US605 extends Component {
                         <tr>
                           <td value={items.name} key={items.name}> {items.name} </td>
                           <td><US605GetCurrentTemperature
-                            link={items.links.find((hrefs) => hrefs.rel === 'Get Room Temperature')} />
+                            link={items.links.find((hrefs) => hrefs.rel === 'Get Room Temperature')} roomID={items.name}/>
                           </td>
                         </tr>
                       ))}
