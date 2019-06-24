@@ -30,7 +30,7 @@ class ImportHouse extends Component {
     } else {
       return (
         <div>
-          <Button onClick={this.toggle} style={{backgroundColor: '#93c4c4', marginBottom: '2rem'}}
+          <Button onClick={this.toggle} style={{backgroundColor: '#93c4c4', marginBottom: '2rem', width: 250, height:50}}
                   class="fa fa-plus-square-o fa-lg mt-4">Import House, Rooms and Grids</Button>
           <Collapse isOpen={this.state.collapse}>
             <Card>

@@ -16,7 +16,7 @@ class ImportHouseSensors extends Component {
   render() {
     return (
       <div>
-        <Button onClick={this.toggle} style={{backgroundColor: '#93c4c4', marginBottom: '2rem'}}
+        <Button onClick={this.toggle} style={{backgroundColor: '#93c4c4', marginBottom: '2rem', width: 250, height:50}}
                 class="fa fa-plus-square-o fa-lg mt-4">Import House Sensors</Button>
         <Collapse isOpen={this.state.collapse}>
           <Card>
