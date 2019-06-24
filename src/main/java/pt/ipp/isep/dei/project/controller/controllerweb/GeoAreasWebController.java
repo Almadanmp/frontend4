@@ -77,11 +77,11 @@ public class GeoAreasWebController {
      */
     @PostMapping(value = "/")
     public ResponseEntity<Object> createGeoArea(@RequestBody GeographicAreaPlainLocalDTO dto) {
-        if (((Double.compare(dto.getLength(), 0.0)) == 0) || (Double.compare(dto.getWidth(), 0.0) == 0)) {
-            return new ResponseEntity<>("You can't have a Geographic Area without an area greater than 0.", HttpStatus.UNPROCESSABLE_ENTITY);
-        }
         if (dto.getName() != null && dto.getTypeArea() != null && dto.getLatitude() != null && dto.getLongitude() != null && dto.getAltitude() != null) {
-            if (geographicAreaRepo.addAndPersistPlainDTO(dto)) {
+            if (((Double.compare(dto.getLength(), 0.0)) == 0) || (Double.compare(dto.getWidth(), 0.0) == 0)) {
+                return new ResponseEntity<>("You can't have a Geographic Area without an area greater than 0.", HttpStatus.UNPROCESSABLE_ENTITY);
+            }
+            else if (geographicAreaRepo.addAndPersistPlainDTO(dto)) {
                 Link link = linkTo(methodOn(GeoAreasWebController.class).getAllGeographicAreas()).withRel("See all geographic areas");
                 dto.add(link);
                 return new ResponseEntity<>(dto, HttpStatus.CREATED);
