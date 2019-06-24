@@ -52,7 +52,7 @@ class US605 extends Component {
                   </Table>
                     </Col>
                     <Col style={{textAlign: "right"}}>
-                      <img src={"https://imgur.com/QHIi5EA.png"} width="100%" height="15%" style={{display: "inline-block"}}/>
+                      <img src={"https://imgur.com/QHIi5EA.png"} width="100%" height="11%" style={{display: "inline-block"}}/>
                       <p></p>
                     </Col>
                   </Row>

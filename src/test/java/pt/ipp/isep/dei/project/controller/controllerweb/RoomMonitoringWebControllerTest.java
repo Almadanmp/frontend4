@@ -90,6 +90,25 @@ class RoomMonitoringWebControllerTest {
     }
 
     @Test
+    void seeIfGetCurrentRoomTemperatureWorksWithRound() {
+        // Arrange
+
+        Room room = room1;
+        double resultTemp = 15.5451254845125484512;
+        double resultRounded= 15.55;
+        ResponseEntity<Object> expectedResult = new ResponseEntity<>(resultRounded, HttpStatus.OK);
+
+        // Act
+
+        Mockito.when(roomRepository.getCurrentRoomTempByRoomId(room.getId())).thenReturn(resultTemp);
+        ResponseEntity<Object> actualResult = roomMonitoringWebController.getCurrentRoomTemperature(room.getId());
+
+        // Assert
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
     void seeIfGetCurrentRoomTemperatureIllegalArgument() {
         // Arrange
         Room room = room1;
