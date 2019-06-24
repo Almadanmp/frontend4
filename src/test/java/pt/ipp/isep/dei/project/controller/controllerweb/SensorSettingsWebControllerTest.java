@@ -44,9 +44,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class SensorSettingsWebControllerTest {
 
     @Mock
-    UserService userService;
-
-    @Mock
     GeographicAreaRepository geographicAreaRepository;
 
     @Mock
@@ -317,6 +314,50 @@ class SensorSettingsWebControllerTest {
     }
 
     @Test
+    void seeIfRemoveAreaSensorFails(){
+        // Arrange
+
+        ResponseEntity<String> expectedResult = new ResponseEntity<>("Sensor doesn't exist or wasn't found.", HttpStatus.NOT_FOUND);
+
+        Mockito.when(geographicAreaRepository.removeSensorDTO(any(GeographicAreaDTO.class), any(String.class))).thenReturn(false);
+
+        // Act
+
+        ResponseEntity<String> actualResult = sensorSettingsWebController.removeAreaSensor(20, "identifier");
+
+        // Assert
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void seeIfAddSensorTypeDifferentNameFromRepoWorks() {
+        // Arrange
+
+        List<SensorTypeDTO> listWithDifferentName = new ArrayList<>();
+
+        SensorTypeDTO sensorTypeDTO = new SensorTypeDTO();
+        sensorTypeDTO.setName("number one");
+
+
+        listWithDifferentName.add(sensorTypeDTO);
+
+        Mockito.when(sensorTypeRepository.getAllSensorTypeDTO()).thenReturn(listWithDifferentName);
+        SensorTypeDTO typeToAdd = new SensorTypeDTO();
+        typeToAdd.setName("rain");
+        typeToAdd.setUnits("mm");
+        ResponseEntity<Object> expectedResult = new ResponseEntity<>(typeToAdd, HttpStatus.OK);
+
+        // Act
+
+        ResponseEntity<Object> actualResult = sensorSettingsWebController.addSensorType(typeToAdd);
+
+        // Assert
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
     void seeIfAddSensorTypeWorksDuplicate() {
         // Arrange
 
@@ -439,6 +480,8 @@ typeToAdd.setUnits("mm");
 
         assertEquals(expectedResult, actualResult);
     }
+
+
 
     @Test
     void seeIfDeactivateAreaSensorWorks() {
