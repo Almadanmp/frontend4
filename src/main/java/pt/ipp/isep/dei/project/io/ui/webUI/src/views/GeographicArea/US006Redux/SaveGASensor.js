@@ -36,20 +36,15 @@ class SaveGASensor extends React.Component {
       return (
         <div className="help-block"><Alert color="success">
           <p>The following sensor was added:</p>
-          <ul>
-            <li>
-              Name: {name}, ID: {sensorId}
-            </li>
-            <li>
-              Type: {typeSensor}
-            </li>
-            <li>
-              Geographic Area ID: {geographicAreaId}
-            </li>
-            <li>
-              Start Date: {dateStartedFunctioning}
-            </li>
-          </ul>
+          <p>
+            Name: {name}, ID: {sensorId}
+          </p>
+          <p>
+            Type: {typeSensor}
+          </p>
+          <p>
+            Start Date: {dateStartedFunctioning}
+          </p>
         </Alert></div>
       );
     }

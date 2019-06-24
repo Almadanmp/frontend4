@@ -24,7 +24,7 @@ class HouseMonitoring extends Component {
         <br></br>
         <Row>
           <Col xs="12" sm="10" md="4">
-            <Card className="card-accent-warning">
+            <Card>
               <CardHeader>
                 Current Temperature
               </CardHeader>
@@ -38,7 +38,7 @@ class HouseMonitoring extends Component {
 
 
           <Col xs="6" sm="4" md="4">
-            <Card className="card-accent-warning">
+            <Card>
               <CardHeader>
                 Total Rainfall
               </CardHeader>
@@ -49,7 +49,7 @@ class HouseMonitoring extends Component {
           </Col>
         </Row>
         <Col xs="12" sm="9" md="8">
-          <Card className="card-accent-warning">
+          <Card>
             <CardHeader>
               Period Monitoring
             </CardHeader>

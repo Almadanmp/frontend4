@@ -67,7 +67,6 @@ class SelectRoom extends Component {
                 {item.map(items => (
                   <option value={items.name} key={items.name}>
                     Name: {items.name}
-
                   </option>
                 ))}
               </Input>
