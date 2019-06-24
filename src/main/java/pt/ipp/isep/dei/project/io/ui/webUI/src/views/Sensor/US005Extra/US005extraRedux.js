@@ -27,7 +27,7 @@ class US005extraRedux extends Component {
             <strong> Sensor Types</strong>
           </CardHeader>
           <CardBody style={{
-            textAlign: "right"
+            textAlign: "left"
           }}>
             <Table>
               <TableHeader headers={headers}/>
