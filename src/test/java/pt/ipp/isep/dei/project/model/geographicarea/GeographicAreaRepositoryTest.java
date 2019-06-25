@@ -142,6 +142,122 @@ class GeographicAreaRepositoryTest {
     }
 
     @Test
+    void seeIfActivateAreaSensorWorks() {
+        // Arrange
+
+        firstValidArea.addSensor(secondValidAreaSensor);
+        firstValidArea.setId(2L);
+        secondValidAreaSensor.deactivateSensor();
+
+        Mockito.when(geographicAreaCrudRepo.findById(2L)).thenReturn(Optional.of(firstValidArea));
+
+        //Act
+
+        boolean actualResult = geographicAreaRepository.activateAreaSensor(firstValidArea.getId(), "SensorTwo");
+
+        // Assert
+
+        assertTrue(actualResult);
+    }
+
+    @Test
+    void seeIfActivateAreaSensorDeactivatesSensor() {
+        // Arrange
+
+        firstValidArea.addSensor(secondValidAreaSensor);
+        firstValidArea.setId(2L);
+        secondValidAreaSensor.deactivateSensor();
+
+        Mockito.when(geographicAreaCrudRepo.findById(2L)).thenReturn(Optional.of(firstValidArea));
+
+        geographicAreaRepository.activateAreaSensor(firstValidArea.getId(), "SensorTwo");
+        AreaSensor sensor = firstValidArea.getAreaSensorByID("SensorTwo");
+
+        //Act
+
+        boolean actualResult = sensor.isActive();
+
+        // Assert
+
+        assertTrue(actualResult);
+    }
+
+    @Test
+    void seeIfActivateAreaSensorWorksWhenSensorIsAlreadyActive() {
+        // Arrange
+
+        firstValidArea.addSensor(secondValidAreaSensor);
+        firstValidArea.setId(2L);
+
+        Mockito.when(geographicAreaCrudRepo.findById(2L)).thenReturn(Optional.of(firstValidArea));
+
+        //Act
+
+        boolean actualResult = geographicAreaRepository.activateAreaSensor(firstValidArea.getId(), "SensorTwo");
+
+
+        // Assert
+
+        assertFalse(actualResult);
+    }
+
+    @Test
+    void seeIfRemoveSensorByIdWorksWhenGeographicAreaNotInDatabase() {
+        // Arrange
+
+        firstValidArea.addSensor(secondValidAreaSensor);
+        firstValidArea.setId(2L);
+
+        Mockito.when(geographicAreaCrudRepo.findById(2L)).thenReturn(Optional.empty());
+
+        //Act
+
+        boolean actualResult = geographicAreaRepository.removeSensorById(firstValidArea.getId(), "SensorTwo");
+
+        // Assert
+
+        assertFalse(actualResult);
+    }
+
+    @Test
+    void seeIfDeactivateAreaSensorWorksWhenGeographicAreaNotInDatabase() {
+        // Arrange
+
+        firstValidArea.addSensor(secondValidAreaSensor);
+        firstValidArea.setId(2L);
+        secondValidAreaSensor.deactivateSensor();
+
+        Mockito.when(geographicAreaCrudRepo.findById(2L)).thenReturn(Optional.empty());
+
+        //Act
+
+        boolean actualResult = geographicAreaRepository.deactivateAreaSensor(firstValidArea.getId(), "SensorTwo");
+
+        // Assert
+
+        assertFalse(actualResult);
+    }
+
+    @Test
+    void seeIfActivateAreaSensorWorksWhenGeographicAreaNotInDatabase() {
+        // Arrange
+
+        firstValidArea.addSensor(secondValidAreaSensor);
+        firstValidArea.setId(2L);
+        secondValidAreaSensor.deactivateSensor();
+
+        Mockito.when(geographicAreaCrudRepo.findById(2L)).thenReturn(Optional.empty());
+
+        //Act
+
+        boolean actualResult = geographicAreaRepository.activateAreaSensor(firstValidArea.getId(), "SensorTwo");
+
+        // Assert
+
+        assertFalse(actualResult);
+    }
+
+    @Test
     void seeIfAddReadingsToGeographicAreaSensorsWorks() {
         // Arrange
 
