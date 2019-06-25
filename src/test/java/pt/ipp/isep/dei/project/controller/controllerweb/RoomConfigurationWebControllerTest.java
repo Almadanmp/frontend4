@@ -311,6 +311,73 @@ class RoomConfigurationWebControllerTest {
     }
 
     @Test
+    void seeIfCreateAreaSensorWorksWhenSensorAlreadyExists() {
+
+        // Arrange
+
+        RoomSensor sensor2 = new RoomSensor("test", "test", "temperature", new Date());
+        List<RoomSensor> sensors = new ArrayList<>();
+        sensors.add(validRoomSensor);
+        validRoom.setRoomSensors(sensors);
+        RoomSensorDTO roomSensorDTO = RoomSensorMapper.objectToDTO(sensor2);
+
+        List<String> names = new ArrayList<>();
+        names.add("temperature");
+
+        Mockito.when(sensorTypeRepository.getAllSensorTypeDTO()).thenReturn(validTypeList);
+        Mockito.when(sensorTypeRepository.getTypeNames(validTypeList)).thenReturn(names);
+
+        Mockito.doReturn(RoomMapper.objectToDTO(validRoom)).when(this.roomRepository).getRoomDTOByName("Bedroom");
+
+
+        Mockito.doReturn(true).when(this.roomRepository).roomSensorDTOIsValid(roomSensorDTO);
+        Mockito.doReturn(true).when(this.roomRepository).sensorExists(roomSensorDTO.getSensorId());
+
+
+        // Act
+
+        ResponseEntity<Object> actualResult = roomConfigurationWebController.createRoomSensor(roomSensorDTO, "Bedroom");
+
+        // Assert
+
+        assertEquals(HttpStatus.CONFLICT, actualResult.getStatusCode());
+    }
+
+
+    @Test
+    void seeIfCreateAreaSensorWorksWhenDateIsInvalid() {
+
+        // Arrange
+
+        RoomSensor sensor2 = new RoomSensor("test", "test", "temperature", new Date());
+        List<RoomSensor> sensors = new ArrayList<>();
+        sensors.add(validRoomSensor);
+        validRoom.setRoomSensors(sensors);
+        RoomSensorDTO roomSensorDTO = RoomSensorMapper.objectToDTO(sensor2);
+        roomSensorDTO.setDateStartedFunctioning("");
+
+        List<String> names = new ArrayList<>();
+        names.add("temperature");
+
+        Mockito.when(sensorTypeRepository.getAllSensorTypeDTO()).thenReturn(validTypeList);
+        Mockito.when(sensorTypeRepository.getTypeNames(validTypeList)).thenReturn(names);
+
+        Mockito.doReturn(RoomMapper.objectToDTO(validRoom)).when(this.roomRepository).getRoomDTOByName("Bedroom");
+
+
+        Mockito.doReturn(true).when(this.roomRepository).roomSensorDTOIsValid(roomSensorDTO);
+
+
+        // Act
+
+        ResponseEntity<Object> actualResult = roomConfigurationWebController.createRoomSensor(roomSensorDTO, "Bedroom");
+
+        // Assert
+
+        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, actualResult.getStatusCode());
+    }
+
+    @Test
     void seeIfCreateAreaSensorFailsEmptyName() {
 
         // Arrange
