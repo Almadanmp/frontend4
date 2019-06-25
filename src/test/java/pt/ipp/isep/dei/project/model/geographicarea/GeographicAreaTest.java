@@ -56,6 +56,49 @@ class GeographicAreaTest {
     }
 
     @Test
+    void seeIfActivateSensorWorks() {
+        // Arrange
+
+        firstValidArea.addSensor(secondValidAreaSensor);
+
+        // Act
+
+        boolean actualResult = firstValidArea.activateSensor(secondValidAreaSensor);
+
+        // Assert
+
+        assertTrue(actualResult);
+    }
+
+    @Test
+    void seeIfActivateSensorDeactivatesSensor() {
+        // Arrange
+
+        firstValidArea.addSensor(secondValidAreaSensor);
+        secondValidAreaSensor.deactivateSensor();
+        firstValidArea.activateSensor(secondValidAreaSensor);
+
+        // Act
+
+        boolean actualResult = secondValidAreaSensor.isActive();
+
+        // Assert
+
+        assertTrue(actualResult);
+    }
+
+    @Test
+    void seeIfActivateSensorWorksWhenSensorDoesntExist() {
+        // Act
+
+        boolean actualResult = firstValidArea.activateSensor(secondValidAreaSensor);
+
+        // Assert
+
+        assertFalse(actualResult);
+    }
+
+    @Test
     void seeIfRemoveChildAreaWorks() {
         // Arrange
 
