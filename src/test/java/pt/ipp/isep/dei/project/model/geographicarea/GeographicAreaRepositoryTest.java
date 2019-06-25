@@ -142,6 +142,40 @@ class GeographicAreaRepositoryTest {
     }
 
     @Test
+    void seeIfRemoveAreaSensorWorks() {
+        // Arrange
+
+        firstValidArea.addSensor(secondValidAreaSensor);
+        firstValidArea.setId(2L);
+
+        Mockito.when(geographicAreaCrudRepo.findById(2L)).thenReturn(Optional.of(firstValidArea));
+
+        //Act
+
+        boolean actualResult = geographicAreaRepository.removeSensorById(firstValidArea.getId(), "SensorTwo");
+
+        // Assert
+
+        assertTrue(actualResult);
+    }
+
+    @Test
+    void seeIfRemoveAreaSensorRemovesSensor() {
+        // Arrange
+
+        firstValidArea.addSensor(secondValidAreaSensor);
+        firstValidArea.setId(2L);
+
+        Mockito.when(geographicAreaCrudRepo.findById(2L)).thenReturn(Optional.of(firstValidArea));
+
+        geographicAreaRepository.removeSensorById(firstValidArea.getId(), "SensorTwo");
+
+        // Assert
+
+        assertThrows(IllegalArgumentException.class,
+                () -> firstValidArea.getAreaSensorByID("SensorTwo"));    }
+
+    @Test
     void seeIfActivateAreaSensorWorks() {
         // Arrange
 
