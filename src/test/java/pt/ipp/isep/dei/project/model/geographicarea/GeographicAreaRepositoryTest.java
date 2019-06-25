@@ -142,6 +142,30 @@ class GeographicAreaRepositoryTest {
     }
 
     @Test
+    void seeIfAddAndPersistPlainDTOWorks() {
+        // Arrange
+
+        GeographicAreaPlainLocalDTO plainLocalDTO = new GeographicAreaPlainLocalDTO();
+        plainLocalDTO.setName("Portugal");
+        plainLocalDTO.setTypeArea("Country");
+        plainLocalDTO.setLength(300);
+        plainLocalDTO.setWidth(200);
+        plainLocalDTO.setLatitude(50D);
+        plainLocalDTO.setLongitude(50D);
+        plainLocalDTO.setAltitude(10D);
+
+        List<GeographicArea> listGA = new ArrayList<>();
+
+        Mockito.when(geographicAreaCrudRepo.findAll()).thenReturn(listGA);
+
+        // Act
+        boolean actualResult = geographicAreaRepository.addAndPersistPlainDTO(plainLocalDTO);
+
+        // Assert
+        assertTrue(actualResult);
+    }
+
+    @Test
     void seeIfRemoveAreaSensorWorks() {
         // Arrange
 
