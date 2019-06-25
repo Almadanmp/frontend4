@@ -163,7 +163,7 @@ class GeographicAreaRepositoryTest {
         // Assert
 
         assertEquals(2, actualResult);
-    }  
+    }
 
     @Test
     void seeIfSensorExistsWorks() {
