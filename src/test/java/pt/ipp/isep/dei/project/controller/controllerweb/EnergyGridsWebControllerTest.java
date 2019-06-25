@@ -9,6 +9,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +36,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -200,6 +203,24 @@ class EnergyGridsWebControllerTest {
         // Arrange
 
         EnergyGrid validGrid = new EnergyGrid(null, 45D, null);
+        EnergyGridDTO energyGridDTO = EnergyGridMapper.objectToDTO(validGrid);
+
+        Mockito.doReturn(true).when(energyGridRepository).createEnergyGrid(energyGridDTO);
+
+        HttpStatus expectedResult = HttpStatus.BAD_REQUEST;
+
+        // Act
+        HttpStatus actualResult = energyGridsWebController.createEnergyGrid(energyGridDTO).getStatusCode();
+
+        // Assert
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void seeIfCreateEnergyGridBadRequestEmptyName() {
+        // Arrange
+
+        EnergyGrid validGrid = new EnergyGrid("", 45D, "7");
         EnergyGridDTO energyGridDTO = EnergyGridMapper.objectToDTO(validGrid);
 
         Mockito.doReturn(true).when(energyGridRepository).createEnergyGrid(energyGridDTO);
@@ -382,7 +403,7 @@ class EnergyGridsWebControllerTest {
 
     @Test
     void seeIfGetAllGridsWorks() {
-        //Arrange
+        // Arrange
 
         EnergyGrid validGrid = new EnergyGrid("Valid Grid", 45D, "01");
         EnergyGrid validGrid2 = new EnergyGrid("Valid Grid 2", 20D, "7");
@@ -392,11 +413,45 @@ class EnergyGridsWebControllerTest {
         Mockito.when(energyGridRepository.getAllGrids()).thenReturn(list);
         Mockito.when(userService.getUsernameFromToken()).thenReturn("ADMIN");
 
-        //Act
+        // Act
+
         ResponseEntity<Object> actualResult = energyGridsWebController.getAllGrids();
 
-        //Assert
+        // Assert
+
         assertEquals(HttpStatus.OK, actualResult.getStatusCode());
+
+    }
+
+    @Test
+    void seeIfGetAllGridsWorksWithAdmin() {
+        // Arrange
+
+        List<EnergyGridDTO> result = new ArrayList<>();
+        EnergyGrid validGrid = new EnergyGrid("Valid Grid", 45D, "01");
+        List<EnergyGrid> list = new ArrayList<>();
+        list.add(validGrid);
+
+        Mockito.when(energyGridRepository.getAllGrids()).thenReturn(list);
+        Mockito.when(userService.getUsernameFromToken()).thenReturn("admin");
+
+        EnergyGridDTO dto = EnergyGridMapper.objectToDTO(validGrid);
+
+        RoomDTO roomDTO = new RoomDTO();
+        Link link = linkTo(methodOn(EnergyGridsWebController.class).getRoomsWebDtoInGrid(dto.getName())).withRel("1. Get rooms in Grid.");
+        Link linkAttach = linkTo(methodOn(EnergyGridsWebController.class).attachRoomToGrid(roomDTO,dto.getName())).withRel("2. Attach a new room to a Grid.");
+        dto.add(link);
+        dto.add(linkAttach);
+        result.add(dto);
+
+        // Act
+
+        ResponseEntity<Object> actualResult = energyGridsWebController.getAllGrids();
+
+        // Assert
+
+        assertEquals(result, actualResult.getBody());
+
     }
 
     @Test
@@ -440,7 +495,7 @@ class EnergyGridsWebControllerTest {
         assertEquals(HttpStatus.CONFLICT, actualResult.getStatusCode());
     }
 
-        @Test
+    @Test
     void seeIfGetRoomsWebDtoInGridWorks() {
         //Arrange
         List<RoomDTOMinimal> roomDTOMinimals = new ArrayList<>();
@@ -460,6 +515,32 @@ class EnergyGridsWebControllerTest {
 
         //Assert
         assertEquals(HttpStatus.OK, actualResult.getStatusCode());
+    }
+
+    @Test
+    void seeIfGetRoomsWebDtoInGridLinksWork() {
+        //Arrange
+        List<RoomDTOMinimal> roomDTOMinimals = new ArrayList<>();
+        RoomDTOMinimal roomDTOMinimal = new RoomDTOMinimal();
+        roomDTOMinimal.setFloor(3);
+        roomDTOMinimal.setLength(3);
+        roomDTOMinimal.setWidth(3);
+        roomDTOMinimal.setName("B107");
+        roomDTOMinimal.setHeight(3);
+        roomDTOMinimals.add(roomDTOMinimal);
+
+        Link linkDelete = linkTo(methodOn(EnergyGridsWebController.class).detachRoomFromGrid(roomDTOMinimal, "B building")).withRel("1. Detach the room from the grid.");
+        roomDTOMinimal.add(linkDelete);
+
+        Mockito.doReturn(roomDTOMinimals).when(energyGridRoomService).getRoomsDtoWebInGrid("B building");
+        Mockito.when(userService.getUsernameFromToken()).thenReturn("ADMIN");
+
+
+        //Act
+        ResponseEntity<Object> actualResult = energyGridsWebController.getRoomsWebDtoInGrid("B building");
+
+        //Assert
+        assertEquals(roomDTOMinimals, actualResult.getBody());
     }
 
     @Test

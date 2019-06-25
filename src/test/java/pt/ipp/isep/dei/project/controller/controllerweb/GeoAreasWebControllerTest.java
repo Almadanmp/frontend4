@@ -1040,6 +1040,66 @@ class GeoAreasWebControllerTest {
         this.mockMvc.perform(get("/geoAreas/"))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    void seeIfGetAreaSensorsWorks(){
+        // Arrange
+
+        List<AreaSensorDTO> list = new ArrayList<>();
+        GeographicAreaDTO validGeographicAreaDTO = new GeographicAreaDTO();
+
+        LocalDTO localDTO = new LocalDTO();
+
+        localDTO.setLatitude(41D);
+        localDTO.setLongitude(-8D);
+        localDTO.setAltitude(100D);
+
+        validGeographicAreaDTO.setLocal(localDTO);
+        validGeographicAreaDTO.setDescription("3rd biggest city");
+        validGeographicAreaDTO.setName("Gaia");
+        validGeographicAreaDTO.setId(66L);
+        validGeographicAreaDTO.setWidth(100);
+        validGeographicAreaDTO.setLength(500);
+        validGeographicAreaDTO.setTypeArea("urban area");
+
+        AreaSensorDTO areaSensorDTO = new AreaSensorDTO();
+
+        areaSensorDTO.setId("area sensor");
+        areaSensorDTO.setName("sensor 1");
+        areaSensorDTO.setTypeSensor("Temperature");
+        areaSensorDTO.setUnits("Celsius");
+        areaSensorDTO.setLatitude(10D);
+        areaSensorDTO.setLongitude(10D);
+        areaSensorDTO.setAltitude(10D);
+        areaSensorDTO.setDateStartedFunctioning("10-12-2018");
+        areaSensorDTO.setActive(true);
+
+        validGeographicAreaDTO.addSensor(areaSensorDTO);
+        list.add(areaSensorDTO);
+
+
+        Link deleteSelf = linkTo
+                (methodOn(SensorSettingsWebController.class).removeAreaSensor(23, areaSensorDTO.getSensorId())).
+                withRel("Delete this Sensor");
+        Link deactivateSelf = linkTo(methodOn(SensorSettingsWebController.class).deactivateAreaSensor(23, areaSensorDTO.getSensorId())).
+                withRel("Deactivate this Sensor");
+        areaSensorDTO.add(deleteSelf);
+        areaSensorDTO.add(deactivateSelf);
+
+        Mockito.when(userService.getUsernameFromToken()).thenReturn("admin");
+        Mockito.when(geographicAreaRepository.getDTOById(any(Long.class))).thenReturn(validGeographicAreaDTO);
+
+
+        // Act
+
+        ResponseEntity<List<AreaSensorDTO>> actualResult = geoAreasWebController.getAreaSensors(23);
+
+        // Assert
+
+        assertEquals(list, actualResult.getBody());
+
+
+    }
 }
 
 

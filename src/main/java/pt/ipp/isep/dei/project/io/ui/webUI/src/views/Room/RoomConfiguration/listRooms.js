@@ -38,7 +38,7 @@ class ListRooms extends Component {
 
   render() {
 
-    const {loading, rooms, error} = this.props;
+    const {loading, rooms} = this.props;
     if (loading == true) {
       return (<div className="spinner-border" role="status">
         <span className="sr-only"> Loading...</span>

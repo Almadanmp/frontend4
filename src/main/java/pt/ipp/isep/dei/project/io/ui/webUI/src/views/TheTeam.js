@@ -45,7 +45,7 @@ class TheTeam extends Component {
               <img src="https://imgur.com/7yG7o0m.png" width="40%" height="60%"/>
               <h3>Daniela</h3>
               <small>1181701@isep.ipp.pt</small>
-              <p>Psychologist</p>
+              <p>Forensic Psychologist</p>
             </Col>
             <Col style={{textAlign: "center"}}>
               <img src="https://imgur.com/O0UJCta.png" width="40%" height="60%"/>

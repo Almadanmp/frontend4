@@ -14,7 +14,7 @@ public class GeographicAreaPlainLocalDTO extends ResourceSupport {
     private Double latitude;
     private Double longitude;
     private Double altitude;
-    private final List<AreaSensorDTO> areaSensorDTOList = new ArrayList<>();
+    private List<AreaSensorDTO> areaSensorDTOList = new ArrayList<>();
     private String description;
 
 
@@ -150,6 +150,7 @@ public class GeographicAreaPlainLocalDTO extends ResourceSupport {
         this.description = description;
     }
 
+    public void setAreaSensorDTOList(List<AreaSensorDTO> list){this.areaSensorDTOList=list;}
     /**
      * method to add Daughter Area to a list of geographic areas
      * @param areaSensorDTO areasensor to add
