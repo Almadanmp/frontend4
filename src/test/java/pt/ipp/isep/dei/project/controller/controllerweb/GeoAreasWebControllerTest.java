@@ -671,7 +671,7 @@ class GeoAreasWebControllerTest {
 
         Mockito.doReturn(false).when(geographicAreaRepository).addChildArea(4L, 2L);
 
-        ResponseEntity<Object> expectedResult = new ResponseEntity<>(validGeographicAreaDTO, HttpStatus.CONFLICT);
+        ResponseEntity<Object> expectedResult = new ResponseEntity<>("The Geographic Area hasn't been added. The daughter area is already contained in the mother area.", HttpStatus.CONFLICT);
 
         // Act
         ResponseEntity<Object> actualResult = geoAreasWebController.addChildArea(4L, 2L);
