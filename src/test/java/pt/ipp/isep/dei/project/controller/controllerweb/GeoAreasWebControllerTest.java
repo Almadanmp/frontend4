@@ -6,7 +6,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -22,7 +21,6 @@ import pt.ipp.isep.dei.project.model.Local;
 import pt.ipp.isep.dei.project.model.areatype.AreaType;
 import pt.ipp.isep.dei.project.model.areatype.AreaTypeRepository;
 import pt.ipp.isep.dei.project.model.geographicarea.AreaSensor;
-import pt.ipp.isep.dei.project.model.geographicarea.GeographicArea;
 import pt.ipp.isep.dei.project.model.geographicarea.GeographicAreaRepository;
 import pt.ipp.isep.dei.project.model.user.UserService;
 
@@ -640,6 +638,50 @@ class GeoAreasWebControllerTest {
     }
 
     @Test
+    void seeIfAddChildAreaWorks() {
+        GeographicAreaDTO validGeographicAreaDTO = new GeographicAreaDTO();
+
+        validGeographicAreaDTO.setDescription("3rd biggest city");
+        validGeographicAreaDTO.setId(2L);
+        validGeographicAreaDTO.setWidth(100);
+        validGeographicAreaDTO.setLength(500);
+        validGeographicAreaDTO.setTypeArea("urban area");
+
+        Mockito.doReturn(true).when(geographicAreaRepository).addChildArea(4L, 2L);
+        Mockito.doReturn(validGeographicAreaDTO).when(geographicAreaRepository).getDTOById(2L);
+
+        ResponseEntity<Object> expectedResult = new ResponseEntity<>(validGeographicAreaDTO, HttpStatus.OK);
+
+        // Act
+        ResponseEntity<Object> actualResult = geoAreasWebController.addChildArea(4L, 2L);
+
+        // Assert
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void seeIfAddChildAreaWorksWhenChildIsAlreadyContainedInParent() {
+        GeographicAreaDTO validGeographicAreaDTO = new GeographicAreaDTO();
+
+        validGeographicAreaDTO.setDescription("3rd biggest city");
+        validGeographicAreaDTO.setId(2L);
+        validGeographicAreaDTO.setWidth(100);
+        validGeographicAreaDTO.setLength(500);
+        validGeographicAreaDTO.setTypeArea("urban area");
+
+        Mockito.doReturn(false).when(geographicAreaRepository).addChildArea(4L, 2L);
+
+        ResponseEntity<Object> expectedResult = new ResponseEntity<>(validGeographicAreaDTO, HttpStatus.CONFLICT);
+
+        // Act
+        ResponseEntity<Object> actualResult = geoAreasWebController.addChildArea(4L, 2L);
+
+        // Assert
+        assertEquals(expectedResult, actualResult);
+    }
+
+
+    @Test
     void addDaughterAreaContainsDaughter() {
         GeographicAreaDTO validGeographicAreaDTO = new GeographicAreaDTO();
 
@@ -699,6 +741,33 @@ class GeoAreasWebControllerTest {
     }
 
     @Test
+    void seeIfRemoveChildAreaWorks() {
+        // Arrange
+
+        GeographicAreaDTO validGeographicAreaDTO = new GeographicAreaDTO();
+
+        validGeographicAreaDTO.setDescription("3rd biggest city");
+        validGeographicAreaDTO.setId(2L);
+        validGeographicAreaDTO.setWidth(100);
+        validGeographicAreaDTO.setLength(500);
+        validGeographicAreaDTO.setTypeArea("urban area");
+
+        Mockito.doReturn(true).when(geographicAreaRepository).removeChildArea(any(long.class), any(long.class));
+        Mockito.doReturn(validGeographicAreaDTO).when(geographicAreaRepository).getDTOById(2L);
+
+        ResponseEntity<Object> expectedResult = new ResponseEntity<>(validGeographicAreaDTO, HttpStatus.OK);
+
+        // Act
+
+        ResponseEntity<Object> actualResult = geoAreasWebController.removeChildArea(6L, validGeographicAreaDTO.getGeographicAreaId());
+
+        // Assert
+
+        assertEquals(expectedResult, actualResult);
+
+    }
+
+    @Test
     void removeDaughterAreaContainsDaughter() {
         // Arrange
 
@@ -721,7 +790,6 @@ class GeoAreasWebControllerTest {
         // Assert
 
         assertEquals(expectedResult, actualResult);
-
     }
 
     @Test
@@ -737,7 +805,6 @@ class GeoAreasWebControllerTest {
         // Assert
 
         assertEquals(HttpStatus.NOT_FOUND, actualResult.getStatusCode());
-
     }
 
     @Test
@@ -1178,8 +1245,64 @@ class GeoAreasWebControllerTest {
         // Assert
 
         assertEquals(list, actualResult.getBody());
+    }
+
+    @Test
+    void seeIfGetAreaSensorsWorksWhenUserIsNotAdmin(){
+        // Arrange
+
+        List<AreaSensorDTO> list = new ArrayList<>();
+        GeographicAreaDTO validGeographicAreaDTO = new GeographicAreaDTO();
+
+        LocalDTO localDTO = new LocalDTO();
+
+        localDTO.setLatitude(41D);
+        localDTO.setLongitude(-8D);
+        localDTO.setAltitude(100D);
+
+        validGeographicAreaDTO.setLocal(localDTO);
+        validGeographicAreaDTO.setDescription("3rd biggest city");
+        validGeographicAreaDTO.setName("Gaia");
+        validGeographicAreaDTO.setId(66L);
+        validGeographicAreaDTO.setWidth(100);
+        validGeographicAreaDTO.setLength(500);
+        validGeographicAreaDTO.setTypeArea("urban area");
+
+        AreaSensorDTO areaSensorDTO = new AreaSensorDTO();
+
+        areaSensorDTO.setId("area sensor");
+        areaSensorDTO.setName("sensor 1");
+        areaSensorDTO.setTypeSensor("Temperature");
+        areaSensorDTO.setUnits("Celsius");
+        areaSensorDTO.setLatitude(10D);
+        areaSensorDTO.setLongitude(10D);
+        areaSensorDTO.setAltitude(10D);
+        areaSensorDTO.setDateStartedFunctioning("10-12-2018");
+        areaSensorDTO.setActive(true);
+
+        validGeographicAreaDTO.addSensor(areaSensorDTO);
+        list.add(areaSensorDTO);
 
 
+        Link deleteSelf = linkTo
+                (methodOn(SensorSettingsWebController.class).removeAreaSensor(23, areaSensorDTO.getSensorId())).
+                withRel("Delete this Sensor");
+        Link deactivateSelf = linkTo(methodOn(SensorSettingsWebController.class).deactivateAreaSensor(23, areaSensorDTO.getSensorId())).
+                withRel("Deactivate this Sensor");
+        areaSensorDTO.add(deleteSelf);
+        areaSensorDTO.add(deactivateSelf);
+
+        Mockito.when(userService.getUsernameFromToken()).thenReturn("NOTADMIN");
+        Mockito.when(geographicAreaRepository.getDTOById(any(Long.class))).thenReturn(validGeographicAreaDTO);
+
+
+        // Act
+
+        ResponseEntity<List<AreaSensorDTO>> actualResult = geoAreasWebController.getAreaSensors(23);
+
+        // Assert
+
+        assertEquals(list, actualResult.getBody());
     }
 }
 
