@@ -1131,12 +1131,39 @@ class GeographicAreaRepositoryTest {
     @Test
     void seeIfRemoveDaughterAreaWorks() {
         //Arrange
+
         GeographicArea geographicArea = new GeographicArea();
         Mockito.doReturn(Optional.of(firstValidArea)).when(geographicAreaCrudRepo).findById(4L);
         Mockito.doReturn(Optional.of(geographicArea)).when(geographicAreaCrudRepo).findById(3L);
+
         //Act
+
         boolean actualResult = geographicAreaRepository.removeChildArea(3L, 4L);
+
         //Assert
+
+        assertFalse(actualResult);
+    }
+
+    @Test
+    void seeIfRemoveDaughterAreaRemovesChildArea() {
+        //Arrange
+
+        GeographicArea geographicArea = new GeographicArea("Porto", "City", 300, 200,
+                new Local(55, 55, 55));
+        firstValidArea.addChildArea(geographicArea);
+
+        Mockito.doReturn(Optional.of(firstValidArea)).when(geographicAreaCrudRepo).findById(4L);
+        Mockito.doReturn(Optional.of(geographicArea)).when(geographicAreaCrudRepo).findById(3L);
+        geographicAreaRepository.removeChildArea(3L, 4L);
+        List<GeographicArea> geographicAreas = firstValidArea.getChildAreas();
+
+        //Act
+
+        boolean actualResult = geographicAreas.contains(geographicArea);
+
+        //Assert
+
         assertFalse(actualResult);
     }
 
