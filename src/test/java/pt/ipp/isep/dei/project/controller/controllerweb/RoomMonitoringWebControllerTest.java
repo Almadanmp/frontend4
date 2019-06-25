@@ -72,11 +72,28 @@ class RoomMonitoringWebControllerTest {
     }
 
     @Test
-    void seeIfGetRoomsWorks() {
+    void seeIfGetRoomsWorksNull() {
         // Arrange
         Mockito.when(roomRepository.getAllRoomsAsMinimalDTOs()).thenReturn(null);
         List<RoomDTOMinimal> empty = new ArrayList<>();
         ResponseEntity<Object> expectedResult = new ResponseEntity<>(empty, HttpStatus.OK);
+
+        // Act
+        ResponseEntity<Object> actualResult = roomMonitoringWebController.getRooms();
+
+        // Assert
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void seeIfGetRoomsWorks() {
+        // Arrange
+        List<RoomDTOMinimal> vida = new ArrayList<>();
+        RoomDTOMinimal technoMinimal = new RoomDTOMinimal();
+        vida.add(technoMinimal);
+        Mockito.when(roomRepository.getAllRoomsAsMinimalDTOs()).thenReturn(vida);
+        Mockito.when(userService.getUsernameFromToken()).thenReturn("admin");
+        ResponseEntity<Object> expectedResult = new ResponseEntity<>(vida, HttpStatus.OK);
 
         // Act
         ResponseEntity<Object> actualResult = roomMonitoringWebController.getRooms();
