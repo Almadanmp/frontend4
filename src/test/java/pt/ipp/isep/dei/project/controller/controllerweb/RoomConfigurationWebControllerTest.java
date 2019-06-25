@@ -118,6 +118,24 @@ class RoomConfigurationWebControllerTest {
     }
 
     @Test
+    void seeIfRemoveRoomSensorWorksWhenSensorIsNotFound() {
+
+        // Arrange
+
+        Mockito.when(roomRepository.removeSensorDTO(roomDTO, "SensorId")).thenReturn(false);
+
+        ResponseEntity<String> expectedResult = new ResponseEntity<>("Sensor doesn't exist or wasn't found.", HttpStatus.NOT_FOUND);
+
+        // Act
+
+        ResponseEntity<String> actualResult = roomConfigurationWebController.removeRoomSensor("Name", "SensorId");
+
+        //Assert
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
     void seeIfRetrieveSensorTypesWorks() throws Exception {
 
         // Arrange
