@@ -151,6 +151,8 @@ class GeographicAreaRepositoryTest {
 
         Mockito.when(geographicAreaCrudRepo.findAll()).thenReturn(geographicAreas);
 
+        Reading reading =  new Reading(0, validDate1, "C", "SensorTwo");
+        validReadingList.add(reading);
         List<ReadingDTO> readingDTOS = new ArrayList<>();
         for (Reading r : validReadingList) {
             readingDTOS.add(ReadingMapper.objectToDTO(r));
@@ -162,7 +164,7 @@ class GeographicAreaRepositoryTest {
 
         // Assert
 
-        assertEquals(2, actualResult);
+        assertEquals(3, actualResult);
     }
 
     @Test

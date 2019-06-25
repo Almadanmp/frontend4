@@ -72,6 +72,20 @@ class RoomMonitoringWebControllerTest {
     }
 
     @Test
+    void seeIfGetRoomsWorks() {
+        // Arrange
+        Mockito.when(roomRepository.getAllRoomsAsMinimalDTOs()).thenReturn(null);
+        List<RoomDTOMinimal> empty = new ArrayList<>();
+        ResponseEntity<Object> expectedResult = new ResponseEntity<>(empty, HttpStatus.OK);
+
+        // Act
+        ResponseEntity<Object> actualResult = roomMonitoringWebController.getRooms();
+
+        // Assert
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
     void seeIfGetCurrentRoomTemperatureWorks() {
         // Arrange
 
