@@ -48,6 +48,7 @@ class US005Redux extends React.Component {
 
   handleSubmit() {
     this.props.onPostType(this.state);
+    this.setState({isHidden: false})
   }
 
   render() {
