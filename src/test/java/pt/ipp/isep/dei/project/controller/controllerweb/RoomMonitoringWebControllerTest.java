@@ -120,6 +120,36 @@ class RoomMonitoringWebControllerTest {
     }
 
     @Test
+    void seeIfGetRoomWorks() {
+        // Arrange
+        String room = "room";
+        RoomDTOMinimal roomM = new RoomDTOMinimal();
+        Mockito.when(roomRepository.getRoomDTOMinimalByName(room)).thenReturn(roomM);
+        ResponseEntity<Object> expectedResult = new ResponseEntity<>(roomM, HttpStatus.OK);
+
+        // Act
+        ResponseEntity<Object> actualResult = roomMonitoringWebController.getRoom(room);
+
+        // Assert
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void seeIfGetRoomWorksNull() {
+        // Arrange
+        String room = "room";
+        RoomDTOMinimal roomM = null;
+        Mockito.when(roomRepository.getRoomDTOMinimalByName(room)).thenReturn(roomM);
+        ResponseEntity<Object> expectedResult = new ResponseEntity<>("There's no room with that ID.", HttpStatus.NOT_FOUND);
+
+        // Act
+        ResponseEntity<Object> actualResult = roomMonitoringWebController.getRoom(room);
+
+        // Assert
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
     void seeIfGetCurrentRoomTemperatureWorks() {
         // Arrange
 
