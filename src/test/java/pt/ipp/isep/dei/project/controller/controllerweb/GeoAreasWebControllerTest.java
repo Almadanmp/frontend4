@@ -18,13 +18,18 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import pt.ipp.isep.dei.project.dto.*;
 import pt.ipp.isep.dei.project.dto.mappers.GeographicAreaMapper;
+import pt.ipp.isep.dei.project.model.Local;
 import pt.ipp.isep.dei.project.model.areatype.AreaType;
 import pt.ipp.isep.dei.project.model.areatype.AreaTypeRepository;
+import pt.ipp.isep.dei.project.model.geographicarea.AreaSensor;
 import pt.ipp.isep.dei.project.model.geographicarea.GeographicArea;
 import pt.ipp.isep.dei.project.model.geographicarea.GeographicAreaRepository;
 import pt.ipp.isep.dei.project.model.user.UserService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -50,10 +55,38 @@ class GeoAreasWebControllerTest {
     @InjectMocks
     private GeoAreasWebController geoAreasWebController;
 
+    private Date validDate1;
+
     @BeforeEach
     void insertData() {
         MockitoAnnotations.initMocks(this);
         this.mockMvc = MockMvcBuilders.standaloneSetup(geoAreasWebController).build();
+        SimpleDateFormat validSdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        validDate1 = new Date();
+
+        try {
+            validDate1 = validSdf.parse("11/01/2018 10:00:00");
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void seeIfDeactivateSensorWorks() {
+
+        AreaSensor areaSensor = new AreaSensor("SensorId", "SensorName", "SensorType", new Local(2,2,2), validDate1);
+
+        Mockito.doReturn(false).when(geographicAreaRepository).deactivateAreaSensor(1L, "SensorId");
+        Mockito.doReturn(true).when(geographicAreaRepository).activateAreaSensor(1L, "SensorId");
+
+        ResponseEntity<Object> expectedResult = new ResponseEntity<>("The sensor was successfully activated from the selected geographic area.", HttpStatus.OK);
+
+        //Act
+        ResponseEntity<Object> actualResult = geoAreasWebController.deactivateSensor(1L, "SensorId");
+
+        //Assert
+        assertEquals(expectedResult, actualResult);
     }
 
     @Test
