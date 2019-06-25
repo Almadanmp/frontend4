@@ -138,6 +138,54 @@ class GeoAreasWebControllerTest {
     }
 
     @Test
+    void seeIfCreateGeoAreaWorksWhenLengthIsZero() {
+        // Arrange
+        GeographicAreaPlainLocalDTO validGeographicAreaDTO = new GeographicAreaPlainLocalDTO();
+
+        validGeographicAreaDTO.setLatitude(60D);
+        validGeographicAreaDTO.setLongitude(-50D);
+        validGeographicAreaDTO.setAltitude(100D);
+        validGeographicAreaDTO.setDescription("4rd biggest city");
+        validGeographicAreaDTO.setName("Santa Maria de Lamas");
+        validGeographicAreaDTO.setWidth(100);
+        validGeographicAreaDTO.setLength(0);
+        validGeographicAreaDTO.setTypeArea("Urban Area");
+
+        ResponseEntity<Object> expectedResult = new ResponseEntity<>("You can't have a Geographic Area without an area greater than 0.", HttpStatus.UNPROCESSABLE_ENTITY);
+
+        // Act
+
+        ResponseEntity<Object> actualResult = geoAreasWebController.createGeoArea(validGeographicAreaDTO);
+
+        // Assert
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void seeIfCreateGeoAreaWorksWhenWidthIsZero() {
+        // Arrange
+        GeographicAreaPlainLocalDTO validGeographicAreaDTO = new GeographicAreaPlainLocalDTO();
+
+        validGeographicAreaDTO.setLatitude(60D);
+        validGeographicAreaDTO.setLongitude(-50D);
+        validGeographicAreaDTO.setAltitude(100D);
+        validGeographicAreaDTO.setDescription("4rd biggest city");
+        validGeographicAreaDTO.setName("Santa Maria de Lamas");
+        validGeographicAreaDTO.setWidth(0);
+        validGeographicAreaDTO.setLength(100);
+        validGeographicAreaDTO.setTypeArea("Urban Area");
+
+        ResponseEntity<Object> expectedResult = new ResponseEntity<>("You can't have a Geographic Area without an area greater than 0.", HttpStatus.UNPROCESSABLE_ENTITY);
+
+        // Act
+
+        ResponseEntity<Object> actualResult = geoAreasWebController.createGeoArea(validGeographicAreaDTO);
+
+        // Assert
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
     void seeIfCreateGeoAreaWorks() {
         // Arrange
         GeographicAreaPlainLocalDTO validGeographicAreaDTO = new GeographicAreaPlainLocalDTO();
