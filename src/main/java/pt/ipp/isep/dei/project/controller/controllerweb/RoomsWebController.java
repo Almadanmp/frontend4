@@ -159,8 +159,6 @@ public class RoomsWebController {
             date = df.parse(day);
         } catch (ParseException c) {
             c.printStackTrace();
-        }
-        if (date == null) {
             return new ResponseEntity<>("This date is not valid.", HttpStatus.OK);
         }
         try {

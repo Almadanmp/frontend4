@@ -29,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -79,7 +80,7 @@ class RoomConfigurationWebControllerTest {
         date1 = new Date();
 
         try {
-            date1 = validSdf.parse("11/01/2018 10:00:00");
+            date1 = validSdf.parse("11/01/2018 00:00:00");
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -123,6 +124,76 @@ class RoomConfigurationWebControllerTest {
         validTypeList.add(SensorTypeMapper.objectToDTO(validSensorType));
         validRoomMinimalDTOlist = new ArrayList<>();
         validRoomMinimalDTOlist.add(RoomMinimalMapper.objectToDtoWeb(validRoom));
+    }
+
+    @Test
+    void seeIfGetRoomMaxTempInDayWorks() {
+
+        // Arrange
+
+        ResponseEntity<Object> expectedResult = new ResponseEntity<>(19.0D, HttpStatus.OK);
+
+        Mockito.when(roomRepository.getRoomMaxTempById("Name", date1)).thenReturn(18.999999D);
+
+        // Act
+
+        ResponseEntity<Object> actualResult = roomConfigurationWebController.getRoomMaxTempInDay("Name", "2018-01-11");
+
+        //Assert
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void seeIfGetRoomMaxTempInDayWorksWhenThereAreNoReadings() {
+
+        // Arrange
+
+        ResponseEntity<Object> expectedResult = new ResponseEntity<>("There are no readings for the given date.", HttpStatus.BAD_REQUEST);
+
+        Mockito.when(roomRepository.getRoomMaxTempById("Name", date1)).thenThrow(new NoSuchElementException());
+
+        // Act
+
+        ResponseEntity<Object> actualResult = roomConfigurationWebController.getRoomMaxTempInDay("Name", "2018-01-11");
+
+        //Assert
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void seeIfGetRoomMaxTempInDayWorksWhenRoomDoesNotExist() {
+
+        // Arrange
+
+        ResponseEntity<Object> expectedResult = new ResponseEntity<>("This room does not exist.", HttpStatus.OK);
+
+        Mockito.when(roomRepository.getRoomMaxTempById("Name", date1)).thenThrow(new IllegalArgumentException());
+
+        // Act
+
+        ResponseEntity<Object> actualResult = roomConfigurationWebController.getRoomMaxTempInDay("Name", "2018-01-11");
+
+        //Assert
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void seeIfGetRoomMaxTempInDayWorksWhenDateIsNull() {
+
+        // Arrange
+
+        ResponseEntity<Object> expectedResult = new ResponseEntity<>("This date is not valid.", HttpStatus.OK);
+
+        // Act
+
+        ResponseEntity<Object> actualResult = roomConfigurationWebController.getRoomMaxTempInDay("Name", "wrongDate");
+
+        //Assert
+
+        assertEquals(expectedResult, actualResult);
     }
 
     @Test
