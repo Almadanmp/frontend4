@@ -9,17 +9,13 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import pt.ipp.isep.dei.project.dto.*;
-import pt.ipp.isep.dei.project.dto.mappers.RoomMapper;
-import pt.ipp.isep.dei.project.dto.mappers.RoomMinimalMapper;
-import pt.ipp.isep.dei.project.dto.mappers.RoomSensorMapper;
-import pt.ipp.isep.dei.project.dto.mappers.SensorTypeMapper;
+import pt.ipp.isep.dei.project.dto.mappers.*;
 import pt.ipp.isep.dei.project.model.bridgeservices.HouseRoomService;
 import pt.ipp.isep.dei.project.model.room.Room;
 import pt.ipp.isep.dei.project.model.room.RoomRepository;
@@ -28,12 +24,13 @@ import pt.ipp.isep.dei.project.model.sensortype.SensorType;
 import pt.ipp.isep.dei.project.model.sensortype.SensorTypeRepository;
 import pt.ipp.isep.dei.project.model.user.UserService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -70,12 +67,23 @@ class RoomConfigurationWebControllerTest {
     private SensorType validSensorType;
     private List<RoomDTOMinimal> validRoomMinimalDTOlist;
     private AddressLocalGeographicAreaIdDTO addressAndLocalDTO;
+    private Date date1;
 
 
     @BeforeEach
     void setUp() {
 
         MockitoAnnotations.initMocks(this);
+
+        SimpleDateFormat validSdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        date1 = new Date();
+
+        try {
+            date1 = validSdf.parse("11/01/2018 10:00:00");
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         roomDTO = new RoomDTO();
         roomDTO.setName("Name");
         roomDTO.setWidth(2D);
@@ -115,6 +123,91 @@ class RoomConfigurationWebControllerTest {
         validTypeList.add(SensorTypeMapper.objectToDTO(validSensorType));
         validRoomMinimalDTOlist = new ArrayList<>();
         validRoomMinimalDTOlist.add(RoomMinimalMapper.objectToDtoWeb(validRoom));
+    }
+
+    @Test
+    void seeIfDeleteRoomWorks() {
+
+        // Arrange
+
+        ResponseEntity<Object> expectedResult = new ResponseEntity<>(roomDTO, HttpStatus.OK);
+
+        Mockito.when(roomRepository.getRoomDTOByName("Name")).thenReturn(roomDTO);
+        Mockito.when(roomRepository.deleteRoom(roomDTO)).thenReturn(true);
+
+        // Act
+
+        ResponseEntity<Object> actualResult = roomConfigurationWebController.deleteRoom("Name");
+
+        //Assert
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void seeIfGetSensorsWorks() {
+
+        // Arrange
+
+        RoomSensor roomSensor1 = new RoomSensor("RoomSensorId1", "RoomSensor1", "SensorType", date1);
+        RoomSensor roomSensor2 = new RoomSensor("RoomSensorId2", "RoomSensor2", "SensorType", date1);
+        RoomSensorDTO roomSensorDTO1 = RoomSensorMapper.objectToDTO(roomSensor1);
+        RoomSensorDTO roomSensorDTO2 = RoomSensorMapper.objectToDTO(roomSensor2);
+
+        RoomSensorDTOMinimal roomSensorDTOMinimal1 = RoomSensorMinimalMapper.objectToDTO(roomSensor1);
+        RoomSensorDTOMinimal roomSensorDTOMinimal2 = RoomSensorMinimalMapper.objectToDTO(roomSensor2);
+        List<RoomSensorDTOMinimal> roomSensorDTOMinimals = new ArrayList<>();
+        roomSensorDTOMinimals.add(roomSensorDTOMinimal1);
+        roomSensorDTOMinimals.add(roomSensorDTOMinimal2);
+
+        ResponseEntity<List<RoomSensorDTOMinimal>> expectedResult = new ResponseEntity<>(roomSensorDTOMinimals, HttpStatus.OK);
+
+        roomDTO.addSensor(roomSensorDTO1);
+        roomDTO.addSensor(roomSensorDTO2);
+
+        Mockito.when(roomRepository.getRoomDTOByName("Name")).thenReturn(roomDTO);
+        Mockito.when(userService.getUsernameFromToken()).thenReturn("admin");
+
+        // Act
+
+        ResponseEntity<List<RoomSensorDTOMinimal>> actualResult = roomConfigurationWebController.getSensors("Name");
+
+        //Assert
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void seeIfGetSensorsWorksWhenUserNameIsNotAdmin() {
+
+        // Arrange
+
+        RoomSensor roomSensor1 = new RoomSensor("RoomSensorId1", "RoomSensor1", "SensorType", date1);
+        RoomSensor roomSensor2 = new RoomSensor("RoomSensorId2", "RoomSensor2", "SensorType", date1);
+        RoomSensorDTO roomSensorDTO1 = RoomSensorMapper.objectToDTO(roomSensor1);
+        RoomSensorDTO roomSensorDTO2 = RoomSensorMapper.objectToDTO(roomSensor2);
+
+        RoomSensorDTOMinimal roomSensorDTOMinimal1 = RoomSensorMinimalMapper.objectToDTO(roomSensor1);
+        RoomSensorDTOMinimal roomSensorDTOMinimal2 = RoomSensorMinimalMapper.objectToDTO(roomSensor2);
+        List<RoomSensorDTOMinimal> roomSensorDTOMinimals = new ArrayList<>();
+        roomSensorDTOMinimals.add(roomSensorDTOMinimal1);
+        roomSensorDTOMinimals.add(roomSensorDTOMinimal2);
+
+        ResponseEntity<List<RoomSensorDTOMinimal>> expectedResult = new ResponseEntity<>(roomSensorDTOMinimals, HttpStatus.OK);
+
+        roomDTO.addSensor(roomSensorDTO1);
+        roomDTO.addSensor(roomSensorDTO2);
+
+        Mockito.when(roomRepository.getRoomDTOByName("Name")).thenReturn(roomDTO);
+        Mockito.when(userService.getUsernameFromToken()).thenReturn("otherUser");
+
+        // Act
+
+        ResponseEntity<List<RoomSensorDTOMinimal>> actualResult = roomConfigurationWebController.getSensors("Name");
+
+        //Assert
+
+        assertEquals(expectedResult, actualResult);
     }
 
     @Test
@@ -342,7 +435,6 @@ class RoomConfigurationWebControllerTest {
 
         assertEquals(HttpStatus.CONFLICT, actualResult.getStatusCode());
     }
-
 
     @Test
     void seeIfCreateAreaSensorWorksWhenDateIsInvalid() {
