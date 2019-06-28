@@ -56,7 +56,8 @@ class US005Redux extends React.Component {
     const {name, units} = this.state;
     return (
       <div className="animated fadeIn">
-        <Card><CardBody> Name: <span>  </span>
+        <Card>
+          <CardBody> Name: <span>  </span>
           <input value={this.state.name} type="text" name="name" placeholder="Name"
                  onChange={this.handleInputChange('name')}/>
 

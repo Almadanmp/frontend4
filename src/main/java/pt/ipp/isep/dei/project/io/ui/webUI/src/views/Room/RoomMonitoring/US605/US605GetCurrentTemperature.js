@@ -12,7 +12,7 @@ class US605GetCurrentTemperature extends Component {
 
   componentDidMount() {
     const token = localStorage.getItem('loginToken')
-    fetch('https://localhost:8443/rooms/currentRoomTemperature/'+this.props.roomID, {
+    fetch(this.props.link.href, {
         headers: {
           'Authorization': token,
           "Access-Control-Allow-Credentials": true,

@@ -50,7 +50,7 @@ class US620 extends Component {
               }
             </Col>
             <Col md="5" style={{textAlign: "right"}}>
-              <img src={"https://imgur.com/EoYAa5f.png"} width="50%" height="45%" style={{display: "inline-block"}}/>
+              <img src={"https://imgur.com/EoYAa5f.png"} width="50%" height="55%" style={{display: "inline-block"}}/>
             </Col>
           </Row>
         </CardBody>

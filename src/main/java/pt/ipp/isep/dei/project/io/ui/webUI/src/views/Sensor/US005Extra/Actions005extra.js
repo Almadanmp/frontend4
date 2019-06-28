@@ -8,19 +8,19 @@ export const FETCH_SENSOR_TYPES_FAILURE = 'FETCH_SENSOR_TYPES_FAILURE';
 export function fetchSensorTypes() {
   const token = localStorage.getItem('loginToken');
   return dispatch => {
-    dispatch(fetchSensorTypesStarted());
-    axios
-      .get(`https://localhost:8443/sensors/sensorTypes`, {
-          headers: {
-            'Authorization': token,
-            "Access-Control-Allow-Credentials": true,
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json"
-          }
-        }
-      )
-      .then(res => {
-        dispatch(fetchSensorTypesSuccess(res.data));
+        dispatch(fetchSensorTypesStarted());
+        axios
+          .get(`https://localhost:8443/sensors/sensorTypes`, {
+              headers: {
+                'Authorization': token,
+                "Access-Control-Allow-Credentials": true,
+                "Access-Control-Allow-Origin": "*",
+                "Content-Type": "application/json"
+              }
+            }
+          )
+          .then(res => {
+            dispatch(fetchSensorTypesSuccess(res.data));
       })
       .catch(err => {
         dispatch(fetchSensorTypesFailure(err.message));

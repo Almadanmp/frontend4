@@ -60,15 +60,6 @@ class TableBody extends Component {
             <td style={{
               textAlign: "center"
             }}>{item.floor} </td>
-            {/*<td style={{*/}
-              {/*textAlign: "center"*/}
-            {/*}}> {item.height}</td>*/}
-            {/*<td style={{*/}
-              {/*textAlign: "center"*/}
-            {/*}}> {item.length} </td>*/}
-            {/*<td style={{*/}
-              {/*textAlign: "center"*/}
-            {/*}}> {item.width} </td>*/}
             <td style={{
               textAlign: "center"
             }}>

@@ -57,7 +57,7 @@ class TheTeam extends Component {
               <img src="https://imgur.com/VzeQmTf.png" width="40%" height="60%"/>
               <h3>Maria</h3>
               <small>1181716@isep.ipp.pt</small>
-              <p>Script writer / Producer</p>
+              <p>Scriptwriter / Producer</p>
               </Col>
           </Row>
           <Row>
