@@ -67,9 +67,9 @@ class AreaReadingsDropzone extends Component {
             return (
               <div {...getRootProps()}>
                 <input {...getInputProps()} />
-                {!isDragActive && 'Click here or drop a file to upload!'}
-                {isDragActive && !isDragReject && "Drop it!"}
-                {isDragReject && "File type not accepted, sorry!"}
+                {!isDragActive && <b>Click here or drop a file to upload!</b>}
+                {isDragActive && !isDragReject && <b>Drop it!</b>}
+                {isDragReject && <b>File type not accepted, sorry!</b>}
                 {isFileTooLarge && (
                   <div className="text-danger mt-2">
                     File is too large.
