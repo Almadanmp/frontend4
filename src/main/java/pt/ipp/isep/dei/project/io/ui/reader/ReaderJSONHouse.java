@@ -5,19 +5,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import pt.ipp.isep.dei.project.dto.*;
+import pt.ipp.isep.dei.project.io.ui.utils.UtilsUI;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ReaderJSONHouse implements Reader {
+    private static final String ROOMS = "rooms";
     private List<RoomDTO> roomDTOS;
     private JSONArray roomList;
     private JSONArray gridList;
-    private static final String ROOMS = "rooms";
 
     /**
      * Method that Reads a .json file and returns a House DTO.
@@ -25,15 +23,18 @@ public class ReaderJSONHouse implements Reader {
      * @param filePath .json file filePath.
      * @return a House DTO for US100.
      */
-    public HouseDTO readFile(String filePath) {
+    public HouseDTO readFile(String filePath) throws IOException {
         try {
             File file = new File(filePath);
             InputStream stream = new FileInputStream(file);
             JSONTokener tokener = new JSONTokener(stream);
             JSONObject object = new JSONObject(tokener);
+            stream.close();
             return readHouseJSON(object);
         } catch (FileNotFoundException | JSONException | IllegalArgumentException e) {
             throw new IllegalArgumentException();
+        } catch (IOException e) {
+            throw new IOException(UtilsUI.printMessage("Unable to close file."));
         }
     }
 

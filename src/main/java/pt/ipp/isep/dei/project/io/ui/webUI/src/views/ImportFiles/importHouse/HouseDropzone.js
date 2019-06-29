@@ -32,7 +32,7 @@ class HouseDropzone extends Component {
         buttons: [
           {
             label: 'Yes',
-            onClick: () => this.props.onPostFile(this.state.file)
+            onClick: () => this.props.onPostFile(this.state.file, this.props.link.href)
           },
           {
             label: 'No',
@@ -104,8 +104,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onPostFile: (file) => {
-      dispatch(uploadFile(file))
+    onPostFile: (file, link) => {
+      dispatch(uploadFile(file, link))
     }
   }
 };

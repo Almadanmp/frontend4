@@ -18,6 +18,7 @@ import pt.ipp.isep.dei.project.model.repository.HouseCrudRepo;
 import pt.ipp.isep.dei.project.model.room.Room;
 import pt.ipp.isep.dei.project.model.room.RoomRepository;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -264,6 +265,8 @@ public class HouseConfigurationUI {
         } catch (IllegalArgumentException ok) {
             System.out.println("There's something wrong with the file provided. Please check it for syntax errors or " +
                     "empty elements.");
+        } catch (IOException e) {
+            e.getMessage();
         }
     }
 

@@ -17,6 +17,7 @@ import pt.ipp.isep.dei.project.model.room.RoomRepository;
 import pt.ipp.isep.dei.project.model.sensortype.SensorType;
 import pt.ipp.isep.dei.project.model.sensortype.SensorTypeRepository;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -224,7 +225,7 @@ class HouseConfigurationControllerTest {
 //    }
 
     @Test
-    void seeIfReadSensorsWorksEmptyDB() {
+    void seeIfReadSensorsWorksEmptyDB() throws IOException {
         // Arrange
 
         String filePath = "src/test/resources/houseSensorFiles/DataSet_sprint06_HouseSensors.json";
@@ -241,7 +242,7 @@ class HouseConfigurationControllerTest {
     }
 
     @Test
-    void seeIfReadSensorsWorks() {
+    void seeIfReadSensorsWorks() throws IOException {
         // Arrange
 
         String filePath = "src/test/resources/houseSensorFiles/DataSet_sprint06_HouseSensors.json";

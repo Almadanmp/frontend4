@@ -5,12 +5,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import pt.ipp.isep.dei.project.dto.RoomSensorDTO;
+import pt.ipp.isep.dei.project.io.ui.utils.UtilsUI;
 import pt.ipp.isep.dei.project.model.sensortype.SensorTypeRepository;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +20,7 @@ public class JSONSensorsReader implements Reader {
      * @param filepath is the path of the file where we want to import the sensors from.
      * @return is the list of HouseSensorDTOs that were imported.
      */
-    public List<RoomSensorDTO> importSensors(String filepath, SensorTypeRepository sensorTypeRepository) {
+    public List<RoomSensorDTO> importSensors(String filepath, SensorTypeRepository sensorTypeRepository) throws IOException {
         List<RoomSensorDTO> result = new ArrayList<>();
         JSONArray importedArray = readFile(filepath); // Imports the whole file as an array.
         for (int x = 0; x < importedArray.length(); x++) {
@@ -60,7 +58,7 @@ public class JSONSensorsReader implements Reader {
      * @param filePath is the filepath that we want to check a file from.
      * @return is the JSON Array with all the data contained in the file.
      */
-    public JSONArray readFile(String filePath) {
+    public JSONArray readFile(String filePath) throws IOException {
         try {
             File file = new File(filePath);
             String absolutePath = file.getAbsolutePath();
@@ -68,9 +66,12 @@ public class JSONSensorsReader implements Reader {
             InputStream stream = new FileInputStream(abFile);
             JSONTokener tokener = new JSONTokener(stream);
             JSONObject object = new JSONObject(tokener);
+            stream.close();
             return getElementArray(object);
         } catch (NullPointerException | FileNotFoundException e) {
             throw new IllegalArgumentException();
+        } catch (IOException e) {
+            throw new IOException(UtilsUI.printMessage("Unable to close file."));
         }
     }
 

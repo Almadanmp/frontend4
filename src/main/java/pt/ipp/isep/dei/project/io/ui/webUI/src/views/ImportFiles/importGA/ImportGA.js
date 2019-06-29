@@ -22,7 +22,7 @@ class ImportGA extends Component {
           <Card>
             <CardBody>
               <span>
-              <GADropzone/>
+              <GADropzone link={this.props.link}/>
               </span>
             </CardBody>
           </Card>

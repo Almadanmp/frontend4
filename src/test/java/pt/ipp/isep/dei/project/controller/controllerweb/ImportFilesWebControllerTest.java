@@ -167,7 +167,7 @@ class ImportFilesWebControllerTest {
     }
 
     @Test
-    void importHouseSensors() {
+    void importHouseSensors() throws IOException {
         int[] responseArray = {20, 1};
         String resultContained = "Successfully imported - DataSet_sprint06_HouseSensors.json.\n" +
                 "20 Sensors successfully imported and 1 rejected.\nImport time:";

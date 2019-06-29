@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Button, Card, CardBody, Collapse} from "reactstrap";
 import {connect} from "react-redux";
 import HouseReadingsDropzone from "./HouseReadingsDropzone";
+import ImportAreaReadingsDropzone from "../importAreaReadings/AreaReadingsDropzone";
 
 class ImportHouseReadings extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class ImportHouseReadings extends Component {
             <Card>
               <CardBody>
               <span>
-              <HouseReadingsDropzone/>
+              <HouseReadingsDropzone link={this.props.link}/>/>
               </span>
               </CardBody>
             </Card>

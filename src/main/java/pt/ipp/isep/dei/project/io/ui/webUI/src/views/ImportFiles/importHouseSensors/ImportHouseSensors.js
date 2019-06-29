@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Card, CardBody, Collapse} from "reactstrap";
-import GADropzone from "./HouseSensorsDropzone";
+import HouseSensorsDropzone from "./HouseSensorsDropzone";
 
 class ImportHouseSensors extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class ImportHouseSensors extends Component {
           <Card>
             <CardBody>
               <span>
-              <GADropzone/>
+              <HouseSensorsDropzone link={this.props.link}/>
               </span>
             </CardBody>
           </Card>

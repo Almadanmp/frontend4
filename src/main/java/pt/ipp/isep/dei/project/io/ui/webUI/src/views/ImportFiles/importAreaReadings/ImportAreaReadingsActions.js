@@ -5,12 +5,12 @@ export const POST_FILE_SUCCESS = 'POST_FILE__SUCCESS';
 export const POST_FILE_FAILURE = 'POST_FILE__FAILURE';
 
 
-export function uploadFile(fileToUpload) {
+export function uploadFile(fileToUpload, link) {
   const token = localStorage.getItem('loginToken');
   return dispatch => {
     dispatch(postFileStarted()); // antes de fazer o get, coloca o loading a true
     axios
-       .post('https://localhost:8443/import/importAreaReadings', fileToUpload, {
+      .post(link, fileToUpload, {
         headers: {
           'Authorization': token,
                 "Access-Control-Allow-Credentials": true,

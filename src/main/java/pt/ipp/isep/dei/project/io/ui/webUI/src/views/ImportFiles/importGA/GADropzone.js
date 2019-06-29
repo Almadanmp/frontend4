@@ -32,7 +32,7 @@ class GADropzone extends Component {
         buttons: [
           {
             label: 'Yes',
-            onClick: () => this.props.onPostFile(this.state.file)
+            onClick: () => this.props.onPostFile(this.state.file, this.props.link.href)
           },
           {
             label: 'No',
@@ -46,10 +46,6 @@ class GADropzone extends Component {
       alert('Unable to submit: a file must be selected')
     }
   };
-
-  // handleSubmit () {
-  //  this.props.onPostFile(this.state.file)
-  // };
 
 
   render() {
@@ -109,8 +105,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onPostFile: (file) => {
-      dispatch(uploadFile(file))
+    onPostFile: (file, link) => {
+      dispatch(uploadFile(file, link))
     }
   }
 };

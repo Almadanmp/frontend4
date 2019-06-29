@@ -23,7 +23,7 @@ class ImportGAReadings extends Component {
           <Card>
             <CardBody>
               <span>
-              <ImportAreaReadingsDropzone/>
+              <ImportAreaReadingsDropzone link={this.props.link}/>
               </span>
             </CardBody>
           </Card>

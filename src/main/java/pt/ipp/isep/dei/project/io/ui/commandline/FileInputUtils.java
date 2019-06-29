@@ -206,7 +206,6 @@ public class FileInputUtils {
                 String aux = getAreaTypesPropertyValueFromKey(props, s);
                 areaTypeConfiguration.add(aux);
             }
-
         } catch (IOException ioe) {
             throw new IOException(ERROR_CONFIGURATION_FILE);
         }

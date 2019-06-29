@@ -16,6 +16,7 @@ import pt.ipp.isep.dei.project.model.house.House;
 import pt.ipp.isep.dei.project.model.house.HouseRepository;
 import pt.ipp.isep.dei.project.model.room.RoomRepository;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -50,6 +51,8 @@ public class ReaderController {
             houseRepository.updateHouse(houseDTO);
         } catch (IllegalArgumentException | NullPointerException e) {
             throw new IllegalArgumentException();
+        } catch (IOException e) {
+            e.getMessage();
         }
 
         //EnergyGrid

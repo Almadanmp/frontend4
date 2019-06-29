@@ -12,6 +12,7 @@ import pt.ipp.isep.dei.project.model.room.Room;
 import pt.ipp.isep.dei.project.model.room.RoomRepository;
 import pt.ipp.isep.dei.project.model.sensortype.SensorTypeRepository;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -124,7 +125,7 @@ public class HouseConfigurationController {
      * @return is the number of imported sensors.
      */
 
-    public int[] readSensors(String filepath) {
+    public int[] readSensors(String filepath) throws IOException {
         // Initialize needed variables.
         JSONSensorsReader reader = new JSONSensorsReader();
         int[] result = new int[2];
@@ -136,6 +137,8 @@ public class HouseConfigurationController {
             return addSensorsToModelRooms(importedSensors);
         } catch (IllegalArgumentException ok) { // Throws an exception if the file is corrupt or non existent.
             throw new IllegalArgumentException();
+        } catch (IOException e) {
+            throw new IOException(e.getMessage());
         }
     }
 

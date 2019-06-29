@@ -7,6 +7,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import pt.ipp.isep.dei.project.dto.RoomSensorDTO;
 import pt.ipp.isep.dei.project.model.sensortype.SensorTypeRepository;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ class JSONSensorsReaderTest {
 
 
     @Test
-    void seeIfImportSensorsWorks() {
+    void seeIfImportSensorsWorks() throws IOException {
         // Arrange
 
         JSONSensorsReader reader = new JSONSensorsReader();
@@ -76,7 +77,7 @@ class JSONSensorsReaderTest {
 
 
     @Test
-    void seeIfImportSensorsWorksWithInvalidRoomID() {
+    void seeIfImportSensorsWorksWithInvalidRoomID() throws IOException {
         // Arrange
 
         JSONSensorsReader reader = new JSONSensorsReader();
@@ -128,7 +129,7 @@ class JSONSensorsReaderTest {
     }
 
     @Test
-    void seeIfImportSensorsWorksWithInvalidElements() {
+    void seeIfImportSensorsWorksWithInvalidElements() throws IOException {
         // Arrange
 
         JSONSensorsReader reader = new JSONSensorsReader();

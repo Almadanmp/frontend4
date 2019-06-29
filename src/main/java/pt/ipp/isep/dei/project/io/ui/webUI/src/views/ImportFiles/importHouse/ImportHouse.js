@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Card, CardBody, Collapse} from "reactstrap";
-import GADropzone from "./HouseDropzone";
+import HouseDropzone from "./HouseDropzone";
 import {connect} from "react-redux";
 
 class ImportHouse extends Component {
@@ -36,7 +36,7 @@ class ImportHouse extends Component {
             <Card>
               <CardBody>
               <span>
-              <GADropzone/>
+              <HouseDropzone link={this.props.link}/>
               </span>
               </CardBody>
             </Card>
