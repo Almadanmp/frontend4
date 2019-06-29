@@ -1,13 +1,11 @@
 package pt.ipp.isep.dei.project.controller.controllerweb;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pt.ipp.isep.dei.project.controller.controllercli.HouseConfigurationController;
 import pt.ipp.isep.dei.project.controller.controllercli.ReaderController;
@@ -19,11 +17,17 @@ import pt.ipp.isep.dei.project.model.geographicarea.GeographicAreaRepository;
 import pt.ipp.isep.dei.project.model.house.House;
 import pt.ipp.isep.dei.project.model.house.HouseRepository;
 import pt.ipp.isep.dei.project.model.sensortype.SensorTypeRepository;
+import pt.ipp.isep.dei.project.model.user.UserService;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/import")
@@ -38,6 +42,7 @@ public class ImportFilesWebController {
     private static final String OPERATION_HOUSE = "OPERATION_HOUSE";
     private static final String OPERATION_HOUSE_SENSORS = "OP_HOUSE_SENSORS";
     private static final String OPERATION_HOUSE_READINGS = "OPERATION_HOUSE_READINGS";
+    private static final String ADMIN = "admin";
 
     @Autowired
     GeographicAreaRepository geographicAreaRepository;
@@ -57,6 +62,38 @@ public class ImportFilesWebController {
     private HouseConfigurationController houseConfigurationController;
     @Autowired
     private HouseConfigurationUI houseConfigurationUI;
+    @Autowired
+    private UserService userService;
+
+    /**
+     * Method to get all methods related to import us.
+     * The returned object will be an array with links to the methods that the user has access
+     * This is done by receiving a user token and checking the user role associated with it
+     *
+     * @return ResponseEntity with all the import files US endpoints
+     */
+    @GetMapping("/")
+    public ResponseEntity<Object> getAllImports() {
+        List<Link> allImports = new ArrayList<>();
+        if (userService.getUsernameFromToken().equals(ADMIN)) {
+            Link importGA = linkTo(methodOn(ImportFilesWebController.class).importGAFile(null)).
+                    withRel("Import Geographic Areas");
+            Link importGAReadings = linkTo(methodOn(ImportFilesWebController.class).importGAReadings(null)).
+                    withRel("Import Area Sensor Readings");
+            Link importHouse = linkTo(methodOn(ImportFilesWebController.class).importHouseFile(null)).
+                    withRel("Import House Data");
+            Link importHouseSensors = linkTo(methodOn(ImportFilesWebController.class).importHouseSensorsFile(null)).
+                    withRel("Import House Sensors");
+            Link importHouseSensorReadings = linkTo(methodOn(ImportFilesWebController.class).importHouseReadings(null)).
+                    withRel("Import House Sensor Readings");
+            allImports.add(importGA);
+            allImports.add(importGAReadings);
+            allImports.add(importHouse);
+            allImports.add(importHouseSensors);
+            allImports.add(importHouseSensorReadings);
+        }
+        return new ResponseEntity<>(allImports, HttpStatus.OK);
+    }
 
 
     /**
@@ -117,7 +154,7 @@ public class ImportFilesWebController {
     }
 
 
-    public ResponseEntity<Object> dataImportProcessor(MultipartFile file, String operation) {
+    ResponseEntity<Object> dataImportProcessor(MultipartFile file, String operation) {
         String result;
         long startTime = System.currentTimeMillis();
 

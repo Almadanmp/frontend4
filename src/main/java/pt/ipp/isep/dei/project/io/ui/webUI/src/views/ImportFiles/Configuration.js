@@ -1,9 +1,5 @@
 import React, {Component} from 'react';
-import ImportGeographicAreas from "./importGA/ImportGA";
-import ImportAreaReadings from "./importAreaReadings/ImportGAReadings";
-import ImportHouse from "./importHouse/ImportHouse";
-import ImportHouseSensors from "./importHouseSensors/ImportHouseSensors";
-import ImportHouseReadings from "./importHouseReadings/ImportHouseReadings";
+import ImportOptions from "./ImportOptions";
 
 class Configuration extends Component {
   constructor(props) {
@@ -20,19 +16,15 @@ class Configuration extends Component {
 
   render() {
     return (
-      <>
+      <div>
         <h2>Welcome to the Application Configuration Menu </h2>
         <p></p>
         <h5>Please select the option you want to run:</h5>
         <p></p>
         <p></p>
         <p></p>
-        <ImportGeographicAreas/>
-        <ImportAreaReadings/>
-        <ImportHouse/>
-        <ImportHouseSensors/>
-        <ImportHouseReadings/>
-      </>
+        <ImportOptions/>
+      </div>
     );
   }
 }
