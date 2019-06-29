@@ -23,7 +23,7 @@ public class LoginWebController {
 
     @GetMapping("/getUserRole")
     public ResponseEntity<Object> getUserRole() {
-        String currentUserName = userService.getUsernameFromToken();
+        String currentUserName = userService.getUserRoleFromToken();
         try {
             User user = userService.findByUsername(currentUserName);
             return new ResponseEntity<>(user.getRoleList().get(0), HttpStatus.OK);

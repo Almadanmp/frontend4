@@ -75,7 +75,7 @@ public class ImportFilesWebController {
     @GetMapping("/")
     public ResponseEntity<Object> getAllImports() {
         List<Link> allImports = new ArrayList<>();
-        if (userService.getUsernameFromToken().equals(ADMIN)) {
+        if (userService.getUserRoleFromToken().equals(ADMIN)) {
             Link importGA = linkTo(methodOn(ImportFilesWebController.class).importGAFile(null)).
                     withRel("Import Geographic Areas");
             Link importGAReadings = linkTo(methodOn(ImportFilesWebController.class).importGAReadings(null)).

@@ -10,13 +10,11 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import pt.ipp.isep.dei.project.dto.DateWithRoomIdDTO;
 import pt.ipp.isep.dei.project.dto.RoomDTOMinimal;
 import pt.ipp.isep.dei.project.model.bridgeservices.HouseRoomService;
 import pt.ipp.isep.dei.project.model.room.Room;
@@ -32,7 +30,6 @@ import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -92,7 +89,7 @@ class RoomMonitoringWebControllerTest {
         RoomDTOMinimal technoMinimal = new RoomDTOMinimal();
         vida.add(technoMinimal);
         Mockito.when(roomRepository.getAllRoomsAsMinimalDTOs()).thenReturn(vida);
-        Mockito.when(userService.getUsernameFromToken()).thenReturn("admin");
+        Mockito.when(userService.getUserRoleFromToken()).thenReturn("admin");
         ResponseEntity<Object> expectedResult = new ResponseEntity<>(vida, HttpStatus.OK);
 
         // Act
@@ -109,7 +106,7 @@ class RoomMonitoringWebControllerTest {
         RoomDTOMinimal technoMinimal = new RoomDTOMinimal();
         vida.add(technoMinimal);
         Mockito.when(roomRepository.getAllRoomsAsMinimalDTOs()).thenReturn(vida);
-        Mockito.when(userService.getUsernameFromToken()).thenReturn("regularUser");
+        Mockito.when(userService.getUserRoleFromToken()).thenReturn("regularUser");
         ResponseEntity<Object> expectedResult = new ResponseEntity<>(vida, HttpStatus.OK);
 
         // Act
@@ -301,7 +298,7 @@ class RoomMonitoringWebControllerTest {
         expectedResult.add(roomDTOMinimal2);
 
         Mockito.doReturn(expectedResult).when(this.roomRepository).getAllRoomsAsMinimalDTOs();
-        Mockito.when(userService.getUsernameFromToken()).thenReturn("ADMIN");
+        Mockito.when(userService.getUserRoleFromToken()).thenReturn("ADMIN");
 
 
         //Arrange

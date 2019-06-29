@@ -237,7 +237,7 @@ class RoomConfigurationWebControllerTest {
         roomDTO.addSensor(roomSensorDTO2);
 
         Mockito.when(roomRepository.getRoomDTOByName("Name")).thenReturn(roomDTO);
-        Mockito.when(userService.getUsernameFromToken()).thenReturn("admin");
+        Mockito.when(userService.getUserRoleFromToken()).thenReturn("admin");
 
         // Act
 
@@ -270,7 +270,7 @@ class RoomConfigurationWebControllerTest {
         roomDTO.addSensor(roomSensorDTO2);
 
         Mockito.when(roomRepository.getRoomDTOByName("Name")).thenReturn(roomDTO);
-        Mockito.when(userService.getUsernameFromToken()).thenReturn("otherUser");
+        Mockito.when(userService.getUserRoleFromToken()).thenReturn("otherUser");
 
         // Act
 

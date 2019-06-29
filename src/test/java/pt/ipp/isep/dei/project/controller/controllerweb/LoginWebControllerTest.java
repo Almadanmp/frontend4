@@ -37,7 +37,7 @@ class LoginWebControllerTest {
     void getUserRoleSuccess() {
         // Act
 
-        Mockito.when(userService.getUsernameFromToken()).thenReturn("Daniela");
+        Mockito.when(userService.getUserRoleFromToken()).thenReturn("Daniela");
 
         Mockito.when(userService.findByUsername("Daniela")).thenReturn(userAdmin);
 
@@ -53,7 +53,7 @@ class LoginWebControllerTest {
     @Test
     void seeGetUserRoleNoSuchElement() {
         // Act
-        Mockito.when(userService.getUsernameFromToken()).thenReturn("John");
+        Mockito.when(userService.getUserRoleFromToken()).thenReturn("John");
         Mockito.when(userService.findByUsername("John")).thenThrow(NoSuchElementException.class);
 
         ResponseEntity<Object> expectedResult = new ResponseEntity<>(HttpStatus.NOT_FOUND);

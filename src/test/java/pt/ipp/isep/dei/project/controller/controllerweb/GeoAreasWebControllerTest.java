@@ -521,7 +521,7 @@ class GeoAreasWebControllerTest {
         geographicAreas.add(validGeographicAreaDTO);
 
         Mockito.when(geographicAreaRepository.getAllDTO()).thenReturn(geographicAreas);
-        Mockito.when(userService.getUsernameFromToken()).thenReturn("admin");
+        Mockito.when(userService.getUserRoleFromToken()).thenReturn("admin");
 
         ResponseEntity<Object> expectedResult = new ResponseEntity<>(geographicAreas, HttpStatus.OK);
 
@@ -556,7 +556,7 @@ class GeoAreasWebControllerTest {
         geographicAreas.add(validGeographicAreaDTO);
 
         Mockito.when(geographicAreaRepository.getAllDTO()).thenReturn(geographicAreas);
-        Mockito.when(userService.getUsernameFromToken()).thenReturn("qwerty");
+        Mockito.when(userService.getUserRoleFromToken()).thenReturn("qwerty");
 
         ResponseEntity<Object> expectedResult = new ResponseEntity<>(geographicAreas, HttpStatus.OK);
 
@@ -591,7 +591,7 @@ class GeoAreasWebControllerTest {
         validGeographicAreaDTO.setDaughterAreaList(geographicAreas);
 
         Mockito.when(geographicAreaRepository.getDTOById(id)).thenReturn(validGeographicAreaDTO);
-        Mockito.when(userService.getUsernameFromToken()).thenReturn("admin");
+        Mockito.when(userService.getUserRoleFromToken()).thenReturn("admin");
 
         ResponseEntity<Object> expectedResult = new ResponseEntity<>(geographicAreas, HttpStatus.OK);
 
@@ -626,7 +626,7 @@ class GeoAreasWebControllerTest {
         validGeographicAreaDTO.setDaughterAreaList(geographicAreas);
 
         Mockito.when(geographicAreaRepository.getDTOById(id)).thenReturn(validGeographicAreaDTO);
-        Mockito.when(userService.getUsernameFromToken()).thenReturn("qwerty");
+        Mockito.when(userService.getUserRoleFromToken()).thenReturn("qwerty");
 
         ResponseEntity<Object> expectedResult = new ResponseEntity<>(geographicAreas, HttpStatus.OK);
 
@@ -1181,7 +1181,7 @@ class GeoAreasWebControllerTest {
         list.add(validGeographicAreaDTO);
 
         Mockito.when(geographicAreaRepository.getAllDTO()).thenReturn(list);
-        Mockito.when(userService.getUsernameFromToken()).thenReturn("admin");
+        Mockito.when(userService.getUserRoleFromToken()).thenReturn("admin");
 
         // Perform
 
@@ -1234,7 +1234,7 @@ class GeoAreasWebControllerTest {
         areaSensorDTO.add(deleteSelf);
         areaSensorDTO.add(deactivateSelf);
 
-        Mockito.when(userService.getUsernameFromToken()).thenReturn("admin");
+        Mockito.when(userService.getUserRoleFromToken()).thenReturn("admin");
         Mockito.when(geographicAreaRepository.getDTOById(any(Long.class))).thenReturn(validGeographicAreaDTO);
 
 
@@ -1292,7 +1292,7 @@ class GeoAreasWebControllerTest {
         areaSensorDTO.add(deleteSelf);
         areaSensorDTO.add(deactivateSelf);
 
-        Mockito.when(userService.getUsernameFromToken()).thenReturn("NOTADMIN");
+        Mockito.when(userService.getUserRoleFromToken()).thenReturn("NOTADMIN");
         Mockito.when(geographicAreaRepository.getDTOById(any(Long.class))).thenReturn(validGeographicAreaDTO);
 
 

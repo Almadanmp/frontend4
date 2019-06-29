@@ -410,7 +410,7 @@ class EnergyGridsWebControllerTest {
         list.add(validGrid);
         list.add(validGrid2);
         Mockito.when(energyGridRepository.getAllGrids()).thenReturn(list);
-        Mockito.when(userService.getUsernameFromToken()).thenReturn("ADMIN");
+        Mockito.when(userService.getUserRoleFromToken()).thenReturn("ADMIN");
 
         // Act
 
@@ -432,7 +432,7 @@ class EnergyGridsWebControllerTest {
         list.add(validGrid);
 
         Mockito.when(energyGridRepository.getAllGrids()).thenReturn(list);
-        Mockito.when(userService.getUsernameFromToken()).thenReturn("admin");
+        Mockito.when(userService.getUserRoleFromToken()).thenReturn("admin");
 
         EnergyGridDTO dto = EnergyGridMapper.objectToDTO(validGrid);
 
@@ -506,7 +506,7 @@ class EnergyGridsWebControllerTest {
         roomDTOMinimal.setHeight(3);
         roomDTOMinimals.add(roomDTOMinimal);
         Mockito.doReturn(roomDTOMinimals).when(energyGridRoomService).getRoomsDtoWebInGrid("B building");
-        Mockito.when(userService.getUsernameFromToken()).thenReturn("ADMIN");
+        Mockito.when(userService.getUserRoleFromToken()).thenReturn("ADMIN");
 
 
         // Act
@@ -532,7 +532,7 @@ class EnergyGridsWebControllerTest {
         roomDTOMinimal.add(linkDelete);
 
         Mockito.doReturn(roomDTOMinimals).when(energyGridRoomService).getRoomsDtoWebInGrid("B building");
-        Mockito.when(userService.getUsernameFromToken()).thenReturn("ADMIN");
+        Mockito.when(userService.getUserRoleFromToken()).thenReturn("ADMIN");
 
 
         // Act
@@ -558,7 +558,7 @@ class EnergyGridsWebControllerTest {
         roomDTOMinimal.add(linkDelete);
 
         Mockito.doReturn(roomDTOMinimals).when(energyGridRoomService).getRoomsDtoWebInGrid("B building");
-        Mockito.when(userService.getUsernameFromToken()).thenReturn("admin");
+        Mockito.when(userService.getUserRoleFromToken()).thenReturn("admin");
 
 
         // Act
