@@ -50,10 +50,10 @@ end
 alt if userService.getUserRoleFromToken().equals(ADMIN)
 loop
 
-":GeoAreasWebController" ->> ":GeographicAreaDTO": geographicAreaDTO.add(linkTo(addChildAreas))
-":GeoAreasWebController" ->> ":GeographicAreaDTO": geographicAreaDTO.add(linkTo(getChildAreas))
-":GeoAreasWebController" ->> ":GeographicAreaDTO": geographicAreaDTO.add(linkTo(getAreaSensors))
-":GeoAreasWebController" ->> ":GeographicAreaDTO": geographicAreaDTO.add(linkTo(createAreaSensor))
+":GeoAreasWebController" ->> ":GeographicAreaDTO": add(linkTo(addChildAreas))
+":GeoAreasWebController" ->> ":GeographicAreaDTO": add(linkTo(getChildAreas))
+":GeoAreasWebController" ->> ":GeographicAreaDTO": add(linkTo(getAreaSensors))
+":GeoAreasWebController" ->> ":GeographicAreaDTO": add(linkTo(createAreaSensor))
 end
 end
 ":GeoAreasWebController" -->> "Web API": return  new ResponseEntity<>({List<GeographicAreaDTO>, HttpStatus.OK)
