@@ -1,0 +1,52 @@
+@startuml
+
+
+
+node "Web Server" as test {
+  [React Application]
+}
+
+node "Browser" {
+  [browser HTML]
+}
+
+
+node "Application Server / Database Server" as test2 {
+  [Tomcat]
+  [API]
+  [H2]
+  [Data Model]
+
+}
+
+
+
+
+
+
+
+
+
+
+database "H2" {
+}
+
+
+[browser HTML] ---> [React Application]:  HTTP / HTTPS connection
+[React Application] ---> [API]
+[Data Model] --> H2:  Local socket
+[API] -> [Data Model]
+
+
+@enduml
+
+skinparam titleBorderRoundCorner 10
+skinparam titleBorderThickness 2
+skinparam titleBorderColor indianred
+skinparam titleBackgroundColor Snow
+skinparam FontName quicksand
+skinparam titleFontSize 10
+skinparam roundcorner 10
+
+actor "User"
+
