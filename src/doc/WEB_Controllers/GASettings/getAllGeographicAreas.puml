@@ -41,7 +41,6 @@ activate ":GeoAreasWebController"
 activate ":GeographicAreaRepository"
 ":GeographicAreaRepository" -->> ":GeoAreasWebController":  return List<GeographicAreaDTO> \n
 deactivate ":GeographicAreaRepository"
-deactivate ":GeoAreasWebController"
 alt if List<GeographicAreaDTO> is null or empty
 ":GeoAreasWebController" -->> "Web API": return  new ResponseEntity<>(HttpStatus.BAD_REQUEST)
 end
@@ -57,6 +56,7 @@ loop
 end
 end
 ":GeoAreasWebController" -->> "Web API": return  new ResponseEntity<>({List<GeographicAreaDTO>, HttpStatus.OK)
+deactivate ":GeoAreasWebController"
 
 "Web API" --> "Client": Show Area List
 deactivate "Web API"

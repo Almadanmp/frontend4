@@ -36,7 +36,7 @@ actor "Client"
 activate "Web API"
 "Web API" ->> ":SpringResolver":  GET "link.hrefs"
 activate ":SpringResolver"
-":SpringResolver" ->> ":GeoAreasWebController": getAreaSensors(long geoAreaID) \n
+":SpringResolver" ->> ":GeoAreasWebController": getAreaSensors(long geoAreaID)
 deactivate ":SpringResolver"
 activate ":GeoAreasWebController"
 ":GeoAreasWebController" -> ":GeographicAreaRepository": getDTOById(long geoAreaID)
@@ -51,11 +51,13 @@ deactivate ":GeographicAreaDTO"
 alt if userService.getUserRoleFromToken().equals(ADMIN)
 loop
 
-":GeoAreasWebController" ->> ":AreaSensorDTO": areaSensorDTO.add(linkTo(removeAreaSensor(geoAreaID, areaSensorDTO.getSensorId()))
-":GeoAreasWebController" ->> ":AreaSensorDTO": areaSensorDTO.add(linkTo(deactivateAreaSensor(geoAreaID, areaSensorDTO.getSensorId()))
+":GeoAreasWebController" ->> ":AreaSensorDTO": add(linkTo(removeAreaSensor(geoAreaID, areaSensorDTO.getSensorId()))
+":GeoAreasWebController" ->> ":AreaSensorDTO": add(linkTo(deactivateAreaSensor(geoAreaID, areaSensorDTO.getSensorId()))
 end
 end
+
 ":GeoAreasWebController" -->> "Web API": return  new ResponseEntity<>({List<AreaSensorDTO>, HttpStatus.OK)
+deactivate ":GeoAreasWebController"
 "Web API" --> "Client": Show Menu with \nSensor List
 
 
