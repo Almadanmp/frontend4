@@ -38,20 +38,29 @@ participant "Redux Store"
 "Web API" ->> ":SpringResolver":  POST ".../login/" \n({"username":"admin", "password":"admin123"})
 activate ":SpringResolver"
 ":SpringResolver" ->> "AUTH0": get Token \n({"username":"admin", "password":"admin123"})
-activate "AUTH0"
 deactivate ":SpringResolver"
+activate "AUTH0"
+
 "AUTH0" ->> "AUTH0": Validate Credentials \n({"username":"admin", "password":"admin123"})
 "AUTH0" -->> "Web API": return  new ResponseEntity<>(HttpStatus.OK), Header: Bearer Token
+deactivate "AUTH0"
+activate "Redux Store"
 "Web API" -> "Redux Store": setItem(loginToken)
 "Web API" -> "Redux Store": setItem(userName)
+deactivate "Redux Store"
 create ":LoginWebController"
 "Web API" ->>":LoginWebController": getUserRole(bearer token)
 activate ":LoginWebController"
 create ":UserService"
 ":LoginWebController" ->> ":UserService": getUserRole(bearer token)
+activate ":UserService"
 ":UserService" -->> ":LoginWebController": return user role
+deactivate ":UserService"
 ":LoginWebController" -->> "Web API": return  new ResponseEntity<>(String, HttpStatus.OK)
+deactivate ":LoginWebController"
+activate "Redux Store"
 "Web API" -> "Redux Store": setItem(userRole)
+deactivate "Redux Store"
 "Web API" ->> "Web API": Redirect to About page
 "Web API" --> "Client": Show Menu Options
 deactivate "Web API"

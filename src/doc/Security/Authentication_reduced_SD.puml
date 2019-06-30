@@ -1,0 +1,48 @@
+@startuml
+skinparam titleBorderRoundCorner 10
+skinparam titleBorderThickness 3
+skinparam titleBorderColor indianred
+skinparam titleBackgroundColor snow
+skinparam FontName quicksand
+
+skinparam actor {
+  BorderColor indianred
+  backgroundColor Snow
+  }
+
+skinparam sequence {
+  LifeLineBackgroundColor indianred
+  ParticipantBackgroundColor snow
+}
+
+skinparam roundcorner 10
+
+skinparam component {
+  arrowThickness 1
+  ArrowFontName Verdana
+  ArrowColor indianred
+  ArrowFontColor darkslategrey
+}
+
+
+title - AUTHENTICATION -
+
+autonumber
+
+actor "Client"
+
+"Web API" --> "Client": Request Credentials
+activate "Web API"
+"Client" -> "Web API": Insert Credentials
+
+activate "AUTH0"
+"Web API" ->> "AUTH0":  POST ".../login/" \n({"username":"admin", "password":"admin123"})
+"AUTH0" -> "AUTH0": Validate Credentials \n({"username":"admin", "password":"admin123"})
+alt if Valid UserName and Password
+"AUTH0" -->> "Web API": return  new ResponseEntity<>(HttpStatus.OK), Header: Bearer Token
+deactivate "AUTH0"
+"Web API" -> "Web API": Redirect to About page
+"Web API" --> "Client": Show Menu Options
+deactivate "Web API"
+end
+@enduml
