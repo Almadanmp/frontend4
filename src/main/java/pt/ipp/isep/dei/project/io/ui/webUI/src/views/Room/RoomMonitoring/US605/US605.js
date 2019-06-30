@@ -34,25 +34,28 @@ class US605 extends Component {
                 <CardBody>
                   <Row className="justify-content-start">
                     <Col md="9">
-                  <Table responsive>
-                    <CardBody>
-                      <tr>
-                        <th>Room</th>
-                        <th style={{textAlign:"center"}}>Temperature</th>
-                      </tr>
-                      {rooms.map(items => (
-                        <tr>
-                          <td value={items.name} key={items.name}> {items.name} </td>
-                          <td style={{textAlign:"center"}}><US605GetCurrentTemperature
-                            link={items.links.find((hrefs) => hrefs.rel === 'Get Room Temperature')} roomID={items.name}/>
-                          </td>
-                        </tr>
-                      ))}
-                    </CardBody>
-                  </Table>
+                      <Table responsive>
+                        <CardBody>
+                          <tr>
+                            <th>Room</th>
+                            <th style={{textAlign: "center"}}>Temperature</th>
+                          </tr>
+                          {rooms.map(items => (
+                            <tr>
+                              <td value={items.name} key={items.name}> {items.name} </td>
+                              <td style={{textAlign: "center"}}>
+                                <US605GetCurrentTemperature
+                                  link={items.links.find((hrefs) => hrefs.rel === 'Get Room Temperature')}
+                                  roomID={items.name}/>
+                              </td>
+                            </tr>
+                          ))}
+                        </CardBody>
+                      </Table>
                     </Col>
                     <Col style={{textAlign: "right"}}>
-                      <img src={"https://imgur.com/QHIi5EA.png"} width="100%" height="11%" style={{display: "inline-block"}}/>
+                      <img src={"https://imgur.com/QHIi5EA.png"} width="100%" height="11%"
+                           style={{display: "inline-block"}}/>
                       <p></p>
                     </Col>
                   </Row>

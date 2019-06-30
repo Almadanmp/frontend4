@@ -3,35 +3,16 @@ import TableHeader from "./TableHeader";
 import connect from "react-redux/es/connect/connect";
 import GetChildren from "../ChildAreas/GetChildren.js";
 import GetSensors from "../AreaSensors/GetSensors.js";
+import {fetchGABTs} from '../US004/Actions004';
 
 class TableBody extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      item: [],
-    }
   }
 
   componentDidMount() {
-    const token = localStorage.getItem('loginToken');
-    fetch('https://localhost:8443/geoAreas/', {
-      headers: {
-        'Authorization': token,
-        "Access-Control-Allow-Credentials": true,
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json"
-      }
-    })
-      .then(res => res.json())
-      .then((json) => {
-        this.setState({
-          item: json,
-        })
-      })
-      .catch(console.log)
-    console.log(this.state.item);
-
+    this.props.onFetchByTypes();
   }
 
   render() {
@@ -42,11 +23,12 @@ class TableBody extends Component {
       sensors: "Sensors",
       children: "Child Areas",
     };
-    var {item} = this.state;
+    const {areas} = this.props;
+    console.log(this.props.areas)
     return (
       <>
         <TableHeader headers={headers}/>
-        {item.map(item => (
+        {areas.map(item => (
           <tr key={item.id}>
             <td style={{
               textAlign: "center"
@@ -77,6 +59,23 @@ class TableBody extends Component {
   }
 
 }
+const mapStateToProps = (state) => {
+  return {
+    areas: state.Reducers004.areas,
+    listGATypes: state.Reducer002.listGATypes
+  }
+};
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onFetchByTypes: () => {
+      dispatch(fetchGABTs())
+    }
 
-export default TableBody;
+  }
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TableBody);
