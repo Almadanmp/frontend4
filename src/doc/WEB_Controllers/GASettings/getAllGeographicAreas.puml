@@ -26,7 +26,7 @@ skinparam component {
 
 
 autonumber
-
+title - Get Geographic Areas -
 actor "Client"
 
 "Client" -> "Web API": Select option Area
@@ -50,14 +50,14 @@ end
 alt if userService.getUserRoleFromToken().equals(ADMIN)
 loop
 
-":GeoAreasWebController" ->> ":GeographicAreaDTO": geographicAreaDTO.add(addChildAreas)
-":GeoAreasWebController" ->> ":GeographicAreaDTO": geographicAreaDTO.add(getChildAreas)
-":GeoAreasWebController" ->> ":GeographicAreaDTO": geographicAreaDTO.add(sensors)
-":GeoAreasWebController" ->> ":GeographicAreaDTO": geographicAreaDTO.add(addSensor)
+":GeoAreasWebController" ->> ":GeographicAreaDTO": geographicAreaDTO.add(linkTo(addChildAreas))
+":GeoAreasWebController" ->> ":GeographicAreaDTO": geographicAreaDTO.add(linkTo(getChildAreas))
+":GeoAreasWebController" ->> ":GeographicAreaDTO": geographicAreaDTO.add(linkTo(getAreaSensors))
+":GeoAreasWebController" ->> ":GeographicAreaDTO": geographicAreaDTO.add(linkTo(createAreaSensor))
 end
-":GeoAreasWebController" -->> "Web API": return  new ResponseEntity<>({GeographicAreaDTO, HttpStatus.OK)
 end
-"Web API" -> "Web API": Create Buttons
+":GeoAreasWebController" -->> "Web API": return  new ResponseEntity<>({List<GeographicAreaDTO>, HttpStatus.OK)
+
 "Web API" --> "Client": Show Area List
 deactivate "Web API"
 

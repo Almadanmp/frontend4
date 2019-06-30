@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import US130 from './US130'
 import RoomGrid from "./SmartGrid/RoomGrid"
-import {Col, Row} from "reactstrap";
+
 
 class HouseConfiguration extends Component {
   constructor(props) {
