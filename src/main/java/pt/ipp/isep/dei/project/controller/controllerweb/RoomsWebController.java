@@ -54,10 +54,10 @@ public class RoomsWebController {
         }
         RoomSensorDTO roomSensorDTO = new RoomSensorDTO();
         for (RoomDTOMinimal r : roomDTOList) {
-            if (userService.getUserRoleFromToken() == null) {
+            if (userService.getUsernameFromToken() == null) {
                 break;
             }
-            if (userService.getUserRoleFromToken().equals(ADMIN)) {
+            if (userService.getUsernameFromToken().equals(ADMIN)) {
                 Link roomSensors = linkTo(methodOn(RoomsWebController.class).getSensors(r.getName())).withRel("Get Room Sensors");
                 Link deleteRoom = linkTo(methodOn(RoomsWebController.class).deleteRoom(r.getName())).withRel("Delete this Room");
                 Link editRoom = linkTo(methodOn(RoomsWebController.class).configureRoom(r.getName(), new RoomDTOMinimal()))
@@ -67,7 +67,7 @@ public class RoomsWebController {
                 r.add(deleteRoom);
                 r.add(addSensor);
                 r.add(editRoom);
-            } else if (userService.getUserRoleFromToken().equals("regularUser")) {
+            } else if (userService.getUsernameFromToken().equals("regularUser")) {
                 Link roomTemp = linkTo(methodOn(RoomsWebController.class).getCurrentRoomTemperature(r.getName())).
                         withRel("Get Room Temperature");
                 Link getRoomMaxTempInDay = linkTo(methodOn(RoomsWebController.class).getRoomMaxTempInDay(r.getName(), "")).withRel("Get Maximum Temperature In Day");
@@ -242,7 +242,7 @@ public class RoomsWebController {
     public ResponseEntity<List<RoomSensorDTOMinimal>> getSensors(@PathVariable String roomId) {
         List<RoomSensorDTOMinimal> roomSensorDTOList = roomRepository.getRoomDTOByName(roomId).getSensorDTOMinimalistList();
         for (RoomSensorDTOMinimal s : roomSensorDTOList) {
-            if (userService.getUserRoleFromToken().equals(ADMIN)) {
+            if (userService.getUsernameFromToken().equals(ADMIN)) {
                 Link deleteSelf = linkTo(methodOn(RoomsWebController.class).removeRoomSensor(roomId, s.getSensorID())).
                         withRel("Delete this Sensor");
                 s.add(deleteSelf);
