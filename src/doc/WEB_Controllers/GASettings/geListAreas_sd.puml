@@ -51,10 +51,18 @@ end
 
 alt if userService.getUserRoleFromToken().equals(ADMIN)
 loop
+
+":GeoAreasWebController" ->> ":GeographicAreaDTO": add.link(getChildAreas, sensors, ...)
+activate ":GeoAreasWebController"
+activate ":GeographicAreaDTO"
+":GeographicAreaDTO" -->> ":GeoAreasWebController": return GeographicAreaDTO
+deactivate ":GeographicAreaDTO"
+deactivate ":GeoAreasWebController"
+end
 ":GeoAreasWebController" -->> "Web API": return  new ResponseEntity<>({GeographicAreaDTO, HttpStatus.OK)
+end
 "Web API" -> "Web API": Create Buttons
 "Web API" --> "Client": Show Area List
 deactivate "Web API"
-end
-end
+
 @enduml
