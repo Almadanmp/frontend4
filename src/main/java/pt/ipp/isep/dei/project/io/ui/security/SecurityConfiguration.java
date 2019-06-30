@@ -57,20 +57,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/").permitAll()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
-                //get all rooms needs to be accessed by ADMIN and REGULAR so made it a permit all
-                .antMatchers("/houseSettings/houseRooms").permitAll()
                 //login related methods
                 .antMatchers("/loginWeb/**").permitAll()
                 //ADMIN User Access
-                .antMatchers("/houseSettings/house").hasRole(ADMIN)
-                .antMatchers("/houseSettings/room").hasRole(ADMIN)
-                .antMatchers("/roomConfiguration/**").hasRole(ADMIN)
-                .antMatchers("/gridSettings/**").hasRole(ADMIN)
-                .antMatchers("/geographic_area_settings/**").hasRole(ADMIN)
-                .antMatchers("/import/**").hasRole(ADMIN)
-                //Regular User Access - US600, US605, US610, US620, US630, US631, US633
-                .antMatchers("/houseMonitoring/**").hasAnyRole(REGULAR_USER, POWER_USER, ROOM_OWNER)
-                .antMatchers("/roomMonitoring/**").hasAnyRole(REGULAR_USER, POWER_USER)
+                .antMatchers("/grids/**").hasRole(ADMIN)
+                .antMatchers("/sensors/**").hasRole(ADMIN)
+                .antMatchers("/geoAreas/**").hasRole(ADMIN)
+                .antMatchers("/import/**").hasAnyRole(ADMIN)
+                .antMatchers("/house/**").hasAnyRole(ADMIN,REGULAR_USER, POWER_USER, ROOM_OWNER)
+                .antMatchers("/room/**").hasAnyRole(ADMIN, REGULAR_USER, POWER_USER, ROOM_OWNER)
                 .anyRequest().authenticated();
     }
 
