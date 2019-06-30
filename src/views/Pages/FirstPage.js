@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import TextInput from './TextInput';
-import {bindActionCreators} from 'redux/index';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {logInUser} from './sessionActions';
 import {Col, Container, Row} from "reactstrap";
