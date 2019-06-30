@@ -25,8 +25,6 @@ skinparam component {
 }
 
 
-title - AUTHORIZATION -
-
 autonumber
 
 actor "Client"
@@ -52,12 +50,10 @@ end
 alt if userService.getUserRoleFromToken().equals(ADMIN)
 loop
 
-":GeoAreasWebController" ->> ":GeographicAreaDTO": add.link(getChildAreas, sensors, ...)
-activate ":GeoAreasWebController"
-activate ":GeographicAreaDTO"
-":GeographicAreaDTO" -->> ":GeoAreasWebController": return GeographicAreaDTO
-deactivate ":GeographicAreaDTO"
-deactivate ":GeoAreasWebController"
+":GeoAreasWebController" ->> ":GeographicAreaDTO": geographicAreaDTO.add(addChildAreas)
+":GeoAreasWebController" ->> ":GeographicAreaDTO": geographicAreaDTO.add(getChildAreas)
+":GeoAreasWebController" ->> ":GeographicAreaDTO": geographicAreaDTO.add(sensors)
+":GeoAreasWebController" ->> ":GeographicAreaDTO": geographicAreaDTO.add(addSensor)
 end
 ":GeoAreasWebController" -->> "Web API": return  new ResponseEntity<>({GeographicAreaDTO, HttpStatus.OK)
 end
