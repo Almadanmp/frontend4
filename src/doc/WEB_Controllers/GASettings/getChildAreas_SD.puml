@@ -25,7 +25,7 @@ skinparam component {
 }
 
 
-title - Get Area Sensors -
+title - Get Child Areas -
 
 autonumber
 
@@ -47,15 +47,15 @@ deactivate ":GeographicAreaRepository"
 activate ":GeographicAreaDTO"
 ":GeographicAreaDTO" --> ":GeoAreasWebController": return  :List<GeographicAreaDTO>
 deactivate ":GeographicAreaDTO"
+deactivate ":GeoAreasWebController"
 
 alt if userService.getUserRoleFromToken().equals(ADMIN)
 loop
 
-":GeoAreasWebController" ->> ":GeographicAreaDTO": add(linkTo(removeAreaSensor(geoAreaID, areaSensorDTO.getSensorId()))
-":GeoAreasWebController" ->> ":GeographicAreaDTO": add(linkTo(deactivateAreaSensor(geoAreaID, areaSensorDTO.getSensorId()))
+":GeoAreasWebController" ->> ":GeographicAreaDTO": add(linkTo(removeChildArea(parentGeoAreaID, childGeoAreaID)))
 end
 end
-":GeoAreasWebController" -->> "Web API": return  new ResponseEntity<>({List<AreaSensorDTO>, HttpStatus.OK)
+":GeoAreasWebController" -->> "Web API": return  new ResponseEntity<>({List<GeographicAreaDTO>, HttpStatus.OK)
 "Web API" --> "Client": Show Menu with \nSensor List
 
 
