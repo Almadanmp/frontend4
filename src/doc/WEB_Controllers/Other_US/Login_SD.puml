@@ -1,0 +1,59 @@
+@startuml
+skinparam titleBorderRoundCorner 10
+skinparam titleBorderThickness 3
+skinparam titleBorderColor indianred
+skinparam titleBackgroundColor snow
+skinparam FontName quicksand
+
+skinparam actor {
+  BorderColor indianred
+  backgroundColor Snow
+  }
+
+skinparam sequence {
+  LifeLineBackgroundColor indianred
+  ParticipantBackgroundColor snow
+}
+
+skinparam roundcorner 10
+
+skinparam component {
+  arrowThickness 1
+  ArrowFontName Verdana
+  ArrowColor indianred
+  ArrowFontColor darkslategrey
+}
+
+
+title - AUTHENTICATION - \n Success Case
+
+autonumber
+
+actor "Client"
+
+"Web API" -->> "Client": Request Username and Password
+activate "Web API"
+"Client" ->> "Web API": Insert Username and Password
+participant "Redux Store"
+"Web API" ->> ":SpringResolver":  POST ".../login/" \n({"username":"admin", "password":"admin123"})
+activate ":SpringResolver"
+":SpringResolver" ->> "AUTH0": get Token \n({"username":"admin", "password":"admin123"})
+activate "AUTH0"
+deactivate ":SpringResolver"
+"AUTH0" ->> "AUTH0": Validate Credentials \n({"username":"admin", "password":"admin123"})
+"AUTH0" -->> "Web API": return  new ResponseEntity<>(HttpStatus.OK), Header: Bearer Token
+"Web API" -> "Redux Store": setItem(loginToken)
+"Web API" -> "Redux Store": setItem(userName)
+create ":LoginWebController"
+"Web API" ->>":LoginWebController": getUserRole(bearer token)
+activate ":LoginWebController"
+create ":UserService"
+":LoginWebController" ->> ":UserService": getUserRole(bearer token)
+":UserService" -->> ":LoginWebController": return user role
+":LoginWebController" -->> "Web API": return  new ResponseEntity<>(String, HttpStatus.OK)
+"Web API" -> "Redux Store": setItem(userRole)
+"Web API" ->> "Web API": Redirect to About page
+"Web API" --> "Client": Show Menu Options
+deactivate "Web API"
+
+@enduml
