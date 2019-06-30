@@ -38,20 +38,21 @@ class ImportOptions extends Component {
   render() {
     console.log(this.state.item)
     let {item} = this.state;
+    if (item.length != 0) {
+      return (
+        <>
+          <>
+            <ImportGA link={item.find((hrefs) => hrefs.rel === 'Import Geographic Areas')}ImportGA/>
+            <ImportGAReadings link={item.find((hrefs) => hrefs.rel === 'Import Area Sensor Readings')}/>
+            <ImportHouse link={item.find((hrefs) => hrefs.rel === 'Import House Data')}/>
+            <ImportHouseSensors link={item.find((hrefs) => hrefs.rel === 'Import House Sensors')}/>
+            <ImportHouseReadings link={item.find((hrefs) => hrefs.rel === 'Import House Sensor Readings')}/>
+          </>
+        </>
+      );
+    }
     return (
       <>
-
-          <>
-          <ImportGA link={item.find((hrefs) => hrefs.rel === 'Import Geographic Areas')}/>
-
-          < ImportGAReadings link={item.find((hrefs) => hrefs.rel === 'Import Area Sensor Readings')}/>
-
-          <ImportHouse link={item.find((hrefs) => hrefs.rel === 'Import House Data')}/>
-          <ImportHouseSensors link={item.find((hrefs) => hrefs.rel === 'Import House Sensors')}/>
-
-          <ImportHouseReadings link={item.find((hrefs) => hrefs.rel === 'Import House Sensor Readings')}/>
-          </>
-
       </>
     );
   }

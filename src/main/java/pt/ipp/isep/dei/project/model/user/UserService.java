@@ -17,7 +17,7 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public String getUsernameFromToken() {
+    public String getUserRoleFromToken() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             return authentication.getName();
